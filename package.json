@@ -1,6 +1,6 @@
 {
   "name": "react-facebook",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Facebook components like a Login button, Like, Share or Embedded Post",
   "author": {
     "name": "Zlatko Fedor",
@@ -36,8 +36,7 @@
     "coveralls": "babel-node ./node_modules/gulp/bin/gulp.js coveralls",
     "eslint": "node ./node_modules/eslint/bin/eslint.js --ext .js,.jsx ."
   },
-  "dependencies": {
-  },
+  "dependencies": {},
   "devDependencies": {
     "babel-cli": "^6.5.1",
     "babel-core": "^6.5.2",
