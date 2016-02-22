@@ -13,5 +13,6 @@ describe('Provider', () => {
       </FacebookProvider>
     );
 
-    //findDOMNode(node)});
+    //findDOMNode(node)
+  });
 });
