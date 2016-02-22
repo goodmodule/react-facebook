@@ -6,7 +6,7 @@ import { findDOMNode } from 'react-dom';
 import TestUtils from 'react-addons-test-utils';
 
 describe('Provider', () => {
-  it('should be able to create simple instance', (done) => {
+  it('should be able to create simple instance', () => {
     const node = renderJSX(
       <FacebookProvider appID="123456789">
         <Like />
