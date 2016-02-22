@@ -30,7 +30,7 @@
     "node": ">= 0.12.0"
   },
   "scripts": {
-    "offprepublish": "npm run build",
+    "prepublish": "npm run build",
     "test": "babel-node ./node_modules/gulp/bin/gulp.js test",
     "build": "babel-node ./node_modules/gulp/bin/gulp.js build",
     "coveralls": "babel-node ./node_modules/gulp/bin/gulp.js coveralls",
