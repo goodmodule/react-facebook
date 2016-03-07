@@ -67,14 +67,15 @@ import React, { Component} from 'react';
 import FacebookProvider, { Login } from 'react-facebook';
 
 export default class Example extends Component {
-  onFacebookSubmit(data) {
+  onFacebookSubmit(data, user_data) {
     console.log(data);
+    console.log(user_data);
   }
 
   render() {
     return (
       <FacebookProvider appID="123456789">
-        <Login scope="email" onSubmit={this.onFacebookSubmit.bind(this)}/>
+        <Login scope="email" onSubmit={this.onFacebookSubmit.bind(this)} children="Log in with Facebook"/>
       </FacebookProvider>
     );
   }
