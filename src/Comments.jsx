@@ -37,7 +37,7 @@ class Comments extends React.Component {
 
         var me    = this,
             props = {};
-        Object.keys(Comments.defaultProps).forEach(( v )=>props["data-" + v] = me.props[v]);
+        Object.keys(Comments.defaultProps).forEach(( v )=>(props["data-" + v] = me.props[v]));
 
         return (
             <div ref="box">
