@@ -1,5 +1,6 @@
 import React from 'react';
-import FacebookProvider, {Like, Share} from 'react-facebook';
+import FacebookProvider from './FacebookProvider';
+
 import ReactDom  from 'react-dom';
 
 class Comments extends React.Component {
