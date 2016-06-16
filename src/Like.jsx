@@ -46,7 +46,8 @@ export default class Like extends Component {
         layout=${this.props.layout}
         color-scheme=${this.props.colorScheme}
         action=${this.props.action}
-        show-faces=${this.props.showFaces}></fb:like>
+        show-faces=${this.props.showFaces}
+        share=${this.props.share}></fb:like>
     `;
 
     return (
