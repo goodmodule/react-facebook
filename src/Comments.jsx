@@ -1,50 +1,59 @@
-import React from 'react';
+import React, { Component, PropTypes } from 'react';
 import FacebookProvider from './FacebookProvider';
-import ReactDom  from 'react-dom';
 
-class Comments extends React.Component {
+export default class Comments extends Component {
+  static contextTypes = {
+    ...FacebookProvider.childContextTypes,
+  };
 
+  static propTypes = {
+    className: PropTypes.string,
+    href: PropTypes.string.isRequired,
+    numPosts: PropTypes.number.isRequired,
+    orderBy: PropTypes.string.isRequired,
+    width: PropTypes.number.isRequired,
+    colorScheme: PropTypes.string.isRequired,
+    children: PropTypes.node,
+  };
 
-    static contextTypes = {
-        ...FacebookProvider.childContextTypes
-    };
+  static defaultProps = {
+    href: 'http://www.facebook.com',
+    numPosts: 10,
+    orderBy: 'social', // "social", "reverse_time", or "time"
+    width: 550,
+    colorScheme: 'light',
+  };
 
-    static defaultProps = {
-        href        : 'http://www.facebook.com',
-        layout      : 'standard', // standard, button_count, button or box_count
-        num_posts   : 5,
-        order_by    : "social",
-        width       : 550,
-        colorScheme : 'light'
-    };
+  componentDidMount() {
+    this.context.facebook.whenReady((err, facebook) => {
+      if (err) {
+        return;
+      }
 
-    componentDidMount() {
-        var me = this;
-        this.context.facebook.whenReady(( err, facebook ) => {
-            if ( err ) {
-                return;
-            }
-            facebook.parse(ReactDom.findDOMNode(me.refs.box), () => {
-            });
-        });
-    }
+      facebook.parse(this.refs.container, () => {});
+    });
+  }
 
-    shouldComponentUpdate() {
-        return false;
-    }
+  shouldComponentUpdate() {
+    return false;
+  }
 
-    render() {
+  render() {
+    const { className, colorScheme, href, numPosts, orderBy, width, children } = this.props;
 
-        var me    = this,
-            props = {};
-        Object.keys(Comments.defaultProps).forEach(( v )=>(props["data-" + v] = me.props[v]));
-
-        return (
-            <div ref="box">
-                <div className="fb-comments" {...props}></div>
-            </div>
-        )
-    }
-
-};
-export default Comments;
+    return (
+      <div ref="container" className={className}>
+        <div
+          className="fb-comments"
+          data-colorscheme={colorScheme}
+          data-numposts={numPosts}
+          data-href={href}
+          data-order-by={orderBy}
+          data-width={width}
+        >
+          {children}
+        </div>
+      </div>
+    );
+  }
+}

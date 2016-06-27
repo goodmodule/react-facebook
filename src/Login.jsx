@@ -40,7 +40,8 @@ export default class Login extends Component {
   componentDidMount() {
     this.context.facebook.whenReady((err, facebook) => {
       if (err) {
-        return this.props.onSubmit(err);
+        this.props.onSubmit(err);
+        return;
       }
 
       this.setState({ facebook });
@@ -88,19 +89,22 @@ export default class Login extends Component {
     facebook.login(loginQpts, (err, loginStatus) => {
       if (err) {
         this.setWorking(false);
-        return onSubmit(err);
+        onSubmit(err);
+        return;
       }
 
       if (loginStatus !== LoginStatus.AUTHORIZED) {
         this.setWorking(false);
-        return onSubmit(new Error('Unauthorized user'));
+        onSubmit(new Error('Unauthorized user'));
+        return;
       }
 
       facebook.getTokenDetailWithProfile({ fields }, (err2, data) => {
         this.setWorking(false);
 
         if (err2) {
-          return onSubmit(err2);
+          onSubmit(err2);
+          return;
         }
 
         onSubmit(null, {

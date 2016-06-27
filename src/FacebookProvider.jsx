@@ -1,6 +1,7 @@
 import { Component, PropTypes, Children } from 'react';
 import FB from './Facebook';
-var globalFacebookInstance;
+
+let facebookInstance = null;
 
 export default class Facebook extends Component {
   static propTypes = {
@@ -39,9 +40,8 @@ export default class Facebook extends Component {
   whenReady(callback) {
     const props = this.props;
 
-    if (!this.facebook) 
-    {
-      this.facebook = globalFacebookInstance = globalFacebookInstance || new FB({
+    if (!this.facebook) {
+      this.facebook = facebookInstance = facebookInstance || new FB({
         appID: props.appID,
         version: props.version,
         cookie: props.cookie,

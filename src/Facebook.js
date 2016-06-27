@@ -114,7 +114,8 @@ export default class Facebook {
 
   callCallbackByResponse(cb, response) {
     if (!response) {
-      return cb(new Error('Response is undefined'));
+      cb(new Error('Response is undefined'));
+      return;
     }
 
     cb(null, response);
@@ -122,12 +123,14 @@ export default class Facebook {
 
   login(opts, callback) {
     if (typeof opts === 'function') {
-      return this.login(null, opts);
+      this.login(null, opts);
+      return;
     }
 
     this.whenReady(err => {
       if (err) {
-        return callback(err);
+        callback(err);
+        return;
       }
 
       window.FB.login((response) => {
@@ -145,7 +148,8 @@ export default class Facebook {
   getLoginStatus(callback) {
     this.whenReady(err => {
       if (err) {
-        return callback(err);
+        callback(err);
+        return;
       }
 
       window.FB.getLoginStatus((response) => {
@@ -163,12 +167,14 @@ export default class Facebook {
   getTokenDetail(callback) {
     this.whenReady(err => {
       if (err) {
-        return callback(err);
+        callback(err);
+        return;
       }
 
       const authResponse = window.FB.getAuthResponse();
       if (!authResponse.accessToken) {
-        return callback(new Error('Token is undefined'));
+        callback(new Error('Token is undefined'));
+        return;
       }
 
       callback(null, authResponse);
@@ -177,17 +183,20 @@ export default class Facebook {
 
   getTokenDetailWithProfile(params, callback) {
     if (typeof params === 'function') {
-      return this.getTokenDetailWithProfile({}, params);
+      this.getTokenDetailWithProfile({}, params);
+      return;
     }
 
     this.getTokenDetail((err, tokenDetail) => {
       if (err) {
-        return callback(err);
+        callback(err);
+        return;
       }
 
       this.getProfile(params, (err2, profile) => {
         if (err2) {
-          return callback(err2);
+          callback(err2);
+          return;
         }
 
         callback(null, {
@@ -201,7 +210,8 @@ export default class Facebook {
   getToken(callback) {
     this.getTokenDetail((err, authResponse) => {
       if (err) {
-        return callback(err);
+        callback(err);
+        return;
       }
 
       callback(null, authResponse.accessToken);
@@ -211,7 +221,8 @@ export default class Facebook {
   getUserID(callback) {
     this.getTokenDetail((err, authResponse) => {
       if (err) {
-        return callback(err);
+        callback(err);
+        return;
       }
 
       callback(null, authResponse.userID);
@@ -221,7 +232,8 @@ export default class Facebook {
   sendInvite(to, options, callback) {
     this.whenReady((err, facebook) => {
       if (err) {
-        return callback(err);
+        callback(err);
+        return;
       }
 
       window.FB.ui({
@@ -240,7 +252,8 @@ export default class Facebook {
 
   postAction(ogNamespace, ogAction, ogObject, ogObjectUrl, noFeedStory, callback) {
     if (typeof noFeedStory === 'function') {
-      return this.postAction(ogNamespace, ogAction, ogObject, ogObjectUrl, false, noFeedStory);
+      this.postAction(ogNamespace, ogAction, ogObject, ogObjectUrl, false, noFeedStory);
+      return;
     }
 
     let url = `/me/${ogNamespace}:${ogAction}?${ogObject}=${encodeURIComponent(ogObjectUrl)}`;
@@ -251,7 +264,8 @@ export default class Facebook {
 
     this.whenReady((err, facebook) => {
       if (err) {
-        return callback(err);
+        callback(err);
+        return;
       }
 
       api(url, Method.POST, response => {
@@ -263,12 +277,14 @@ export default class Facebook {
   getPermissions(callback) {
     this.whenReady(err => {
       if (err) {
-        return callback(err);
+        callback(err);
+        return;
       }
 
       api('/me/permissions', response => {
         if (!response || !response.data[0]) {
-          return callback(new Error('Response is undefined'));
+          callback(new Error('Response is undefined'));
+          return;
         }
 
         const perms = response.data[0];
@@ -280,7 +296,8 @@ export default class Facebook {
   hasPermissions(permissions, callback) {
     this.getPermissions((err, userPermissions) => {
       if (err) {
-        return callback(err);
+        callback(err);
+        return;
       }
 
       for (const index in permissions) {
@@ -291,18 +308,20 @@ export default class Facebook {
         const permission = permissions[index];
 
         if (!userPermissions[permission]) {
-          return callback(null, false, userPermissions);
+          callback(null, false, userPermissions);
+          return;
         }
       }
 
-      return callback(null, true, userPermissions);
+      callback(null, true, userPermissions);
     });
   }
 
   subscribe(what, callback) {
     this.whenReady(err => {
       if (err) {
-        return callback(err);
+        callback(err);
+        return;
       }
 
       window.FB.Event.subscribe(what, (href, widget) => {
@@ -314,7 +333,8 @@ export default class Facebook {
   parse(parentNode, callback) {
     this.whenReady(err => {
       if (err) {
-        return callback(err);
+        callback(err);
+        return;
       }
 
       if (typeof parentNode === 'undefined') {
@@ -329,12 +349,14 @@ export default class Facebook {
 
   getProfile(params, callback) {
     if (typeof params === 'function') {
-      return this.getProfile({}, params);
+      this.getProfile({}, params);
+      return;
     }
 
     this.whenReady((err, facebook) => {
       if (err) {
-        return callback(err);
+        callback(err);
+        return;
       }
 
       api('/me', Method.GET, params, (response) => {
@@ -346,7 +368,8 @@ export default class Facebook {
   getRequests(callback) {
     this.whenReady((err, facebook) => {
       if (err) {
-        return callback(err);
+        callback(err);
+        return;
       }
 
       api('/me/apprequests', response => {
@@ -358,7 +381,8 @@ export default class Facebook {
   removeRequest(requestID, callback) {
     this.whenReady((err, facebook) => {
       if (err) {
-        return callback(err);
+        callback(err);
+        return;
       }
 
       api(requestID, Method.DELETE, response => {
@@ -370,7 +394,8 @@ export default class Facebook {
   setAutoGrow(callback) {
     this.whenReady(err => {
       if (err) {
-        return callback(err);
+        callback(err);
+        return;
       }
 
       window.FB.Canvas.setAutoGrow();
@@ -380,12 +405,14 @@ export default class Facebook {
 
   paySimple(productUrl, quantity, callback) {
     if (typeof quantity === 'function') {
-      return this.paySimple(productUrl, 1, quantity);
+      this.paySimple(productUrl, 1, quantity);
+      return;
     }
 
     this.whenReady((err, facebook) => {
       if (err) {
-        return callback(err);
+        callback(err);
+        return;
       }
 
       window.FB.ui({
@@ -402,7 +429,8 @@ export default class Facebook {
   pay(productUrl, options, callback) {
     this.whenReady((err, facebook) => {
       if (err) {
-        return callback(err);
+        callback(err);
+        return;
       }
 
       window.FB.ui({

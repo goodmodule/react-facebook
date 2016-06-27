@@ -10,6 +10,9 @@ export default class Like extends Component {
     action: PropTypes.string.isRequired,
     share: PropTypes.bool.isRequired,
     className: PropTypes.string,
+    children: PropTypes.node,
+    width: PropTypes.number,
+    kidDirectedSite: PropTypes.bool.isRequired,
   };
 
   static contextTypes = {
@@ -22,7 +25,8 @@ export default class Like extends Component {
     showFaces: false,
     colorScheme: 'light', // dark
     action: 'like', // recommend
-    share: true,
+    share: false,
+    kidDirectedSite: false,
   };
 
   componentDidMount() {
@@ -31,7 +35,7 @@ export default class Like extends Component {
         return;
       }
 
-      facebook.parse(this.refs.like, () => {});
+      facebook.parse(this.refs.container, () => {});
     });
   }
 
@@ -40,18 +44,34 @@ export default class Like extends Component {
   }
 
   render() {
-    const content = `
-      <fb:like
-        href=${this.props.href}
-        layout=${this.props.layout}
-        color-scheme=${this.props.colorScheme}
-        action=${this.props.action}
-        show-faces=${this.props.showFaces}
-        share=${this.props.share}></fb:like>
-    `;
+    const {
+      className,
+      href,
+      layout,
+      colorScheme,
+      action,
+      showFaces,
+      share,
+      children,
+      width,
+      kidDirectedSite,
+    } = this.props;
 
     return (
-      <div className={this.props.className} ref="like" dangerouslySetInnerHTML={{__html: content}} />
+      <div className={className} ref="container">
+        <div
+          data-href={href}
+          data-layout={layout}
+          data-colorscheme={colorScheme}
+          data-action={action}
+          data-show-faces={showFaces}
+          data-share={share}
+          data-width={width}
+          data-kid-directed-site={kidDirectedSite}
+        >
+          {children}
+        </div>
+      </div>
     );
   }
 }

@@ -1,46 +1,45 @@
-import React from 'react';
+import React, { Component, PropTypes } from 'react';
 import FacebookProvider from './FacebookProvider';
 
-import ReactDom  from 'react-dom';
+export default class Comments extends Component {
+  static contextTypes = {
+    ...FacebookProvider.childContextTypes,
+  };
 
-class Comments extends React.Component {
+  static propTypes = {
+    href: PropTypes.string.isRequired,
+    children: PropTypes.node,
+    className: PropTypes.string,
+  };
 
+  static defaultProps = {
+    href: 'http://www.facebook.com',
+  };
 
-    static contextTypes = {
-        ...FacebookProvider.childContextTypes
-    };
+  componentDidMount() {
+    this.context.facebook.whenReady((err, facebook) => {
+      if (err) {
+        return;
+      }
+      facebook.parse(this.refs.container, () => {});
+    });
+  }
 
-    static defaultProps = {
-        href        : 'http://www.facebook.com'
-    };
+  shouldComponentUpdate() {
+    return false;
+  }
 
-    componentDidMount() {
-        var me = this;
-        this.context.facebook.whenReady(( err, facebook ) => {
-            if ( err ) {
-                return;
-            }
-            facebook.parse(ReactDom.findDOMNode(me.refs.box), () => {
-            });
-        });
-    }
+  render() {
+    const { href, children } = this.props;
 
-    shouldComponentUpdate() {
-        return false;
-    }
-
-    render() {
-
-        var me    = this,
-            props = {};
-        Object.keys(Comments.defaultProps).forEach(( v )=>(props["data-" + v] = me.props[v]));
-
-        return (
-            <div ref="box">
-                <span className="fb-comments-count" {...props}>0</span> Comment(s)
-            </div>
-        )
-    }
-
-};
-export default Comments;
+    return (
+      <span
+        ref="container"
+        className="fb-comments-count"
+        data-href={href}
+      >
+        {children}
+      </span>
+    );
+  }
+}

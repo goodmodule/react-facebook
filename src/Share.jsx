@@ -64,9 +64,11 @@ export default class Share extends Component {
 
     return (
       <div className={className}>
-        <button type="button"
+        <button
+          type="button"
           className={buttonClassName}
-          onClick={this.handleClick}>
+          onClick={this.handleClick}
+        >
           {icon ? <i className={iconClassName} /> : null}
           {this.props.children}
         </button>

@@ -5,6 +5,8 @@ export default class EmbeddedPost extends Component {
   static propTypes = {
     href: PropTypes.string.isRequired,
     width: PropTypes.number.isRequired,
+    showText: PropTypes.bool.isRequired,
+    children: PropTypes.node,
     className: PropTypes.string,
   };
 
@@ -13,6 +15,7 @@ export default class EmbeddedPost extends Component {
   static defaultProps = {
     href: 'http://www.facebook.com',
     width: 500, // 350 - 750
+    showText: false,
   };
 
   componentDidMount() {
@@ -21,7 +24,7 @@ export default class EmbeddedPost extends Component {
         return;
       }
 
-      facebook.parse(this.refs.fbContent, () => {});
+      facebook.parse(this.refs.container, () => {});
     });
   }
 
@@ -30,17 +33,19 @@ export default class EmbeddedPost extends Component {
   }
 
   render() {
-    const { href, width, className } = this.props;
-
-    const content = `
-      <fb:post
-        href=${href}
-        width=${width}>
-      </fb:post>
-    `;
+    const { href, width, showText, className, children } = this.props;
 
     return (
-      <div className={className} ref="fbContent" dangerouslySetInnerHTML={{__html: content}} />
+      <div className={className} ref="container">
+        <div
+          className="fb-post"
+          data-href={href}
+          data-width={width}
+          data-show-text={showText}
+        >
+          {children}
+        </div>
+      </div>
     );
   }
 }
