@@ -16,6 +16,8 @@
 - Login button (provide user profile and signed request)
 - Like button
 - Share button
+- Comments
+- CommentsCount
 - Embedded post
 
 # Support us
@@ -53,6 +55,40 @@ export default class Example extends Component {
     return (
       <FacebookProvider appID="123456789">
         <Share href="http://www.facebook.com" />
+      </FacebookProvider>
+    );
+  }
+}
+```
+
+## Comments
+
+```js
+import React, { Component} from 'react';
+import FacebookProvider, { Comments } from 'react-facebook';
+
+export default class Example extends Component {
+  render() {
+    return (
+      <FacebookProvider appID="123456789">
+        <Comments href="http://www.facebook.com" />
+      </FacebookProvider>
+    );
+  }
+}
+```
+
+## Comments count
+
+```js
+import React, { Component} from 'react';
+import FacebookProvider, { CommentsCount } from 'react-facebook';
+
+export default class Example extends Component {
+  render() {
+    return (
+      <FacebookProvider appID="123456789">
+        <CommentsCount href="http://www.facebook.com" /> Comments
       </FacebookProvider>
     );
   }

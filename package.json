@@ -1,7 +1,7 @@
 {
   "name": "react-facebook",
-  "version": "2.0.2",
-  "description": "Facebook components like a Login button, Like, Share or Embedded Post",
+  "version": "2.0.3",
+  "description": "Facebook components like a Login button, Like, Share, Comments or Embedded Post",
   "author": {
     "name": "Zlatko Fedor",
     "email": "zfedor@gmail.com",
@@ -21,7 +21,9 @@
     "share button",
     "like",
     "like button",
-    "embeded posty"
+    "embeded post",
+    "comment",
+    "comments"
   ],
   "private": false,
   "license": "MIT",
