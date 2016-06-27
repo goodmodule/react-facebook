@@ -60,6 +60,7 @@ export default class Like extends Component {
     return (
       <div className={className} ref="container">
         <div
+          className="fb-like"
           data-href={href}
           data-layout={layout}
           data-colorscheme={colorScheme}

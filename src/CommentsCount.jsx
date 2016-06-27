@@ -35,10 +35,13 @@ export default class Comments extends Component {
     return (
       <span
         ref="container"
-        className="fb-comments-count"
-        data-href={href}
       >
-        {children}
+        <span
+          className="fb-comments-count"
+          data-href={href}
+        >
+          {children}
+        </span>
       </span>
     );
   }
