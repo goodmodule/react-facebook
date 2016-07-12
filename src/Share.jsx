@@ -1,7 +1,12 @@
 import React, { Component, PropTypes } from 'react';
 import qs from 'qs';
+import Provider from './FacebookProvider';
 
 export default class Share extends Component {
+  static contextTypes = {
+    ...Provider.childContextTypes,
+  };
+
   static propTypes = {
     href: PropTypes.string.isRequired,
     target: PropTypes.string.isRequired,
