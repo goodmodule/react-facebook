@@ -1,10 +1,10 @@
 import React, { Component, PropTypes } from 'react';
+import qs from 'qs';
 
 export default class Share extends Component {
   static propTypes = {
     href: PropTypes.string.isRequired,
     target: PropTypes.string.isRequired,
-    text: PropTypes.string.isRequired,
     width: PropTypes.number.isRequired,
     height: PropTypes.number.isRequired,
     children: PropTypes.node,
@@ -12,12 +12,18 @@ export default class Share extends Component {
     buttonClassName: PropTypes.string,
     iconClassName: PropTypes.string,
     icon: PropTypes.bool,
+    hashtag: PropTypes.string,
+    quote: PropTypes.string,
+    mobileIframe: PropTypes.bool,
+    display: PropTypes.string.isRequired,
+    appId: PropTypes.string,
+    redirectURI: PropTypes.string,
   };
 
   static defaultProps = {
     href: 'http://www.facebook.com',
     target: '_blank',
-    text: '',
+    display: 'popup',
     width: 626,
     height: 436,
     buttonClassName: 'btn btn-lg',
@@ -32,13 +38,26 @@ export default class Share extends Component {
   }
 
   getSharerHref() {
-    const { href, text } = this.props;
-    const url = `//www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(href)}&display=popup&ref=plugin&src=share_button`;
-    if (!text) {
-      return url;
-    }
+    const { facebook } = this.context;
+    const {
+      href,
+      display,
+      appId = facebook.props.appID,
+      hashtag,
+      redirectURI,
+      quote,
+      mobileIframe,
+    } = this.props;
 
-    return `url&t=${encodeURIComponent(text)}`;
+    return '//www.facebook.com/dialog/share?' + qs.stringify({
+      href,
+      display,
+      app_id: appId,
+      hashtag,
+      redirect_uri: redirectURI,
+      quote,
+      mobile_iframe: mobileIframe,
+    });
   }
 
   handleClick(evn) {

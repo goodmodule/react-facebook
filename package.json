@@ -1,6 +1,6 @@
 {
   "name": "react-facebook",
-  "version": "2.0.3",
+  "version": "2.0.4",
   "description": "Facebook components like a Login button, Like, Share, Comments or Embedded Post",
   "author": {
     "name": "Zlatko Fedor",
@@ -40,7 +40,8 @@
   },
   "dependencies": {
     "keymirror": "^0.1.1",
-    "react-spinner-children": "^1.0.5"
+    "react-spinner-children": "^1.0.5",
+    "qs": "^6.2.0"
   },
   "devDependencies": {
     "babel-cli": "^6.10.1",
