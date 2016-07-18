@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import qs from 'qs';
 import Provider from './FacebookProvider';
+import getCurrentHref from './utils/getCurrentHref';
 
 export default class Share extends Component {
   static contextTypes = {
@@ -8,7 +9,7 @@ export default class Share extends Component {
   };
 
   static propTypes = {
-    href: PropTypes.string.isRequired,
+    href: PropTypes.string,
     target: PropTypes.string.isRequired,
     width: PropTypes.number.isRequired,
     height: PropTypes.number.isRequired,
@@ -26,7 +27,6 @@ export default class Share extends Component {
   };
 
   static defaultProps = {
-    href: 'http://www.facebook.com',
     target: '_blank',
     display: 'popup',
     width: 626,
@@ -45,7 +45,7 @@ export default class Share extends Component {
   getSharerHref() {
     const { facebook } = this.context;
     const {
-      href,
+      href = getCurrentHref(),
       display,
       appId = facebook.props.appID,
       hashtag,

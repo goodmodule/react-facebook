@@ -1,7 +1,7 @@
-import React, { Component, PropTypes } from 'react';
-import Facebook from './FacebookProvider';
+import React, { PropTypes } from 'react';
+import Parser from './Parser';
 
-export default class EmbeddedPost extends Component {
+export default class EmbeddedPost extends Parser {
   static propTypes = {
     href: PropTypes.string.isRequired,
     width: PropTypes.number.isRequired,
@@ -10,7 +10,9 @@ export default class EmbeddedPost extends Component {
     className: PropTypes.string,
   };
 
-  static contextTypes = Facebook.childContextTypes;
+  static contextTypes = {
+    ...Parser.contextTypes,
+  };
 
   static defaultProps = {
     href: 'http://www.facebook.com',
@@ -18,33 +20,17 @@ export default class EmbeddedPost extends Component {
     showText: false,
   };
 
-  componentDidMount() {
-    this.context.facebook.whenReady((err, facebook) => {
-      if (err) {
-        return;
-      }
-
-      facebook.parse(this.refs.container, () => {});
-    });
-  }
-
-  shouldComponentUpdate() {
-    return false;
-  }
-
-  render() {
-    const { href, width, showText, className, children } = this.props;
+  renderComponent() {
+    const { href, width, showText, children } = this.props;
 
     return (
-      <div className={className} ref="container">
-        <div
-          className="fb-post"
-          data-href={href}
-          data-width={width}
-          data-show-text={showText}
-        >
-          {children}
-        </div>
+      <div
+        className="fb-post"
+        data-href={href}
+        data-width={width}
+        data-show-text={showText}
+      >
+        {children}
       </div>
     );
   }

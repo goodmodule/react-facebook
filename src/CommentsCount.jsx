@@ -1,47 +1,27 @@
-import React, { Component, PropTypes } from 'react';
-import FacebookProvider from './FacebookProvider';
+import React, { PropTypes } from 'react';
+import Parser from './Parser';
+import getCurrentHref from './utils/getCurrentHref';
 
-export default class Comments extends Component {
+export default class CommentsCount extends Parser {
   static contextTypes = {
-    ...FacebookProvider.childContextTypes,
+    ...Parser.contextTypes,
   };
 
   static propTypes = {
-    href: PropTypes.string.isRequired,
+    ...Parser.propTypes,
+    href: PropTypes.string,
     children: PropTypes.node,
-    className: PropTypes.string,
   };
 
-  static defaultProps = {
-    href: 'http://www.facebook.com',
-  };
-
-  componentDidMount() {
-    this.context.facebook.whenReady((err, facebook) => {
-      if (err) {
-        return;
-      }
-      facebook.parse(this.refs.container, () => {});
-    });
-  }
-
-  shouldComponentUpdate() {
-    return false;
-  }
-
-  render() {
-    const { href, children } = this.props;
+  renderComponent() {
+    const { href = getCurrentHref(), children } = this.props;
 
     return (
       <span
-        ref="container"
+        className="fb-comments-count"
+        data-href={href}
       >
-        <span
-          className="fb-comments-count"
-          data-href={href}
-        >
-          {children}
-        </span>
+        {children}
       </span>
     );
   }

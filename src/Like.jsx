@@ -1,26 +1,26 @@
-import React, { Component, PropTypes } from 'react';
-import FacebookProvider from './FacebookProvider';
+import React, { PropTypes } from 'react';
+import Parser from './Parser';
+import getCurrentHref from './utils/getCurrentHref';
 
-export default class Like extends Component {
+export default class Like extends Parser {
   static propTypes = {
-    href: PropTypes.string.isRequired,
+    ...Parser.propTypes,
+    href: PropTypes.string,
     layout: PropTypes.string.isRequired,
     showFaces: PropTypes.bool.isRequired,
     colorScheme: PropTypes.string.isRequired,
     action: PropTypes.string.isRequired,
     share: PropTypes.bool.isRequired,
-    className: PropTypes.string,
     children: PropTypes.node,
     width: PropTypes.number,
     kidDirectedSite: PropTypes.bool.isRequired,
   };
 
   static contextTypes = {
-    ...FacebookProvider.childContextTypes,
+    ...Parser.contextTypes,
   };
 
   static defaultProps = {
-    href: 'http://www.facebook.com',
     layout: 'standard', // standard, button_count, button or box_count
     showFaces: false,
     colorScheme: 'light', // dark
@@ -29,24 +29,9 @@ export default class Like extends Component {
     kidDirectedSite: false,
   };
 
-  componentDidMount() {
-    this.context.facebook.whenReady((err, facebook) => {
-      if (err) {
-        return;
-      }
-
-      facebook.parse(this.refs.container, () => {});
-    });
-  }
-
-  shouldComponentUpdate() {
-    return false;
-  }
-
-  render() {
+  renderComponent() {
     const {
-      className,
-      href,
+      href = getCurrentHref(),
       layout,
       colorScheme,
       action,
@@ -58,20 +43,18 @@ export default class Like extends Component {
     } = this.props;
 
     return (
-      <div className={className} ref="container">
-        <div
-          className="fb-like"
-          data-href={href}
-          data-layout={layout}
-          data-colorscheme={colorScheme}
-          data-action={action}
-          data-show-faces={showFaces}
-          data-share={share}
-          data-width={width}
-          data-kid-directed-site={kidDirectedSite}
-        >
-          {children}
-        </div>
+      <div
+        className="fb-like"
+        data-href={href}
+        data-layout={layout}
+        data-colorscheme={colorScheme}
+        data-action={action}
+        data-show-faces={showFaces}
+        data-share={share}
+        data-width={width}
+        data-kid-directed-site={kidDirectedSite}
+      >
+        {children}
       </div>
     );
   }
