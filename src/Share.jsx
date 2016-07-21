@@ -87,16 +87,7 @@ export default class Share extends Component {
     const { className, buttonClassName, iconClassName, icon } = this.props;
 
     return (
-      <div className={className}>
-        <button
-          type="button"
-          className={buttonClassName}
-          onClick={this.handleClick}
-        >
-          {icon ? <i className={iconClassName} /> : null}
-          {this.props.children}
-        </button>
-      </div>
+      React.cloneElement(this.props.children, {onClick: this.handleClick})
     );
   }
 }
