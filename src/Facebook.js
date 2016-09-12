@@ -38,6 +38,7 @@ function api(path, method, params, callback) {
 
 export default class Facebook {
   constructor(options = {}) {
+    this.domain = options.domain || 'connect.facebook.net';
     this._appID = options.appID || null;
     this._version = options.version || 'v2.5';
     this._cookie = options.cookie || false;
@@ -76,7 +77,7 @@ export default class Facebook {
 
     const js = document.createElement('script');
     js.id = 'facebook-jssdk';
-    js.src = `//connect.facebook.net/${this._language}/sdk.js`;
+    js.src = `//${this.domain}/${this._language}/sdk.js`;
 
     fjs.parentNode.insertBefore(js, fjs);
   }

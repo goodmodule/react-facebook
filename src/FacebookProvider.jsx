@@ -5,6 +5,7 @@ let facebookInstance = null;
 
 export default class Facebook extends Component {
   static propTypes = {
+    domain: PropTypes.string,
     appID: PropTypes.string.isRequired,
     version: PropTypes.string.isRequired,
     cookie: PropTypes.bool.isRequired,
@@ -39,6 +40,7 @@ export default class Facebook extends Component {
 
   whenReady(callback) {
     const {
+      domain,
       version,
       appID,
       cookie,
@@ -51,6 +53,7 @@ export default class Facebook extends Component {
 
     if (!this.facebook) {
       this.facebook = facebookInstance = facebookInstance || new FB({
+        domain,
         appID,
         version,
         cookie,
