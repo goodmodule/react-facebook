@@ -12,7 +12,10 @@ export default class Comments extends Parser {
     href: PropTypes.string,
     numPosts: PropTypes.number.isRequired,
     orderBy: PropTypes.string.isRequired,
-    width: PropTypes.number.isRequired,
+    width: PropTypes.oneOfType([
+      PropTypes.number.isRequired,
+      PropTypes.string.isRequired
+    ]),
     colorScheme: PropTypes.string.isRequired,
     children: PropTypes.node,
   };
