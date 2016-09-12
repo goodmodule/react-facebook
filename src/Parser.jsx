@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
-import FacebookProvider from './FacebookProvider';
 import canUseDOM from 'can-use-dom';
+import FacebookProvider from './FacebookProvider';
 
 export default class Parser extends Component {
   static propTypes = {
@@ -21,7 +21,7 @@ export default class Parser extends Component {
         return;
       }
 
-      facebook.parse(this.refs.container, () => {});
+      facebook.parse(this.container, () => {});
     });
   }
 
@@ -33,7 +33,7 @@ export default class Parser extends Component {
     const { className } = this.props;
 
     return (
-      <div className={className} ref="container">
+      <div className={className} ref={(c) => { this.container = c; }}>
         {this.renderComponent()}
       </div>
     );

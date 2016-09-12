@@ -44,7 +44,3 @@ gulp.task('coveralls', ['test'], () => {
   return gulp.src(path.join(__dirname, 'coverage/lcov.info'))
     .pipe(coveralls());
 });
-
-gulp.doneCallback = (err) => {
-  process.exit(err ? 1 : 0);
-};

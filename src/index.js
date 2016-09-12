@@ -1,11 +1,18 @@
 import FacebookProvider from './FacebookProvider';
-import Like from './Like';
-import Share from './Share';
-import Login from './Login';
-import LoginButton from './LoginButton';
-import EmbeddedPost from './EmbeddedPost';
-import Comments from './Comments';
-import CommentsCount from './CommentsCount';
 
-export { Like, Share, Login, LoginButton, EmbeddedPost, Comments, CommentsCount };
+export Like from './Like';
+export Share from './Share';
+export ShareButton from './ShareButton';
+export Login from './Login';
+export LoginButton from './LoginButton';
+export EmbeddedPost from './EmbeddedPost';
+export Comments from './Comments';
+export CommentsCount from './CommentsCount';
+
+export LikeSize from './constants/LikeSize';
+export LikeLayout from './constants/LikeLayout';
+export ColorScheme from './constants/ColorScheme';
+export LikeAction from './constants/LikeAction';
+export CommentsOrderBy from './constants/CommentsOrderBy';
+
 export default FacebookProvider;

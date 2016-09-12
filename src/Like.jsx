@@ -1,6 +1,10 @@
 import React, { PropTypes } from 'react';
 import Parser from './Parser';
 import getCurrentHref from './utils/getCurrentHref';
+import LikeSize from './constants/LikeSize';
+import LikeLayout from './constants/LikeLayout';
+import ColorScheme from './constants/ColorScheme';
+import LikeAction from './constants/LikeAction';
 
 export default class Like extends Parser {
   static propTypes = {
@@ -12,7 +16,11 @@ export default class Like extends Parser {
     action: PropTypes.string.isRequired,
     share: PropTypes.bool.isRequired,
     children: PropTypes.node,
-    width: PropTypes.number,
+    width: PropTypes.oneOfType([
+      PropTypes.number.isRequired,
+      PropTypes.string.isRequired,
+    ]),
+    size: PropTypes.string,
     kidDirectedSite: PropTypes.bool.isRequired,
   };
 
@@ -21,11 +29,12 @@ export default class Like extends Parser {
   };
 
   static defaultProps = {
-    layout: 'standard', // standard, button_count, button or box_count
+    layout: LikeLayout.STANDARD,
     showFaces: false,
-    colorScheme: 'light', // dark
-    action: 'like', // recommend
+    colorScheme: ColorScheme.LIGHT,
+    action: LikeAction.LIKE,
     share: false,
+    size: LikeSize.SMALL,
     kidDirectedSite: false,
   };
 
@@ -39,6 +48,7 @@ export default class Like extends Parser {
       share,
       children,
       width,
+      size,
       kidDirectedSite,
     } = this.props;
 
@@ -52,6 +62,7 @@ export default class Like extends Parser {
         data-show-faces={showFaces}
         data-share={share}
         data-width={width}
+        data-size={size}
         data-kid-directed-site={kidDirectedSite}
       >
         {children}

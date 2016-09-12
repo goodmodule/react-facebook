@@ -4,7 +4,10 @@ import Parser from './Parser';
 export default class EmbeddedPost extends Parser {
   static propTypes = {
     href: PropTypes.string.isRequired,
-    width: PropTypes.number.isRequired,
+    width: PropTypes.oneOfType([
+      PropTypes.number.isRequired,
+      PropTypes.string.isRequired
+    ]),
     showText: PropTypes.bool.isRequired,
     children: PropTypes.node,
     className: PropTypes.string,

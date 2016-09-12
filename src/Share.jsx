@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import qs from 'qs';
+import { autobind } from 'core-decorators';
 import Provider from './FacebookProvider';
 import getCurrentHref from './utils/getCurrentHref';
 
@@ -10,14 +11,9 @@ export default class Share extends Component {
 
   static propTypes = {
     href: PropTypes.string,
-    target: PropTypes.string.isRequired,
     width: PropTypes.number.isRequired,
     height: PropTypes.number.isRequired,
     children: PropTypes.node,
-    className: PropTypes.string,
-    buttonClassName: PropTypes.string,
-    iconClassName: PropTypes.string,
-    icon: PropTypes.bool,
     hashtag: PropTypes.string,
     quote: PropTypes.string,
     mobileIframe: PropTypes.bool,
@@ -27,7 +23,6 @@ export default class Share extends Component {
   };
 
   static defaultProps = {
-    target: '_blank',
     display: 'popup',
     width: 626,
     height: 436,
@@ -35,12 +30,6 @@ export default class Share extends Component {
     iconClassName: 'fa fa-facebook pull-left',
     icon: true,
   };
-
-  constructor(props, context) {
-    super(props, context);
-
-    this.handleClick = this.handleClick.bind(this);
-  }
 
   getSharerHref() {
     const { facebook } = this.context;
@@ -65,6 +54,7 @@ export default class Share extends Component {
     });
   }
 
+  @autobind
   handleClick(evn) {
     evn.preventDefault();
     evn.stopPropagation();
@@ -75,8 +65,8 @@ export default class Share extends Component {
     const halfWidth = Math.floor(width / 2);
     const halfHeight = Math.floor(height / 2);
 
-    const left = Math.floor(window.innerWidth / 2 - halfWidth);
-    const top = Math.floor(window.innerHeight / 2 - halfHeight);
+    const left = Math.floor((window.innerWidth / 2) - halfWidth);
+    const top = Math.floor((window.innerHeight / 2) - halfHeight);
 
     const params = `status=0, width=${width}, height=${height}, top=${top}, left=${left}, toolbar=0, location=0, menubar=0, directories=0, scrollbars=0`;
 
@@ -84,10 +74,10 @@ export default class Share extends Component {
   }
 
   render() {
-    const { className, buttonClassName, iconClassName, icon } = this.props;
+    const { children } = this.props;
 
     return (
-      React.cloneElement(this.props.children, {onClick: this.handleClick})
+      React.cloneElement(children, { onClick: this.handleClick })
     );
   }
 }

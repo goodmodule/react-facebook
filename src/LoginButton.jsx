@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
-import FacebookLogin from './Login';
 import Spinner from 'react-spinner-children';
+import FacebookLogin from './Login';
 
 export default class LoginButton extends Component {
   static propTypes = {

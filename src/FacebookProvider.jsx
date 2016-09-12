@@ -38,18 +38,27 @@ export default class Facebook extends Component {
   }
 
   whenReady(callback) {
-    const props = this.props;
+    const {
+      version,
+      appID,
+      cookie,
+      status,
+      xfbml,
+      language,
+      frictionlessRequests,
+      init,
+    } = this.props;
 
     if (!this.facebook) {
       this.facebook = facebookInstance = facebookInstance || new FB({
-        appID: props.appID,
-        version: props.version,
-        cookie: props.cookie,
-        status: props.status,
-        xfbml: props.xfbml,
-        language: props.language,
-        frictionlessRequests: props.frictionlessRequests,
-        init: props.init,
+        appID,
+        version,
+        cookie,
+        status,
+        xfbml,
+        language,
+        frictionlessRequests,
+        init,
       });
     }
 

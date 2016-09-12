@@ -15,9 +15,9 @@
 - Facebook provider (provide settings to child components)
 - Login button (provide user profile and signed request)
 - Like button
-- Share button
+- Share and Share button
 - Comments
-- CommentsCount
+- Comments count
 - Embedded post
 
 # Support us
@@ -54,7 +54,28 @@ export default class Example extends Component {
   render() {
     return (
       <FacebookProvider appID="123456789">
-        <Share href="http://www.facebook.com" />
+        <Share href="http://www.facebook.com">
+          <button type="button">Share</button>
+        </Share>
+      </FacebookProvider>
+    );
+  }
+}
+```
+
+## Share button
+
+You can use predefined button with bootstrap and font awesome classNames
+
+```js
+import React, { Component} from 'react';
+import FacebookProvider, { ShareButton } from 'react-facebook';
+
+export default class Example extends Component {
+  render() {
+    return (
+      <FacebookProvider appID="123456789">
+        <ShareButton href="http://www.facebook.com" />
       </FacebookProvider>
     );
   }

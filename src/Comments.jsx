@@ -1,6 +1,8 @@
 import React, { PropTypes } from 'react';
 import Parser from './Parser';
 import getCurrentHref from './utils/getCurrentHref';
+import ColorScheme from './constants/ColorScheme';
+import CommentsOrderBy from './constants/CommentsOrderBy';
 
 export default class Comments extends Parser {
   static contextTypes = {
@@ -14,7 +16,7 @@ export default class Comments extends Parser {
     orderBy: PropTypes.string.isRequired,
     width: PropTypes.oneOfType([
       PropTypes.number.isRequired,
-      PropTypes.string.isRequired
+      PropTypes.string.isRequired,
     ]),
     colorScheme: PropTypes.string.isRequired,
     children: PropTypes.node,
@@ -22,9 +24,9 @@ export default class Comments extends Parser {
 
   static defaultProps = {
     numPosts: 10,
-    orderBy: 'social', // "social", "reverse_time", or "time"
+    orderBy: CommentsOrderBy.SOCIAL,
     width: 550,
-    colorScheme: 'light',
+    colorScheme: ColorScheme.LIGHT,
   };
 
   renderComponent() {

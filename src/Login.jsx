@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import { autobind } from 'core-decorators';
 import { LoginStatus } from './Facebook';
 import FacebookProvider from './FacebookProvider';
 
@@ -33,8 +34,6 @@ export default class Login extends Component {
     super(props, context);
 
     this.state = {};
-
-    this.handleClick = this.handleClick.bind(this);
   }
 
   componentDidMount() {
@@ -66,7 +65,8 @@ export default class Login extends Component {
     return working || !facebook;
   }
 
-  handleClick() {
+  @autobind
+  onClick() {
     const isWorking = this.isWorking();
     if (isWorking) {
       return;
@@ -119,7 +119,7 @@ export default class Login extends Component {
     const { className, children } = this.props;
 
     return (
-      <div className={className} onClick={this.handleClick}>
+      <div className={className} onClick={this.onClick}>
         {children}
       </div>
     );

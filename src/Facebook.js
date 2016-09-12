@@ -30,10 +30,10 @@ function api(path, method, params, callback) {
   const FB = window.FB;
   if (!FB) {
     callback(new Error('FB is not initialized'));
-    return void 0;
+    return undefined;
   }
 
-  FB.api(path, method, params, callback);
+  return FB.api(path, method, params, callback);
 }
 
 export default class Facebook {
