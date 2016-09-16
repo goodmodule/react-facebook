@@ -47,6 +47,7 @@ export default class Comments extends Parser {
         data-href={href}
         data-order-by={orderBy}
         data-width={width}
+        data-skin={colorScheme}
       >
         {children}
       </div>
