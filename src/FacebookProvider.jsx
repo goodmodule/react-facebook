@@ -1,4 +1,4 @@
-import { Component, PropTypes, Children } from 'react';
+import { Component, PropTypes } from 'react';
 import FB from './Facebook';
 
 let facebookInstance = null;
@@ -72,6 +72,6 @@ export default class Facebook extends Component {
   }
 
   render() {
-    return Children.only(this.props.children);
+    return this.props.children;
   }
 }
