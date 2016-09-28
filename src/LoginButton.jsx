@@ -32,7 +32,11 @@ export default class LoginButton extends Component {
     };
   }
 
-  handleWorking = (isWorking) => {
+  onReady = () => {
+    this.setState({ isWorking: false });
+  }
+
+  onWorking = (isWorking = false) => {
     this.setState({ isWorking });
   }
 
@@ -53,8 +57,8 @@ export default class LoginButton extends Component {
 
     return (
       <FacebookLogin
-        onReady={() => this.handleWorking(false)}
-        onWorking={this.handleWorking}
+        onReady={this.onReady}
+        onWorking={this.onWorking}
         {...this.props}
       >
         <button

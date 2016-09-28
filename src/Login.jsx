@@ -1,8 +1,6 @@
-import React, { Component, PropTypes } from 'react';
-import { autobind } from 'core-decorators';
+import React, { Component, PropTypes, cloneElement } from 'react';
 import { LoginStatus } from './Facebook';
 import FacebookProvider from './FacebookProvider';
-
 
 export default class Login extends Component {
   static propTypes = {
@@ -11,10 +9,9 @@ export default class Login extends Component {
     onSubmit: PropTypes.func.isRequired,
     onReady: PropTypes.func,
     onWorking: PropTypes.func,
-    children: PropTypes.node,
+    children: PropTypes.node.isRequired,
     returnScopes: PropTypes.bool,
     rerequest: PropTypes.bool,
-    className: PropTypes.string,
   };
 
   static contextTypes = {
@@ -27,7 +24,6 @@ export default class Login extends Component {
       'name', 'locale', 'gender', 'timezone', 'verified', 'link'],
     returnScopes: false,
     rerequest: false,
-    className: 'facebook-btn',
   };
 
   constructor(props, context) {
@@ -51,22 +47,10 @@ export default class Login extends Component {
     });
   }
 
-  setWorking(working) {
-    this.setState({ working });
+  onClick = (evn) => {
+    evn.stopPropagation();
+    evn.preventDefault();
 
-    if (this.props.onWorking) {
-      this.props.onWorking(working);
-    }
-  }
-
-  isWorking() {
-    const { working, facebook } = this.state;
-
-    return working || !facebook;
-  }
-
-  @autobind
-  onClick() {
     const isWorking = this.isWorking();
     if (isWorking) {
       return;
@@ -115,13 +99,23 @@ export default class Login extends Component {
     });
   }
 
-  render() {
-    const { className, children } = this.props;
+  setWorking(working) {
+    this.setState({ working });
 
-    return (
-      <div className={className} onClick={this.onClick}>
-        {children}
-      </div>
-    );
+    if (this.props.onWorking) {
+      this.props.onWorking(working);
+    }
+  }
+
+  isWorking() {
+    const { working, facebook } = this.state;
+
+    return working || !facebook;
+  }
+
+  render() {
+    const { children } = this.props;
+
+    return cloneElement(children, { onClick: this.onClick });
   }
 }
