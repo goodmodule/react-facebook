@@ -1,7 +1,5 @@
-import keymirror from 'keymirror';
-
-export default keymirror({
+export default {
   SOCIAL: 'social',
   REVERSE_TIME: 'reverse_time',
   TIME: 'time',
-});
+};

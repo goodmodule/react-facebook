@@ -1,6 +1,4 @@
-import keymirror from 'keymirror';
-
-export default keymirror({
+export default {
   SMALL: 'small',
   LARGE: 'large',
-});
+};

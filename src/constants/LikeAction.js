@@ -1,6 +1,4 @@
-import keymirror from 'keymirror';
-
-export default keymirror({
+export default {
   LIKE: 'like',
   RECOMMEND: 'recommend',
-});
+};
