@@ -6,7 +6,7 @@ export default class Login extends Component {
   static propTypes = {
     scope: PropTypes.string.isRequired,
     fields: PropTypes.array.isRequired,
-    onSubmit: PropTypes.func.isRequired,
+    onResponse: PropTypes.func.isRequired,
     onReady: PropTypes.func,
     onWorking: PropTypes.func,
     children: PropTypes.node.isRequired,
@@ -35,7 +35,7 @@ export default class Login extends Component {
   componentDidMount() {
     this.context.facebook.whenReady((err, facebook) => {
       if (err) {
-        this.props.onSubmit(err);
+        this.props.onResponse(err);
         return;
       }
 
@@ -58,7 +58,7 @@ export default class Login extends Component {
 
     this.setWorking(true);
 
-    const { scope, fields, onSubmit, returnScopes, rerequest } = this.props;
+    const { scope, fields, onResponse, returnScopes, rerequest } = this.props;
     const facebook = this.state.facebook;
     const loginQpts = { scope };
 
@@ -73,13 +73,13 @@ export default class Login extends Component {
     facebook.login(loginQpts, (err, loginStatus) => {
       if (err) {
         this.setWorking(false);
-        onSubmit(err);
+        onResponse(err);
         return;
       }
 
       if (loginStatus !== LoginStatus.AUTHORIZED) {
         this.setWorking(false);
-        onSubmit(new Error('Unauthorized user'));
+        onResponse(new Error('Unauthorized user'));
         return;
       }
 
@@ -87,14 +87,11 @@ export default class Login extends Component {
         this.setWorking(false);
 
         if (err2) {
-          onSubmit(err2);
+          onResponse(err2);
           return;
         }
 
-        onSubmit(null, {
-          profile: data.profile,
-          signedRequest: data.tokenDetail.signedRequest,
-        });
+        onResponse(null, data);
       });
     });
   }
