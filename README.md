@@ -19,6 +19,7 @@
 - Comments
 - Comments count
 - Embedded post
+- Page
 
 # Support us
 
