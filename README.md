@@ -43,7 +43,6 @@ export default class Example extends Component {
 }
 ```
 
-
 ## Share post
 
 ```js
@@ -116,7 +115,6 @@ export default class Example extends Component {
 }
 ```
 
-
 ## Login
 
 ```js
@@ -124,7 +122,7 @@ import React, { Component} from 'react';
 import FacebookProvider, { Login } from 'react-facebook';
 
 export default class Example extends Component {
-  onFacebookSubmit(data, user_data) {
+  onFacebookResponse(data, user_data) {
     console.log(data);
     console.log(user_data);
   }
@@ -132,13 +130,12 @@ export default class Example extends Component {
   render() {
     return (
       <FacebookProvider appID="123456789">
-        <Login scope="email" onSubmit={this.onFacebookSubmit.bind(this)} children="Log in with Facebook"/>
+        <Login scope="email" Response={this.onFacebookResponse.bind(this)} children="Log in with Facebook" />
       </FacebookProvider>
     );
   }
 }
 ```
-
 
 ## Embedded post
 
