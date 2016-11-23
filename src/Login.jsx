@@ -33,18 +33,24 @@ export default class Login extends Component {
   }
 
   componentDidMount() {
-    this.context.facebook.whenReady((err, facebook) => {
-      if (err) {
-        this.props.onResponse(err);
-        return;
-      }
+    this.context.facebook.whenReady(this.onReady);
+  }
 
-      this.setState({ facebook });
+  componentWillUnmount() {
+    this.context.facebook.dismiss(this.onReady);
+  }
 
-      if (this.props.onReady) {
-        this.props.onReady();
-      }
-    });
+  onReady = (err, facebook) => {
+    if (err) {
+      this.props.onResponse(err);
+      return;
+    }
+
+    this.setState({ facebook });
+
+    if (this.props.onReady) {
+      this.props.onReady();
+    }
   }
 
   onClick = (evn) => {
@@ -94,7 +100,7 @@ export default class Login extends Component {
         onResponse(null, data);
       });
     });
-  }
+  };
 
   setWorking(working) {
     this.setState({ working });
