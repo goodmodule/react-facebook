@@ -71,6 +71,12 @@ export default class Facebook extends Component {
     }
   }
 
+  dismiss(callback) {
+    if (this.facebook) {
+      this.facebook.dismiss(callback);
+    }
+  }
+
   render() {
     return this.props.children;
   }

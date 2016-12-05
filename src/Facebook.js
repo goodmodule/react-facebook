@@ -113,6 +113,10 @@ export default class Facebook {
     return this;
   }
 
+  dismiss(removeCallback) {
+    this._callbacks = this._callbacks.filter(callback => callback !== removeCallback);
+  }
+
   callCallbackByResponse(cb, response) {
     if (!response) {
       cb(new Error('Response is undefined'));
