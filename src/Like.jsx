@@ -9,6 +9,7 @@ import LikeAction from './constants/LikeAction';
 export default class Like extends Parser {
   static propTypes = {
     ...Parser.propTypes,
+    referral: PropTypes.string,
     href: PropTypes.string,
     layout: PropTypes.string.isRequired,
     showFaces: PropTypes.bool.isRequired,
@@ -50,11 +51,13 @@ export default class Like extends Parser {
       width,
       size,
       kidDirectedSite,
+      referral,
     } = this.props;
 
     return (
       <div
         className="fb-like"
+        data-ref={referral}
         data-href={href}
         data-layout={layout}
         data-colorscheme={colorScheme}

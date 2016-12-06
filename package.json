@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/seeden/react-facebook.git"
+    "url": "git://github.com/CherryProjects/react-facebook.git"
   },
   "keywords": [
     "react",
@@ -23,7 +23,9 @@
     "like button",
     "embeded post",
     "comment",
-    "comments"
+    "comments",
+    "feed",
+    "page"
   ],
   "private": false,
   "license": "MIT",

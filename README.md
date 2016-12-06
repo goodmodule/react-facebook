@@ -131,7 +131,9 @@ export default class Example extends Component {
   render() {
     return (
       <FacebookProvider appID="123456789">
-        <Login scope="email" onResponse={this.onFacebookResponse.bind(this)} children="Log in with Facebook" />
+        <Login scope="email" onResponse={this.onFacebookResponse.bind(this)}>
+          Login via Facebook
+        </Login>
       </FacebookProvider>
     );
   }
