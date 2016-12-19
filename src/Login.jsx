@@ -21,7 +21,7 @@ export default class Login extends Component {
   static defaultProps = {
     scope: '',
     fields: ['id', 'first_name', 'last_name', 'middle_name',
-      'name', 'locale', 'gender', 'timezone', 'verified', 'link'],
+      'name', 'email', 'locale', 'gender', 'timezone', 'verified', 'link'],
     returnScopes: false,
     rerequest: false,
   };
