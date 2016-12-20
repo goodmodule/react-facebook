@@ -1,11 +1,12 @@
 {
   "presets": [
+    ["es2015", {"loose": true}],
     "stage-0",
     "react",
-    "es2015"
   ],
   "plugins": [
     "transform-decorators-legacy",
-    "transform-class-properties"
+    "transform-class-properties",
+    "transform-proto-to-assign",
   ]
 }

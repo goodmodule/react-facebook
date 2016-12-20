@@ -25,10 +25,6 @@ export default class Like extends Parser {
     kidDirectedSite: PropTypes.bool.isRequired,
   };
 
-  static contextTypes = {
-    ...Parser.contextTypes,
-  };
-
   static defaultProps = {
     layout: LikeLayout.STANDARD,
     showFaces: false,

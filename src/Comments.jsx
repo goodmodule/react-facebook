@@ -5,10 +5,6 @@ import ColorScheme from './constants/ColorScheme';
 import CommentsOrderBy from './constants/CommentsOrderBy';
 
 export default class Comments extends Parser {
-  static contextTypes = {
-    ...Parser.contextTypes,
-  };
-
   static propTypes = {
     ...Parser.propTypes,
     href: PropTypes.string,

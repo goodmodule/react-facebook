@@ -3,10 +3,6 @@ import Parser from './Parser';
 import getCurrentHref from './utils/getCurrentHref';
 
 export default class CommentsCount extends Parser {
-  static contextTypes = {
-    ...Parser.contextTypes,
-  };
-
   static propTypes = {
     ...Parser.propTypes,
     href: PropTypes.string,

@@ -1,4 +1,4 @@
-import FacebookProvider from './FacebookProvider';
+export default from './FacebookProvider';
 
 export Like from './Like';
 export Share from './Share';
@@ -15,5 +15,3 @@ export LikeLayout from './constants/LikeLayout';
 export ColorScheme from './constants/ColorScheme';
 export LikeAction from './constants/LikeAction';
 export CommentsOrderBy from './constants/CommentsOrderBy';
-
-export default FacebookProvider;

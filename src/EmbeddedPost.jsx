@@ -6,15 +6,11 @@ export default class EmbeddedPost extends Parser {
     href: PropTypes.string.isRequired,
     width: PropTypes.oneOfType([
       PropTypes.number.isRequired,
-      PropTypes.string.isRequired
+      PropTypes.string.isRequired,
     ]),
     showText: PropTypes.bool.isRequired,
     children: PropTypes.node,
     className: PropTypes.string,
-  };
-
-  static contextTypes = {
-    ...Parser.contextTypes,
   };
 
   static defaultProps = {
