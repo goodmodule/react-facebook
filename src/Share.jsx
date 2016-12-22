@@ -55,7 +55,7 @@ export default class Share extends Component {
   }
 
   @autobind
-  handleClick(evn) {
+  onClick(evn) {
     evn.preventDefault();
     evn.stopPropagation();
 
@@ -71,13 +71,18 @@ export default class Share extends Component {
     const params = `status=0, width=${width}, height=${height}, top=${top}, left=${left}, toolbar=0, location=0, menubar=0, directories=0, scrollbars=0`;
 
     window.open(href, 'sharer', params);
+
+    const { children } = this.props;
+    if (children && children.props && children.props.onClick) {
+      children.props.onClick(evn);
+    }
   }
 
   render() {
     const { children } = this.props;
 
     return (
-      React.cloneElement(children, { onClick: this.handleClick })
+      React.cloneElement(children, { onClick: this.onClick })
     );
   }
 }
