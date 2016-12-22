@@ -1,13 +1,13 @@
 language: node_js
 node_js:
-    - iojs
-    - "4"
     - "5"
+    - "6"
+    - "7"
 script: npm test
 notifications:
     email:
         recipients:
-            - zlatkofedor@cherrysro.com
+            - zlatkofedor@cherryprojects.com
         on_success: change
         on_failure: always
 
