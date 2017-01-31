@@ -9,6 +9,7 @@ export LoginButton from './LoginButton';
 export EmbeddedPost from './EmbeddedPost';
 export Comments from './Comments';
 export CommentsCount from './CommentsCount';
+export Feed from './Feed';
 
 export LikeSize from './constants/LikeSize';
 export LikeLayout from './constants/LikeLayout';
