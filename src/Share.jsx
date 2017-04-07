@@ -1,6 +1,5 @@
 import React, { Component, PropTypes } from 'react';
 import qs from 'qs';
-import { autobind } from 'core-decorators';
 import Provider from './FacebookProvider';
 import getCurrentHref from './utils/getCurrentHref';
 
@@ -54,8 +53,7 @@ export default class Share extends Component {
     });
   }
 
-  @autobind
-  onClick(evn) {
+  onClick = (evn) => {
     evn.preventDefault();
     evn.stopPropagation();
 
