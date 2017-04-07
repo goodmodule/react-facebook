@@ -1,5 +1,4 @@
 import React, { Component, PropTypes } from 'react';
-import { autobind } from 'core-decorators';
 import qs from 'qs';
 
 import Provider from './FacebookProvider';
@@ -37,8 +36,7 @@ export default class Feed extends Component {
     icon: true,
   };
 
-  @autobind
-  onClick(evn) {
+  onClick = (evn) => {
     evn.preventDefault();
     evn.stopPropagation();
 
