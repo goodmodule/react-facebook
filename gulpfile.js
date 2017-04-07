@@ -33,7 +33,7 @@ gulp.task('test', jsxCoverage.createTask({
 gulp.task('build', () =>
   gulp.src('./src/**/*.{js,jsx}')
     .pipe(babel())
-    .pipe(gulp.dest('./dist'))
+    .pipe(gulp.dest('./lib'))
 );
 
 gulp.task('coveralls', ['test'], () => {

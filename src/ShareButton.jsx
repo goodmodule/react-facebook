@@ -7,7 +7,6 @@ export default class ShareButton extends Component {
     className: PropTypes.string,
     iconClassName: PropTypes.string,
     icon: PropTypes.bool,
-
   };
 
   static defaultProps = {

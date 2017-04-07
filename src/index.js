@@ -1,4 +1,5 @@
 export default from './FacebookProvider';
+export FacebookProvider from './FacebookProvider';
 
 export Like from './Like';
 export Share from './Share';
