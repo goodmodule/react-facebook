@@ -4,7 +4,7 @@
   "description": "Facebook components like a Login button, Like, Share, Comments or Embedded Post",
   "author": {
     "name": "Zlatko Fedor",
-    "email": "zfedor@gmail.com",
+    "email": "zfedor@cherryprojects.com",
     "url": "http://www.cherryprojects.com/"
   },
   "repository": {
@@ -44,18 +44,19 @@
     "keymirror": "^0.1.1",
     "react-spinner-children": "^1.0.5",
     "qs": "^6.4.0",
-    "can-use-dom": "^0.1.0"
+    "can-use-dom": "^0.1.0",
+    "prop-types": "^15.5.4"
   },
   "devDependencies": {
-    "babel-cli": "^6.24.0",
-    "babel-core": "^6.24.0",
-    "babel-eslint": "^7.2.1",
+    "babel-cli": "^6.24.1",
+    "babel-core": "^6.24.1",
+    "babel-eslint": "^7.2.3",
     "babel-plugin-transform-decorators-legacy": "^1.3.4",
-    "babel-plugin-transform-class-properties": "^6.23.0",
+    "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-plugin-transform-proto-to-assign": "^6.23.0",
-    "babel-preset-es2015": "^6.24.0",
-    "babel-preset-react": "^6.23.0",
-    "babel-preset-stage-0": "^6.22.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1",
     "eslint": "^3.19.0",
     "eslint-config-airbnb": "^14.1.0",
     "eslint-loader": "^1.7.1",
@@ -67,12 +68,12 @@
     "gulp-coveralls": "^0.1.4",
     "gulp-jsx-coverage": "^0.4.0",
     "gulp-util": "^3.0.8",
-    "react": "^15.4.2",
-    "react-dom": "^15.4.2",
+    "react": "^15.5.4",
+    "react-dom": "^15.5.4",
     "jest": "^19.0.2",
     "jest-cli": "^19.0.2",
-    "enzyme": "^2.8.0",
-    "react-addons-test-utils": "^15.4.2"
+    "enzyme": "^2.8.2",
+    "react-addons-test-utils": "^15.5.1"
   },
   "peerDependencies": {
     "react": "15.x"
