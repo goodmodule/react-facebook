@@ -15,7 +15,7 @@ export default class Share extends Process {
   };
 
   static defaultProps = {
-    ...Process.propTypes,
+    ...Process.defaultProps,
     href: undefined,
     hashtag: undefined,
     quote: undefined,

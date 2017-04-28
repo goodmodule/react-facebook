@@ -20,7 +20,7 @@ export default class Feed extends Process {
   };
 
   static defaultProps = {
-    ...Process.propTypes,
+    ...Process.defaultProps,
     link: undefined,
     display: 'popup',
     appId: undefined,

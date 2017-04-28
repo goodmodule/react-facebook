@@ -5,7 +5,7 @@ import FacebookProvider, { Share } from '../src';
 describe('Provider', () => {
   it('should be able to create simple instance', () => {
     const wrapper = mount(
-      <FacebookProvider appID="123456789">
+      <FacebookProvider appId="123456789">
         <span>Test</span>
       </FacebookProvider>
     );
@@ -15,8 +15,8 @@ describe('Provider', () => {
 
   it('should be able to create simple instance', (done) => {
     const wrapper = mount(
-      <FacebookProvider appID="123456789">
-        <Share popup>
+      <FacebookProvider appId="123456789">
+        <Share>
           <button type="button" onClick={done}>
             Test
           </button>

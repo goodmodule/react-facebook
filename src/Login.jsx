@@ -14,7 +14,7 @@ export default class Login extends Process {
   };
 
   static defaultProps = {
-    ...Process.propTypes,
+    ...Process.defaultProps,
     scope: '',
     fields: ['id', 'first_name', 'last_name', 'middle_name',
       'name', 'email', 'locale', 'gender', 'timezone', 'verified', 'link'],
