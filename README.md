@@ -172,14 +172,14 @@ export default class Example extends Component {
           scope="email"
           onResponse={this.handleResponse}
           onError={this.handleError}
-          render=(({ isLoading, isWorking, onClick }) => (
+          render={({ isLoading, isWorking, onClick }) => (
             <span onClick={onClick}>
               Login via Facebook
               {(isLoading || isWorking) && (
                 <span>Loading...</span>
               )}
             </span>
-          ))
+          )}
         />
       </FacebookProvider>
     );
