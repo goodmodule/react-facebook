@@ -3,23 +3,33 @@ import PropTypes from 'prop-types';
 import Parser from './Parser';
 import getCurrentHref from './utils/getCurrentHref';
 
-export default class CommentsCount extends Parser {
-  static propTypes = {
-    ...Parser.propTypes,
-    href: PropTypes.string,
-    children: PropTypes.node,
-  };
+export default function CommentsCount(props) {
+  const {
+    className,
+    href = getCurrentHref(),
+    children,
+  } = props;
 
-  renderComponent() {
-    const { href = getCurrentHref(), children } = this.props;
-
-    return (
+  return (
+    <Parser className={className}>
       <span
         className="fb-comments-count"
         data-href={href}
       >
         {children}
       </span>
-    );
-  }
+    </Parser>
+  );
 }
+
+CommentsCount.propTypes = {
+  className: PropTypes.string,
+  href: PropTypes.string,
+  children: PropTypes.node,
+};
+
+CommentsCount.defaultProps = {
+  className: undefined,
+  href: undefined,
+  children: undefined,
+};

@@ -1,6 +1,9 @@
 export default from './FacebookProvider';
 export FacebookProvider from './FacebookProvider';
 
+export Parser from './Parser';
+export InitFacebook from './InitFacebook';
+
 export Like from './Like';
 export Share from './Share';
 export ShareButton from './ShareButton';

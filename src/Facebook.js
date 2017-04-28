@@ -31,6 +31,10 @@ export default class Facebook {
     }
   }
 
+  getAppId() {
+    return this.options.appId;
+  }
+
   async init() {
     if (this.loadingPromise) {
       return this.loadingPromise;

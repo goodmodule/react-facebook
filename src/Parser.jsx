@@ -1,33 +1,23 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import canUseDOM from 'can-use-dom';
-import FacebookProvider from './FacebookProvider';
+import InitFacebook from './InitFacebook';
 
 export default class Parser extends Component {
   static propTypes = {
     className: PropTypes.string,
+    children: PropTypes.node,
   };
 
   static defaultProps = {
     className: undefined,
+    children: undefined,
   };
-
-  static contextTypes = {
-    ...FacebookProvider.childContextTypes,
-  };
-
-  componentDidMount() {
-    if (canUseDOM) {
-      this.initFacebook();
-    }
-  }
 
   shouldComponentUpdate() {
     return false;
   }
 
-  async initFacebook() {
-    const facebook = await this.context.facebook.init();
+  handleFacebookReady = (facebook) => {
     facebook.parse(this.container);
   }
 
@@ -36,12 +26,14 @@ export default class Parser extends Component {
   }
 
   render() {
-    const { className } = this.props;
+    const { className, children } = this.props;
 
     return (
-      <div className={className} ref={this.handleContainer}>
-        {this.renderComponent()}
-      </div>
+      <InitFacebook onReady={this.handleFacebookReady}>
+        <div className={className} ref={this.handleContainer}>
+          {children}
+        </div>
+      </InitFacebook>
     );
   }
 }

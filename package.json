@@ -1,6 +1,6 @@
 {
   "name": "react-facebook",
-  "version": "3.0.8",
+  "version": "4.0.0",
   "description": "Facebook components like a Login button, Like, Share, Comments or Embedded Post",
   "author": {
     "name": "Zlatko Fedor",
@@ -37,12 +37,10 @@
     "prepublish": "npm run build",
     "test": "jest --coverage",
     "build": "babel-node ./node_modules/gulp/bin/gulp.js build",
-    "coveralls": "babel-node ./node_modules/gulp/bin/gulp.js coveralls",
     "eslint": "node ./node_modules/eslint/bin/eslint.js --ext .js,.jsx ./src"
   },
   "dependencies": {
     "react-spinner-children": "^1.0.5",
-    "qs": "^6.4.0",
     "can-use-dom": "^0.1.0",
     "prop-types": "^15.5.8",
     "babel-runtime": "^6.23.0"
@@ -66,8 +64,6 @@
     "eslint-plugin-import": "^2.2.0",
     "gulp": "^3.9.1",
     "gulp-babel": "^6.1.2",
-    "gulp-coveralls": "^0.1.4",
-    "gulp-jsx-coverage": "^0.4.0",
     "gulp-util": "^3.0.8",
     "react": "^15.5.4",
     "react-dom": "^15.5.4",

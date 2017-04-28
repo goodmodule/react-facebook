@@ -7,51 +7,24 @@ import LikeLayout from './constants/LikeLayout';
 import ColorScheme from './constants/ColorScheme';
 import LikeAction from './constants/LikeAction';
 
-export default class Like extends Parser {
-  static propTypes = {
-    ...Parser.propTypes,
-    referral: PropTypes.string,
-    href: PropTypes.string,
-    layout: PropTypes.string.isRequired,
-    showFaces: PropTypes.bool.isRequired,
-    colorScheme: PropTypes.string.isRequired,
-    action: PropTypes.string.isRequired,
-    share: PropTypes.bool.isRequired,
-    children: PropTypes.node,
-    width: PropTypes.oneOfType([
-      PropTypes.number.isRequired,
-      PropTypes.string.isRequired,
-    ]),
-    size: PropTypes.string,
-    kidDirectedSite: PropTypes.bool.isRequired,
-  };
+export default function Like(props) {
+  const {
+    className,
+    href = getCurrentHref(),
+    layout,
+    colorScheme,
+    action,
+    showFaces,
+    share,
+    children,
+    width,
+    size,
+    kidDirectedSite,
+    referral,
+  } = props;
 
-  static defaultProps = {
-    layout: LikeLayout.STANDARD,
-    showFaces: false,
-    colorScheme: ColorScheme.LIGHT,
-    action: LikeAction.LIKE,
-    share: false,
-    size: LikeSize.SMALL,
-    kidDirectedSite: false,
-  };
-
-  renderComponent() {
-    const {
-      href = getCurrentHref(),
-      layout,
-      colorScheme,
-      action,
-      showFaces,
-      share,
-      children,
-      width,
-      size,
-      kidDirectedSite,
-      referral,
-    } = this.props;
-
-    return (
+  return (
+    <Parser className={className}>
       <div
         className="fb-like"
         data-ref={referral}
@@ -67,6 +40,39 @@ export default class Like extends Parser {
       >
         {children}
       </div>
-    );
-  }
+    </Parser>
+  );
 }
+
+Like.propTypes = {
+  className: PropTypes.string,
+  referral: PropTypes.string,
+  href: PropTypes.string,
+  layout: PropTypes.string.isRequired,
+  showFaces: PropTypes.bool.isRequired,
+  colorScheme: PropTypes.string.isRequired,
+  action: PropTypes.string.isRequired,
+  share: PropTypes.bool.isRequired,
+  children: PropTypes.node,
+  width: PropTypes.oneOfType([
+    PropTypes.number.isRequired,
+    PropTypes.string.isRequired,
+  ]),
+  size: PropTypes.string,
+  kidDirectedSite: PropTypes.bool.isRequired,
+};
+
+Like.defaultProps = {
+  layout: LikeLayout.STANDARD,
+  showFaces: false,
+  colorScheme: ColorScheme.LIGHT,
+  action: LikeAction.LIKE,
+  share: false,
+  size: LikeSize.SMALL,
+  kidDirectedSite: false,
+  children: undefined,
+  className: undefined,
+  href: undefined,
+  referral: undefined,
+  width: undefined,
+};

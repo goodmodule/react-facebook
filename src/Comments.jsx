@@ -5,38 +5,19 @@ import getCurrentHref from './utils/getCurrentHref';
 import ColorScheme from './constants/ColorScheme';
 import CommentsOrderBy from './constants/CommentsOrderBy';
 
-export default class Comments extends Parser {
-  static propTypes = {
-    ...Parser.propTypes,
-    href: PropTypes.string,
-    numPosts: PropTypes.number.isRequired,
-    orderBy: PropTypes.string.isRequired,
-    width: PropTypes.oneOfType([
-      PropTypes.number.isRequired,
-      PropTypes.string.isRequired,
-    ]),
-    colorScheme: PropTypes.string.isRequired,
-    children: PropTypes.node,
-  };
+export default function Comments(props) {
+  const {
+    className,
+    colorScheme,
+    href = getCurrentHref(),
+    numPosts,
+    orderBy,
+    width,
+    children,
+  } = props;
 
-  static defaultProps = {
-    numPosts: 10,
-    orderBy: CommentsOrderBy.SOCIAL,
-    width: 550,
-    colorScheme: ColorScheme.LIGHT,
-  };
-
-  renderComponent() {
-    const {
-      colorScheme,
-      href = getCurrentHref(),
-      numPosts,
-      orderBy,
-      width,
-      children,
-    } = this.props;
-
-    return (
+  return (
+    <Parser className={className}>
       <div
         className="fb-comments"
         data-colorscheme={colorScheme}
@@ -48,6 +29,29 @@ export default class Comments extends Parser {
       >
         {children}
       </div>
-    );
-  }
+    </Parser>
+  );
 }
+
+Comments.propTypes = {
+  className: PropTypes.string,
+  href: PropTypes.string,
+  numPosts: PropTypes.number.isRequired,
+  orderBy: PropTypes.string.isRequired,
+  width: PropTypes.oneOfType([
+    PropTypes.number.isRequired,
+    PropTypes.string.isRequired,
+  ]),
+  colorScheme: PropTypes.string.isRequired,
+  children: PropTypes.node,
+};
+
+Comments.defaultProps = {
+  numPosts: 10,
+  orderBy: CommentsOrderBy.SOCIAL,
+  width: 550,
+  colorScheme: ColorScheme.LIGHT,
+  children: undefined,
+  className: undefined,
+  href: undefined,
+};
