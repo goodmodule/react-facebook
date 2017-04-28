@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import getCurrentHref from './utils/getCurrentHref';
-import clearUndefinedProperties from './clearUndefinedProperties';
+import clearUndefinedProperties from './utils/clearUndefinedProperties';
 import Process from './Process';
 
 export default class Feed extends Process {
