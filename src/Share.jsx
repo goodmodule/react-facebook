@@ -47,7 +47,7 @@ export default class Share extends Component {
     const {
       href = getCurrentHref(),
       display,
-      appId = facebook.props.appID,
+      appId = facebook.props.appId,
       hashtag,
       redirectURI,
       quote,
