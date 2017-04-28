@@ -52,14 +52,12 @@ export default class Process extends Component {
             onError(error);
           }
         });
+      } else {
+        const response = await this.process(facebook);
 
-        return;
-      }
-
-      const response = await this.process(facebook);
-
-      if (onResponse) {
-        await onResponse(response);
+        if (onResponse) {
+          await onResponse(response);
+        }
       }
     } catch (e) {
       const { onError } = this.props;
