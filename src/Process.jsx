@@ -10,6 +10,7 @@ export default class Process extends Component {
     onReady: PropTypes.func,
     onError: PropTypes.func,
     onResponse: PropTypes.func,
+    dontWait: PropTypes.bool,
   };
 
   static defaultProps = {
@@ -19,6 +20,7 @@ export default class Process extends Component {
     onReady: undefined,
     onError: undefined,
     onResponse: undefined,
+    dontWait: undefined,
   };
 
   state = {
@@ -39,9 +41,23 @@ export default class Process extends Component {
         throw new Error('Facebook is not initialized');
       }
 
+      const { dontWait, onResponse, onError } = this.props;
+      if (dontWait) {
+        this.process(facebook).then((response) => {
+          if (onResponse) {
+            onResponse(response);
+          }
+        }, (error) => {
+          if (onError) {
+            onError(error);
+          }
+        });
+
+        return;
+      }
+
       const response = await this.process(facebook);
 
-      const { onResponse } = this.props;
       if (onResponse) {
         await onResponse(response);
       }
