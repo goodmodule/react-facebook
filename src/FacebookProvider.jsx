@@ -15,7 +15,7 @@ export default class Facebook extends Component {
     language: PropTypes.string,
     frictionlessRequests: PropTypes.bool,
     children: PropTypes.node,
-    init: PropTypes.bool.isRequired,
+    wait: PropTypes.bool,
   };
 
   static childContextTypes = {
@@ -31,6 +31,7 @@ export default class Facebook extends Component {
     frictionlessRequests: false,
     domain: 'connect.facebook.net',
     children: undefined,
+    wait: false,
   };
 
   getChildContext() {
@@ -50,7 +51,7 @@ export default class Facebook extends Component {
         xfbml,
         language,
         frictionlessRequests,
-        init,
+        wait,
       } = this.props;
 
       this.facebook = facebookInstance || new FB({
@@ -62,7 +63,7 @@ export default class Facebook extends Component {
         xfbml,
         language,
         frictionlessRequests,
-        init,
+        wait,
       });
 
       facebookInstance = this.facebook;

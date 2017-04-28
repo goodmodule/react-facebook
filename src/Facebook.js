@@ -26,7 +26,7 @@ export default class Facebook {
       throw new Error('You need to set appId');
     }
 
-    if (this.options.init !== false) {
+    if (!this.options.wait) {
       this.init();
     }
   }
