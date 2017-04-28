@@ -67,7 +67,7 @@ export default class Facebook {
     return this.loadingPromise;
   }
 
-  async process(method, before, after) {
+  async process(method, before = [], after = []) {
     const fb = await this.init();
 
     return new Promise((resolve, reject) => {
