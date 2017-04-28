@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, cloneElement } from 'react';
 import PropTypes from 'prop-types';
 import qs from 'qs';
 import Provider from './FacebookProvider';
@@ -20,15 +20,26 @@ export default class Share extends Component {
     display: PropTypes.string.isRequired,
     appId: PropTypes.string,
     redirectURI: PropTypes.string,
+    render: PropTypes.func,
+    component: PropTypes.node,
   };
 
   static defaultProps = {
+    href: undefined,
+    children: undefined,
+    hashtag: undefined,
+    quote: undefined,
+    mobileIframe: undefined,
     display: 'popup',
     width: 626,
     height: 436,
     buttonClassName: 'btn btn-lg',
     iconClassName: 'fa fa-facebook pull-left',
     icon: true,
+    appId: undefined,
+    redirectURI: undefined,
+    render: undefined,
+    component: undefined,
   };
 
   getSharerHref() {
@@ -78,10 +89,22 @@ export default class Share extends Component {
   }
 
   render() {
-    const { children } = this.props;
+    const { children, render, component: Component } = this.props;
 
-    return (
-      React.cloneElement(children, { onClick: this.onClick })
-    );
+    if (render) {
+      return render({
+        onClick: this.onClick,
+      });
+    }
+
+    if (Component) {
+      return (
+        <Component onClick={this.onClick} />
+      );
+    }
+
+    return cloneElement(children, {
+      onClick: this.onClick,
+    });
   }
 }

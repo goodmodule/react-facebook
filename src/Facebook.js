@@ -1,16 +1,7 @@
-import keymirror from 'keymirror';
-
-export const InitStatus = keymirror({
-  LOADING: null,
-  SUCCESS: null,
-  TIMEOUT: null,
-});
-
-export const LoginStatus = keymirror({
-  AUTHORIZED: null,
-  UNAUTHORIZED: null,
-  GUEST: null,
-});
+export const LoginStatus = {
+  CONNECTED: 'connected',
+  NOT_AUTHORIZED: 'not_authorized',
+};
 
 export const Method = {
   GET: 'get',
@@ -18,434 +9,221 @@ export const Method = {
   DELETE: 'delete',
 };
 
-function api(path, method, params, callback) {
-  if (typeof params === 'function') {
-    return api(path, method, {}, params);
-  }
-
-  if (typeof method === 'function') {
-    return api(path, 'get', {}, method);
-  }
-
-  const FB = window.FB;
-  if (!FB) {
-    callback(new Error('FB is not initialized'));
-    return undefined;
-  }
-
-  return FB.api(path, method, params, callback);
-}
-
 export default class Facebook {
   constructor(options = {}) {
-    this.domain = options.domain || 'connect.facebook.net';
-    this._appID = options.appID || null;
-    this._version = options.version || 'v2.5';
-    this._cookie = options.cookie || false;
-    this._status = options.status || false;
-    this._xfbml = options.xfbml || false;
-    this._language = options.language || 'en_US';
-    this._frictionlessRequests = options.frictionlessRequests || false;
+    this.options = {
+      domain: 'connect.facebook.net',
+      version: 'v2.9',
+      cookie: false,
+      status: false,
+      xfbml: false,
+      language: 'en_US',
+      frictionlessRequests: false,
+      ...options,
+    };
 
-    this._loaded = false;
-    this._initialized = false;
+    if (!this.options.appId) {
+      throw new Error('You need to set appId');
+    }
 
-    this._callbacks = [];
-
-    if (options.init !== false) {
-      this._loadScript();
+    if (this.options.init !== false) {
+      this.init();
     }
   }
 
-  _loadScript() {
-    if (!this._appID) {
-      throw new Error('Facebook app id is not defined');
+  async init() {
+    if (this.loadingPromise) {
+      return this.loadingPromise;
     }
 
-    if (this._loaded) {
-      throw new Error('FB script is already added to the DOM');
-    }
+    this.loadingPromise = new Promise((resolve) => {
+      const { options } = this;
 
-    this._loaded = true;
+      window.fbAsyncInit = () => {
+        window.FB.init({
+          appId: options.appId,
+          version: options.version,
+          cookie: options.cookie,
+          status: options.status,
+          xfbml: options.xfbml,
+          frictionlessRequests: this.frictionlessRequests,
+        });
 
-    window.fbAsyncInit = () => this._initFB();
+        resolve(window.FB);
+      };
 
-    const fjs = document.getElementsByTagName('script')[0];
-    if (document.getElementById('facebook-jssdk')) {
-      return;
-    }
+      const fjs = document.getElementsByTagName('script')[0];
+      if (document.getElementById('facebook-jssdk')) {
+        return;
+      }
 
-    const js = document.createElement('script');
-    js.id = 'facebook-jssdk';
-    js.src = `//${this.domain}/${this._language}/sdk.js`;
+      const js = document.createElement('script');
+      js.id = 'facebook-jssdk';
+      js.src = `//${this.domain}/${options.language}/sdk.js`;
 
-    fjs.parentNode.insertBefore(js, fjs);
-  }
-
-  _initFB() {
-    window.FB.init({
-      appId: this._appID,
-      version: this._version,
-      cookie: this._cookie,
-      status: this._status,
-      xfbml: this._xfbml,
-      frictionlessRequests: this._frictionlessRequests,
+      fjs.parentNode.insertBefore(js, fjs);
     });
 
-    this._initialized = true;
-
-    // call callbacks
-    this._callbacks.forEach(callback => this.whenReady(callback));
-    this._callbacks = [];
+    return this.loadingPromise;
   }
 
-  whenReady(callback) {
-    if (!this._loaded) {
-      this._loadScript();
-    }
+  async process(method, before, after) {
+    const fb = await this.init();
 
-    if (!this._initialized) {
-      this._callbacks.push(callback);
-    } else {
-      callback(null, this);
-    }
-
-    return this;
-  }
-
-  dismiss(removeCallback) {
-    this._callbacks = this._callbacks.filter(callback => callback !== removeCallback);
-  }
-
-  callCallbackByResponse(cb, response) {
-    if (!response) {
-      cb(new Error('Response is undefined'));
-      return;
-    }
-
-    cb(null, response);
-  }
-
-  login(opts, callback) {
-    if (typeof opts === 'function') {
-      this.login(null, opts);
-      return;
-    }
-
-    this.whenReady(err => {
-      if (err) {
-        callback(err);
-        return;
-      }
-
-      window.FB.login((response) => {
-        if (response.status === 'connected') {
-          callback(null, LoginStatus.AUTHORIZED, response);
-        } else if (response.status === 'not_authorized') {
-          callback(null, LoginStatus.UNAUTHORIZED, response);
-        } else {
-          callback(null, LoginStatus.GUEST, response);
-        }
-      }, opts);
-    });
-  }
-
-  getLoginStatus(callback) {
-    this.whenReady(err => {
-      if (err) {
-        callback(err);
-        return;
-      }
-
-      window.FB.getLoginStatus((response) => {
-        if (response.status === 'connected') {
-          callback(null, LoginStatus.AUTHORIZED, response);
-        } else if (response.status === 'not_authorized') {
-          callback(null, LoginStatus.UNAUTHORIZED, response);
-        } else {
-          callback(null, LoginStatus.GUEST, response);
-        }
-      });
-    });
-  }
-
-  getTokenDetail(callback) {
-    this.whenReady(err => {
-      if (err) {
-        callback(err);
-        return;
-      }
-
-      const authResponse = window.FB.getAuthResponse();
-      if (!authResponse.accessToken) {
-        callback(new Error('Token is undefined'));
-        return;
-      }
-
-      callback(null, authResponse);
-    });
-  }
-
-  getTokenDetailWithProfile(params, callback) {
-    if (typeof params === 'function') {
-      this.getTokenDetailWithProfile({}, params);
-      return;
-    }
-
-    this.getTokenDetail((err, tokenDetail) => {
-      if (err) {
-        callback(err);
-        return;
-      }
-
-      this.getProfile(params, (err2, profile) => {
-        if (err2) {
-          callback(err2);
+    return new Promise((resolve, reject) => {
+      fb[method](...before, (err, response) => {
+        if (!response || response.error) {
+          reject(new Error(response.error || 'Response is undefined'));
           return;
         }
 
-        callback(null, {
-          tokenDetail,
-          profile,
-        });
-      });
+        resolve(response);
+      }, ...after);
     });
   }
 
-  getToken(callback) {
-    this.getTokenDetail((err, authResponse) => {
-      if (err) {
-        callback(err);
-        return;
-      }
-
-      callback(null, authResponse.accessToken);
-    });
+  async ui(options) {
+    return this.process('ui', [options]);
   }
 
-  getUserID(callback) {
-    this.getTokenDetail((err, authResponse) => {
-      if (err) {
-        callback(err);
-        return;
-      }
-
-      callback(null, authResponse.userID);
-    });
+  async api(path, method = Method.GET, params = {}) {
+    return this.process('api', [path, method, params]);
   }
 
-  sendInvite(to, options, callback) {
-    this.whenReady((err, facebook) => {
-      if (err) {
-        callback(err);
-        return;
-      }
-
-      window.FB.ui({
-        to,
-        method: 'apprequests',
-        ...options,
-      }, (response) => {
-        facebook.callCallbackByResponse(callback, response);
-      });
-    });
+  async login(opts = null) {
+    return this.process('login', [], [opts]);
   }
 
-  api(path, method, params, callback) {
-    return api(path, method, params, callback);
+  async logout() {
+    return this.process('logout');
   }
 
-  postAction(ogNamespace, ogAction, ogObject, ogObjectUrl, noFeedStory, callback) {
-    if (typeof noFeedStory === 'function') {
-      this.postAction(ogNamespace, ogAction, ogObject, ogObjectUrl, false, noFeedStory);
-      return;
+  async getLoginStatus() {
+    return this.process('getLoginStatus');
+  }
+
+  async getAuthResponse() {
+    return this.process('getAuthResponse');
+  }
+
+  async getTokenDetail() {
+    const response = await this.getLoginStatus();
+    if (response.status === LoginStatus.CONNECTED && response.authResponse) {
+      return response.authResponse;
     }
 
+    throw new Error('Token is undefined');
+  }
+
+  async getProfile(params) {
+    return this.api('/me', Method.GET, params);
+  }
+
+  async getTokenDetailWithProfile(params) {
+    const tokenDetail = await this.getTokenDetail();
+    const profile = await this.getProfile(params);
+
+    return {
+      profile,
+      tokenDetail,
+    };
+  }
+
+  async getToken() {
+    const authResponse = await this.getTokenDetail();
+    return authResponse.accessToken;
+  }
+
+  async getUserId() {
+    const authResponse = await this.getTokenDetail();
+    return authResponse.userID;
+  }
+
+  async sendInvite(to, options) {
+    return this.ui({
+      to,
+      method: 'apprequests',
+      ...options,
+    });
+  }
+
+
+  async postAction(ogNamespace, ogAction, ogObject, ogObjectUrl, noFeedStory) {
     let url = `/me/${ogNamespace}:${ogAction}?${ogObject}=${encodeURIComponent(ogObjectUrl)}`;
 
     if (noFeedStory === true) {
       url += '&no_feed_story=true';
     }
 
-    this.whenReady((err, facebook) => {
-      if (err) {
-        callback(err);
-        return;
-      }
+    return this.api(url, Method.POST);
+  }
 
-      api(url, Method.POST, response => {
-        facebook.callCallbackByResponse(callback, response);
+  async getPermissions() {
+    const response = await this.api('/me/permissions');
+    return response.data;
+  }
+
+  async hasPermissions(permissions) {
+    const usersPermissions = await this.getPermissions();
+
+    const findedPermissions = permissions.filter((p) => {
+      return !!usersPermissions.find((row) => {
+        const { permission, status } = row;
+        return status === 'granted' && permission === p;
       });
     });
+
+    return findedPermissions.length === permissions.length;
   }
 
-  getPermissions(callback) {
-    this.whenReady(err => {
-      if (err) {
-        callback(err);
-        return;
-      }
-
-      api('/me/permissions', response => {
-        if (!response || !response.data[0]) {
-          callback(new Error('Response is undefined'));
-          return;
-        }
-
-        const perms = response.data[0];
-        callback(null, perms, response);
-      });
-    });
+  async subscribe(eventName, callback) {
+    const fb = await this.init();
+    fb.Event.subscribe(eventName, callback);
   }
 
-  hasPermissions(permissions, callback) {
-    this.getPermissions((err, userPermissions) => {
-      if (err) {
-        callback(err);
-        return;
-      }
-
-      for (const index in permissions) {
-        if (!permissions.hasOwnProperty(index)) {
-          continue;
-        }
-
-        const permission = permissions[index];
-
-        if (!userPermissions[permission]) {
-          callback(null, false, userPermissions);
-          return;
-        }
-      }
-
-      callback(null, true, userPermissions);
-    });
+  async unsubscribe(eventName, callback) {
+    const fb = await this.init();
+    fb.Event.unsubscribe(eventName, callback);
   }
 
-  subscribe(what, callback) {
-    this.whenReady(err => {
-      if (err) {
-        callback(err);
-        return;
-      }
+  async parse(parentNode) {
+    const fb = await this.init();
 
-      window.FB.Event.subscribe(what, (href, widget) => {
-        callback(null, href, widget);
-      });
-    });
-  }
-
-  parse(parentNode, callback) {
-    this.whenReady(err => {
-      if (err) {
-        callback(err);
-        return;
-      }
-
-      if (typeof parentNode === 'undefined') {
-        window.FB.XFBML.parse();
-      } else {
-        window.FB.XFBML.parse(parentNode);
-      }
-
-      callback(null);
-    });
-  }
-
-  getProfile(params, callback) {
-    if (typeof params === 'function') {
-      this.getProfile({}, params);
-      return;
+    if (typeof parentNode === 'undefined') {
+      fb.XFBML.parse();
+    } else {
+      fb.XFBML.parse(parentNode);
     }
+  }
 
-    this.whenReady((err, facebook) => {
-      if (err) {
-        callback(err);
-        return;
-      }
+  async getRequests() {
+    return this.api('/me/apprequests');
+  }
 
-      api('/me', Method.GET, params, (response) => {
-        facebook.callCallbackByResponse(callback, response);
-      });
+  async removeRequest(requestID) {
+    return this.api(requestID, Method.DELETE);
+  }
+
+  async setAutoGrow() {
+    const fb = await this.init();
+    fb.Canvas.setAutoGrow();
+  }
+
+  async paySimple(product, quantity = 1) {
+    return this.ui({
+      method: 'pay',
+      action: 'purchaseitem',
+      product,
+      quantity,
     });
   }
 
-  getRequests(callback) {
-    this.whenReady((err, facebook) => {
-      if (err) {
-        callback(err);
-        return;
-      }
-
-      api('/me/apprequests', response => {
-        facebook.callCallbackByResponse(callback, response);
-      });
-    });
-  }
-
-  removeRequest(requestID, callback) {
-    this.whenReady((err, facebook) => {
-      if (err) {
-        callback(err);
-        return;
-      }
-
-      api(requestID, Method.DELETE, response => {
-        facebook.callCallbackByResponse(callback, response);
-      });
-    });
-  }
-
-  setAutoGrow(callback) {
-    this.whenReady(err => {
-      if (err) {
-        callback(err);
-        return;
-      }
-
-      window.FB.Canvas.setAutoGrow();
-      callback(null);
-    });
-  }
-
-  paySimple(productUrl, quantity, callback) {
-    if (typeof quantity === 'function') {
-      this.paySimple(productUrl, 1, quantity);
-      return;
-    }
-
-    this.whenReady((err, facebook) => {
-      if (err) {
-        callback(err);
-        return;
-      }
-
-      window.FB.ui({
-        method: 'pay',
-        action: 'purchaseitem',
-        product: productUrl,
-        quantity: quantity || 1, // optional, defaults to 1
-      }, response => {
-        facebook.callCallbackByResponse(callback, response);
-      });
-    });
-  }
-
-  pay(productUrl, options, callback) {
-    this.whenReady((err, facebook) => {
-      if (err) {
-        callback(err);
-        return;
-      }
-
-      window.FB.ui({
-        method: 'pay',
-        action: 'purchaseitem',
-        product: productUrl,
-        ...options,
-      }, response => {
-        facebook.callCallbackByResponse(callback, response);
-      });
+  async pay(product, options) {
+    return this.ui({
+      method: 'pay',
+      action: 'purchaseitem',
+      product,
+      ...options,
     });
   }
 }

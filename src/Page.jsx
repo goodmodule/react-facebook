@@ -50,13 +50,13 @@ export default class Page extends Parser {
       children,
     } = this.props;
 
-    const appID = this.context.facebook && this.context.facebook.props.appID;
+    const appId = this.context.facebook && this.context.facebook.props.appId;
 
     return (
       <div
         className="fb-page"
         style={style}
-        data-appID={appID}
+        data-appID={appId}
         data-tabs={tabs}
         data-hide-cover={hideCover}
         data-show-facepile={showFacepile}

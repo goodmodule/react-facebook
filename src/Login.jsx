@@ -1,5 +1,6 @@
 import React, { Component, cloneElement } from 'react';
 import PropTypes from 'prop-types';
+import canUseDOM from 'can-use-dom';
 import { LoginStatus } from './Facebook';
 import FacebookProvider from './FacebookProvider';
 
@@ -7,12 +8,14 @@ export default class Login extends Component {
   static propTypes = {
     scope: PropTypes.string.isRequired,
     fields: PropTypes.array.isRequired,
+    onError: PropTypes.func.isRequired,
     onResponse: PropTypes.func.isRequired,
     onReady: PropTypes.func,
-    onWorking: PropTypes.func,
-    children: PropTypes.node.isRequired,
+    children: PropTypes.node,
+    render: PropTypes.func,
     returnScopes: PropTypes.bool,
     rerequest: PropTypes.bool,
+    component: PropTypes.node,
   };
 
   static contextTypes = {
@@ -25,48 +28,48 @@ export default class Login extends Component {
       'name', 'email', 'locale', 'gender', 'timezone', 'verified', 'link'],
     returnScopes: false,
     rerequest: false,
+    onReady: undefined,
+    children: undefined,
+    render: undefined,
+    component: undefined,
   };
 
-  constructor(props, context) {
-    super(props, context);
-
-    this.state = {};
-  }
+  state = {};
 
   componentDidMount() {
-    this.context.facebook.whenReady(this.onReady);
-  }
-
-  componentWillUnmount() {
-    this.context.facebook.dismiss(this.onReady);
-  }
-
-  onReady = (err, facebook) => {
-    if (err) {
-      this.props.onResponse(err);
-      return;
-    }
-
-    this.setState({ facebook });
-
-    if (this.props.onReady) {
-      this.props.onReady();
+    if (canUseDOM) {
+      this.initFacebook();
     }
   }
 
-  onClick = (evn) => {
+  async initFacebook() {
+    const facebook = await this.context.facebook.init();
+
+    this.setState({
+      facebook,
+    });
+
+    const { onReady } = this.props;
+    if (onReady) {
+      onReady();
+    }
+  }
+
+  onClick = async (evn) => {
     evn.stopPropagation();
     evn.preventDefault();
 
-    const isWorking = this.isWorking();
-    if (isWorking) {
+    const { facebook, isWorking } = this.state;
+    if (!facebook || isWorking) {
       return;
     }
 
-    this.setWorking(true);
+    this.setState({
+      isWorking: true,
+    });
 
-    const { scope, fields, onResponse, returnScopes, rerequest } = this.props;
-    const facebook = this.state.facebook;
+
+    const { scope, fields, onError, onResponse, returnScopes, rerequest } = this.props;
     const loginQpts = { scope };
 
     if (returnScopes) {
@@ -77,49 +80,69 @@ export default class Login extends Component {
       loginQpts.auth_type = 'rerequest';
     }
 
-    facebook.login(loginQpts, (err, loginStatus) => {
-      if (err) {
-        this.setWorking(false);
-        onResponse(err);
-        return;
+    try {
+      const response = await facebook.login(loginQpts);
+      if (response.status !== 'connected') {
+        throw new Error('Unauthorized user');
       }
 
-      if (loginStatus !== LoginStatus.AUTHORIZED) {
-        this.setWorking(false);
-        onResponse(new Error('Unauthorized user'));
-        return;
-      }
+      const data = await facebook.getTokenDetailWithProfile({ fields });
 
-      facebook.getTokenDetailWithProfile({ fields }, (err2, data) => {
-        this.setWorking(false);
-
-        if (err2) {
-          onResponse(err2);
-          return;
-        }
-
-        onResponse(null, data);
+      this.setState({
+        isWorking: false,
+        data,
+        error: null,
       });
-    });
+
+      if (onResponse) {
+        onResponse(data);
+      }
+    } catch (error) {
+      this.setState({
+        isWorking: false,
+        data: null,
+        error,
+      });
+
+      if (onError) {
+        onError(error);
+      }
+    }
   };
 
-  setWorking(working) {
-    this.setState({ working });
-
-    if (this.props.onWorking) {
-      this.props.onWorking(working);
-    }
-  }
-
-  isWorking() {
-    const { working, facebook } = this.state;
-
-    return working || !facebook;
-  }
-
   render() {
-    const { children } = this.props;
+    const { children, render, component: Component } = this.props;
+    const { error, data, facebook, isWorking = false } = this.state;
+    const isLoading = !facebook;
 
-    return cloneElement(children, { onClick: this.onClick });
+    if (render) {
+      return render({
+        isLoading,
+        isWorking,
+        data,
+        error,
+        onClick: this.onClick,
+      });
+    }
+
+    if (Component) {
+      return (
+        <Component
+          isLoading={isLoading}
+          isWorking={isWorking}
+          data={data}
+          error={error}
+          onClick={this.onClick}
+        />
+      );
+    }
+
+    return cloneElement(children, {
+      isLoading,
+      isWorking,
+      data,
+      error,
+      onClick: this.onClick,
+    });
   }
 }

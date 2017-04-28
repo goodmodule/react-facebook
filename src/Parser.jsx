@@ -8,33 +8,38 @@ export default class Parser extends Component {
     className: PropTypes.string,
   };
 
+  static defaultProps = {
+    className: undefined,
+  };
+
   static contextTypes = {
     ...FacebookProvider.childContextTypes,
   };
 
   componentDidMount() {
-    if (!canUseDOM) {
-      return;
+    if (canUseDOM) {
+      this.initFacebook();
     }
-
-    this.context.facebook.whenReady((err, facebook) => {
-      if (err) {
-        return;
-      }
-
-      facebook.parse(this.container, () => {});
-    });
   }
 
   shouldComponentUpdate() {
     return false;
   }
 
+  async initFacebook() {
+    const facebook = await this.context.facebook.init();
+    facebook.parse(this.container);
+  }
+
+  handleContainer = (container) => {
+    this.container = container;
+  }
+
   render() {
     const { className } = this.props;
 
     return (
-      <div className={className} ref={(c) => { this.container = c; }}>
+      <div className={className} ref={this.handleContainer}>
         {this.renderComponent()}
       </div>
     );

@@ -25,53 +25,38 @@ export default class LoginButton extends Component {
     icon: true,
   };
 
-  constructor(props, context) {
-    super(props, context);
-
-    this.state = {
-      isWorking: true,
-    };
-  }
-
-  onReady = () => {
-    this.setState({ isWorking: false });
-  }
-
-  onWorking = (isWorking = false) => {
-    this.setState({ isWorking });
-  }
-
-  renderLoading() {
-    const { spinner, spinnerClassName } = this.props;
-
-    if (!spinner || !this.state.isWorking) {
-      return null;
-    }
-
-    return (
-      <Spinner config={this.props.spinnerConfig} className={spinnerClassName} />
-    );
-  }
-
   render() {
-    const { children, buttonClassName, iconClassName, icon } = this.props;
+    const {
+      children,
+      buttonClassName,
+      iconClassName,
+      icon,
+      spinner,
+      spinnerClassName,
+      ...rest
+    } = this.props;
 
     return (
       <FacebookLogin
-        onReady={this.onReady}
-        onWorking={this.onWorking}
-        {...this.props}
-      >
-        <button
-          type="button"
-          className={buttonClassName}
-          disabled={this.state.isWorking}
-        >
-          {icon ? <i className={iconClassName} /> : null}
-          {children}
-          {this.renderLoading()}
-        </button>
-      </FacebookLogin>
+        {...rest}
+        render={({ isWorking, isLoading, onClick }) => (
+          <button
+            type="button"
+            className={buttonClassName}
+            onClick={onClick}
+            disabled={isWorking || isLoading}
+          >
+            {!!icon && <i className={iconClassName} />}
+            {children}
+            {!!spinner && (isWorking || isLoading) && (
+              <Spinner
+                config={this.props.spinnerConfig}
+                className={spinnerClassName}
+              />
+            )}
+          </button>
+        )}
+      />
     );
   }
 }

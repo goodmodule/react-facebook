@@ -20,11 +20,11 @@ export default class Feed extends Component {
     from: PropTypes.string,
     to: PropTypes.string,
     link: PropTypes.string,
-    picture: PropTypes.string,
     source: PropTypes.string,
-    name: PropTypes.string,
-    caption: PropTypes.string,
-    description: PropTypes.string,
+    picture: PropTypes.string, // deprecated
+    name: PropTypes.string, // deprecated
+    caption: PropTypes.string, // deprecated
+    description: PropTypes.string, // deprecated
     ref: PropTypes.string,
   };
 
@@ -63,7 +63,7 @@ export default class Feed extends Component {
   getSharerHref() {
     const { facebook } = this.context;
     const {
-      appId = facebook.props.appID,
+      appId = facebook.props.appId,
       redirectURI,
       display,
       from,

@@ -1,10 +1,14 @@
 {
   "presets": [
-    ["es2015", {"loose": true}],
+    ["es2015", { "loose": true }],
     "stage-0",
     "react",
   ],
   "plugins": [
+    ["transform-runtime", {
+      "polyfill": false,
+      "regenerator": true
+    }],
     "transform-decorators-legacy",
     "transform-class-properties",
     "transform-proto-to-assign",

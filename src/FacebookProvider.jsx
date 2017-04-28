@@ -6,17 +6,16 @@ let facebookInstance = null;
 
 export default class Facebook extends Component {
   static propTypes = {
+    appId: PropTypes.string.isRequired,
     domain: PropTypes.string,
-    appID: PropTypes.string.isRequired,
-    version: PropTypes.string.isRequired,
-    cookie: PropTypes.bool.isRequired,
-    status: PropTypes.bool.isRequired,
-    xfbml: PropTypes.bool.isRequired,
-    language: PropTypes.string.isRequired,
-    frictionlessRequests: PropTypes.bool.isRequired,
+    version: PropTypes.string,
+    cookie: PropTypes.bool,
+    status: PropTypes.bool,
+    xfbml: PropTypes.bool,
+    language: PropTypes.string,
+    frictionlessRequests: PropTypes.bool,
     children: PropTypes.node,
     init: PropTypes.bool.isRequired,
-    onReady: PropTypes.func,
   };
 
   static childContextTypes = {
@@ -24,13 +23,14 @@ export default class Facebook extends Component {
   };
 
   static defaultProps = {
-    version: 'v2.5', // or v2.0, v2.1, v2.2, v2.3
-    cookie: false,
-    status: false,
-    xfbml: false,
-    language: 'en_US',
-    frictionlessRequests: false,
-    init: false,
+    version: undefined,
+    cookie: undefined,
+    status: undefined,
+    xfbml: undefined,
+    language: undefined,
+    frictionlessRequests: undefined,
+    domain: undefined,
+    children: undefined,
   };
 
   getChildContext() {
@@ -39,23 +39,23 @@ export default class Facebook extends Component {
     };
   }
 
-  whenReady(callback) {
-    const {
-      domain,
-      version,
-      appID,
-      cookie,
-      status,
-      xfbml,
-      language,
-      frictionlessRequests,
-      init,
-    } = this.props;
-
+  async init() {
     if (!this.facebook) {
-      this.facebook = facebookInstance = facebookInstance || new FB({
+      const {
         domain,
-        appID,
+        version,
+        appId,
+        cookie,
+        status,
+        xfbml,
+        language,
+        frictionlessRequests,
+        init,
+      } = this.props;
+
+      this.facebook = facebookInstance || new FB({
+        domain,
+        appId,
         version,
         cookie,
         status,
@@ -64,18 +64,12 @@ export default class Facebook extends Component {
         frictionlessRequests,
         init,
       });
+
+      facebookInstance = this.facebook;
     }
 
-    this.facebook.whenReady(callback);
-    if (this.props.onReady) {
-      this.facebook.whenReady(this.props.onReady);
-    }
-  }
-
-  dismiss(callback) {
-    if (this.facebook) {
-      this.facebook.dismiss(callback);
-    }
+    await this.facebook.init();
+    return this.facebook;
   }
 
   render() {

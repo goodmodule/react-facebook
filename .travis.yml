@@ -10,6 +10,3 @@ notifications:
             - zlatkofedor@cherryprojects.com
         on_success: change
         on_failure: always
-
-after_script:
- - ./node_modules/.bin/babel-node ./node_modules/.bin/gulp coveralls

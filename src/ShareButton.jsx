@@ -47,7 +47,7 @@ export default class ShareButton extends Component {
           type="button"
           className={className}
         >
-          {icon ? <i className={iconClassName} /> : null}
+          {!!icon && <i className={iconClassName} />}
           {children}
         </button>
       </Share>
