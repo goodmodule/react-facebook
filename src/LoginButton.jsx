@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Spinner from 'react-spinner-children';
-import FacebookLogin from './Login';
+import Login from './Login';
 
 export default class LoginButton extends Component {
   static propTypes = {
-    ...FacebookLogin.propTypes,
+    ...Login.propTypes,
     spinnerConfig: PropTypes.object.isRequired,
     children: PropTypes.node,
     className: PropTypes.string,
@@ -17,7 +17,7 @@ export default class LoginButton extends Component {
   };
 
   static defaultProps = {
-    ...FacebookLogin.defaultProps,
+    ...Login.defaultProps,
     spinnerConfig: {},
     buttonClassName: 'btn btn-lg',
     iconClassName: 'fa fa-facebook pull-left',
@@ -37,7 +37,7 @@ export default class LoginButton extends Component {
     } = this.props;
 
     return (
-      <FacebookLogin
+      <Login
         {...rest}
         render={({ isWorking, isLoading, onClick }) => (
           <button

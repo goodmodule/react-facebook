@@ -6,9 +6,6 @@ export default class Login extends Process {
     ...Process.propTypes,
     scope: PropTypes.string.isRequired,
     fields: PropTypes.array.isRequired,
-    onError: PropTypes.func.isRequired,
-    onResponse: PropTypes.func.isRequired,
-    onReady: PropTypes.func,
     returnScopes: PropTypes.bool,
     rerequest: PropTypes.bool,
   };
@@ -20,7 +17,6 @@ export default class Login extends Process {
       'name', 'email', 'locale', 'gender', 'timezone', 'verified', 'link'],
     returnScopes: false,
     rerequest: false,
-    onReady: undefined,
   };
 
   async process(facebook) {

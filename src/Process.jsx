@@ -7,6 +7,8 @@ export default class Process extends Component {
     children: PropTypes.node,
     render: PropTypes.func,
     component: PropTypes.node,
+    onReady: PropTypes.func,
+    onError: PropTypes.func,
     onResponse: PropTypes.func,
   };
 
@@ -14,6 +16,8 @@ export default class Process extends Component {
     children: undefined,
     render: undefined,
     component: undefined,
+    onReady: undefined,
+    onError: undefined,
     onResponse: undefined,
   };
 
@@ -41,23 +45,25 @@ export default class Process extends Component {
       if (onResponse) {
         await onResponse(response);
       }
-
-      this.setState({
-        isWorking: false,
-      });
-
-      return response;
     } catch (e) {
-      this.setState({
-        isWorking: false,
-      });
-
-      throw e;
+      const { onError } = this.props;
+      if (onError) {
+        await onError(e);
+      }
     }
+
+    this.setState({
+      isWorking: false,
+    });
   }
 
   handleFacebookReady = (facebook) => {
     this.setState({ facebook });
+
+    const { onReady } = this.props;
+    if (onReady) {
+      onReady(facebook);
+    }
   }
 
   getElement() {
