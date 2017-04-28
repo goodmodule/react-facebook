@@ -16,7 +16,7 @@ describe('Provider', () => {
   it('should be able to create simple instance', (done) => {
     const wrapper = mount(
       <FacebookProvider appID="123456789">
-        <Share>
+        <Share popup>
           <button type="button" onClick={done}>
             Test
           </button>
