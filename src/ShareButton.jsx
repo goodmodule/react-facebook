@@ -12,15 +12,20 @@ export default function ShareButton(props) {
   } = props;
 
   return (
-    <Share {...rest}>
-      <button
-        type="button"
-        className={className}
-      >
-        {!!icon && <i className={iconClassName} />}
-        {children}
-      </button>
-    </Share>
+    <Share
+      {...rest}
+      render={({ isReady, onClick }) => (
+        <button
+          type="button"
+          disabled={!isReady}
+          className={className}
+          onClick={onClick}
+        >
+          {!!icon && <i className={iconClassName} />}
+          {children}
+        </button>
+      )}
+    />
   );
 }
 

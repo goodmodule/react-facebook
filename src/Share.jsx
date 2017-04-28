@@ -37,7 +37,7 @@ export default class Share extends Process {
       mobileIframe,
     } = this.props;
 
-    facebook.ui(clearUndefinedProperties({
+    return facebook.ui(clearUndefinedProperties({
       method: 'share',
       href,
       display,
