@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import getCurrentHref from './utils/getCurrentHref';
+import clearUndefinedProperties from './clearUndefinedProperties';
 import Process from './Process';
 
 export default class Feed extends Process {
@@ -7,7 +8,7 @@ export default class Feed extends Process {
     ...Process.propTypes,
     appId: PropTypes.string,
     redirectURI: PropTypes.string,
-    display: PropTypes.string.isRequired,
+    display: PropTypes.string,
     from: PropTypes.string,
     to: PropTypes.string,
     link: PropTypes.string,
@@ -22,7 +23,7 @@ export default class Feed extends Process {
   static defaultProps = {
     ...Process.defaultProps,
     link: undefined,
-    display: 'popup',
+    display: undefined,
     appId: undefined,
     redirectURI: undefined,
   };
@@ -43,7 +44,7 @@ export default class Feed extends Process {
       ref,
     } = this.props;
 
-    return facebook.ui({
+    return facebook.ui(clearUndefinedProperties({
       method: 'feed',
       link,
       display,
@@ -57,6 +58,6 @@ export default class Feed extends Process {
       caption,
       description,
       ref,
-    });
+    }));
   }
 }

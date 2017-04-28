@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import getCurrentHref from './utils/getCurrentHref';
+import clearUndefinedProperties from './clearUndefinedProperties';
 import Process from './Process';
 
 export default class Share extends Process {
@@ -9,7 +10,7 @@ export default class Share extends Process {
     hashtag: PropTypes.string,
     quote: PropTypes.string,
     mobileIframe: PropTypes.bool,
-    display: PropTypes.string.isRequired,
+    display: PropTypes.string,
     appId: PropTypes.string,
     redirectURI: PropTypes.string,
   };
@@ -20,7 +21,7 @@ export default class Share extends Process {
     hashtag: undefined,
     quote: undefined,
     mobileIframe: undefined,
-    display: 'popup',
+    display: undefined,
     appId: undefined,
     redirectURI: undefined,
   };
@@ -36,7 +37,7 @@ export default class Share extends Process {
       mobileIframe,
     } = this.props;
 
-    return facebook.ui({
+    facebook.ui(clearUndefinedProperties({
       method: 'share',
       href,
       display,
@@ -45,6 +46,6 @@ export default class Share extends Process {
       redirect_uri: redirectURI,
       quote,
       mobile_iframe: mobileIframe,
-    });
+    }));
   }
 }
