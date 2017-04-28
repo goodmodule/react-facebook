@@ -23,13 +23,13 @@ export default class Facebook extends Component {
   };
 
   static defaultProps = {
-    version: undefined,
-    cookie: undefined,
-    status: undefined,
-    xfbml: undefined,
-    language: undefined,
-    frictionlessRequests: undefined,
-    domain: undefined,
+    version: 'v2.9',
+    cookie: false,
+    status: false,
+    xfbml: false,
+    language: 'en_US',
+    frictionlessRequests: false,
+    domain: 'connect.facebook.net',
     children: undefined,
   };
 
