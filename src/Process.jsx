@@ -75,11 +75,13 @@ export default class Process extends Component {
 
     const { facebook, isWorking } = this.state;
     const isLoading = !facebook;
+    const isReady = !isLoading && !isWorking;
 
     if (render) {
       return render({
         isWorking,
         isLoading,
+        isReady,
         onClick: this.handleClick,
       });
     }
@@ -90,6 +92,7 @@ export default class Process extends Component {
           onClick={this.handleClick}
           isLoading={isLoading}
           isWorking={isWorking}
+          isReady={isReady}
         />
       );
     }
