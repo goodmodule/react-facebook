@@ -71,9 +71,9 @@ export default class Facebook {
     const fb = await this.init();
 
     return new Promise((resolve, reject) => {
-      fb[method](...before, (err, response) => {
+      fb[method](...before, (response) => {
         if (!response || response.error) {
-          reject(new Error(response.error || 'Response is undefined'));
+          reject(new Error((response && response.error) || 'Response is undefined'));
           return;
         }
 
