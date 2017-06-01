@@ -17,12 +17,32 @@ export default class Parser extends Component {
     return false;
   }
 
+  rerender() {
+    this.forceUpdate();
+
+    this.parsed = false;
+    this.parse();
+  }
+
   handleFacebookReady = (facebook) => {
-    facebook.parse(this.container);
+    this.facebook = facebook;
+    this.parse();
   }
 
   handleContainer = (container) => {
     this.container = container;
+    this.parse();
+  }
+
+  parse() {
+    const { parsed, container, facebook } = this;
+    if (parsed || !container || !facebook) {
+      return false;
+    }
+
+    this.parsed = true;
+
+    return facebook.parse(container);
   }
 
   render() {
