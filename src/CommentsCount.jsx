@@ -27,10 +27,12 @@ CommentsCount.propTypes = {
   className: PropTypes.string,
   href: PropTypes.string,
   children: PropTypes.node,
+  onParse: PropTypes.func,
 };
 
 CommentsCount.defaultProps = {
   className: undefined,
   href: undefined,
   children: undefined,
+  onParse: undefined,
 };
