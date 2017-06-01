@@ -14,10 +14,11 @@ export default function Comments(props) {
     orderBy,
     width,
     children,
+    onParse,
   } = props;
 
   return (
-    <Parser className={className}>
+    <Parser className={className} onParse={onParse}>
       <div
         className="fb-comments"
         data-colorscheme={colorScheme}
@@ -44,6 +45,7 @@ Comments.propTypes = {
   ]),
   colorScheme: PropTypes.string.isRequired,
   children: PropTypes.node,
+  onParse: PropTypes.func,
 };
 
 Comments.defaultProps = {
@@ -54,4 +56,5 @@ Comments.defaultProps = {
   children: undefined,
   className: undefined,
   href: undefined,
+  onParse: undefined,
 };

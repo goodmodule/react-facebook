@@ -9,10 +9,11 @@ export default function EmbeddedPost(props) {
     width,
     showText,
     children,
+    onParse,
   } = props;
 
   return (
-    <Parser className={className}>
+    <Parser className={className} onParse={onParse}>
       <div
         className="fb-post"
         data-href={href}
@@ -34,6 +35,7 @@ EmbeddedPost.propTypes = {
   ]),
   showText: PropTypes.bool.isRequired,
   children: PropTypes.node,
+  onParse: PropTypes.func,
 };
 
 EmbeddedPost.defaultProps = {
@@ -42,4 +44,5 @@ EmbeddedPost.defaultProps = {
   showText: false,
   children: undefined,
   className: undefined,
+  onParse: undefined,
 };

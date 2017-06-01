@@ -8,10 +8,11 @@ export default function CommentsCount(props) {
     className,
     href = getCurrentHref(),
     children,
+    onParse,
   } = props;
 
   return (
-    <Parser className={className}>
+    <Parser className={className} onParse={onParse}>
       <span
         className="fb-comments-count"
         data-href={href}

@@ -17,12 +17,13 @@ export default function Page(props, context) {
     smallHeader,
     adaptContainerWidth,
     children,
+    onParse,
   } = props;
 
   const appId = context.facebook && context.facebook.props.appId;
 
   return (
-    <Parser className={className}>
+    <Parser className={className} onParse={onParse}>
       <div
         className="fb-page"
         style={style}
@@ -61,6 +62,7 @@ Page.propTypes = {
   smallHeader: PropTypes.bool,
   adaptContainerWidth: PropTypes.bool,
   children: PropTypes.node,
+  onParse: PropTypes.func,
 };
 
 Page.defaultProps = {
@@ -74,6 +76,7 @@ Page.defaultProps = {
   adaptContainerWidth: true,
   children: undefined,
   className: undefined,
+  onParse: undefined,
 };
 
 Page.contextTypes = {

@@ -21,10 +21,11 @@ export default function Like(props) {
     size,
     kidDirectedSite,
     referral,
+    onParse,
   } = props;
 
   return (
-    <Parser className={className}>
+    <Parser className={className} onParse={onParse}>
       <div
         className="fb-like"
         data-ref={referral}
@@ -60,6 +61,7 @@ Like.propTypes = {
   ]),
   size: PropTypes.string,
   kidDirectedSite: PropTypes.bool.isRequired,
+  onParse: PropTypes.func,
 };
 
 Like.defaultProps = {
@@ -75,4 +77,5 @@ Like.defaultProps = {
   href: undefined,
   referral: undefined,
   width: undefined,
+  onParse: undefined,
 };

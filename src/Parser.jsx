@@ -6,10 +6,12 @@ export default class Parser extends Component {
   static propTypes = {
     className: PropTypes.string,
     children: PropTypes.node.isRequired,
+    onParse: PropTypes.func,
   };
 
   static defaultProps = {
     className: undefined,
+    onParse: undefined,
   };
 
   shouldComponentUpdate() {
@@ -61,7 +63,14 @@ export default class Parser extends Component {
 
     this.parsed = true;
 
-    return facebook.parse(container);
+    const parseResponse = facebook.parse(container);
+
+    const { onParse } = this.props;
+    if (onParse) {
+      onParse(parseResponse);
+    }
+
+    return parseResponse;
   }
 
   render() {
