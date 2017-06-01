@@ -5,16 +5,35 @@ import InitFacebook from './InitFacebook';
 export default class Parser extends Component {
   static propTypes = {
     className: PropTypes.string,
-    children: PropTypes.node,
+    children: PropTypes.node.isRequired,
   };
 
   static defaultProps = {
     className: undefined,
-    children: undefined,
   };
 
   shouldComponentUpdate() {
     return false;
+  }
+
+  componentWillReceiveProps(props) {
+    const oldChildren = this.props.children;
+    const { children } = props;
+
+    if (!children || !oldChildren) {
+      return;
+    }
+
+    const changed = Object.keys(oldChildren.props).find((propName) => {
+      const oldValue = oldChildren.props[propName];
+      const newValue = children.props[propName];
+
+      return oldValue !== newValue;
+    });
+
+    if (changed) {
+      this.rerender();
+    }
   }
 
   rerender() {

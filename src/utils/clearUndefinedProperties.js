@@ -5,7 +5,7 @@ export default function clearUndefinedProperties(obj) {
 
   const newObj = {};
 
-  Object.keys(obj).forEach(propertyName => {
+  Object.keys(obj).forEach((propertyName) => {
     const value = obj[propertyName];
     if (value !== undefined) {
       newObj[propertyName] = value;
