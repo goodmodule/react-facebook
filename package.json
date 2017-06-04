@@ -1,6 +1,6 @@
 {
   "name": "react-facebook",
-  "version": "4.0.12",
+  "version": "4.0.13",
   "description": "Facebook components like a Login button, Like, Share, Comments or Embedded Post",
   "author": {
     "name": "Zlatko Fedor",
@@ -30,6 +30,7 @@
   "private": false,
   "license": "MIT",
   "main": "./lib/index.js",
+  "esnext": "./src/index.js",
   "engines": {
     "node": ">= 0.12.0"
   },
