@@ -31,11 +31,11 @@ export default class Login extends Process {
     }
 
     if (rerequest) {
-      authType.append('rerequest');
+      authType.push('rerequest');
     }
 
     if (reauthorize) {
-      authType.append('reauthenticate');
+      authType.push('reauthenticate');
     }
     
     if (authType.length) {
