@@ -8,6 +8,7 @@ export default class Login extends Process {
     fields: PropTypes.array.isRequired,
     returnScopes: PropTypes.bool,
     rerequest: PropTypes.bool,
+    reauthorize: PropTypes.bool,
   };
 
   static defaultProps = {
@@ -17,18 +18,28 @@ export default class Login extends Process {
       'name', 'email', 'locale', 'gender', 'timezone', 'verified', 'link'],
     returnScopes: false,
     rerequest: false,
+    reauthorize: false,
   };
 
   async process(facebook) {
-    const { scope, fields, returnScopes, rerequest } = this.props;
+    const { scope, fields, returnScopes, rerequest, reauthorize } = this.props;
     const loginQpts = { scope };
+    const authType = [];
 
     if (returnScopes) {
       loginQpts.return_scopes = true;
     }
 
     if (rerequest) {
-      loginQpts.auth_type = 'rerequest';
+      authType.push('rerequest');
+    }
+
+    if (reauthorize) {
+      authType.push('reauthenticate');
+    }
+    
+    if (authType.length) {
+      loginQpts.auth_type = authType.join(',');
     }
 
     const response = await facebook.login(loginQpts);
