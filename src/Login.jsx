@@ -24,21 +24,23 @@ export default class Login extends Process {
   async process(facebook) {
     const { scope, fields, returnScopes, rerequest, reauthorize } = this.props;
     const loginQpts = { scope };
-    let auth_type = [];
+    const authType = [];
 
     if (returnScopes) {
       loginQpts.return_scopes = true;
     }
 
     if (rerequest) {
-      auth_type.append('rerequest');
+      authType.append('rerequest');
     }
 
     if (reauthorize) {
-      auth_type.append('reauthenticate');
+      authType.append('reauthenticate');
     }
-
-    loginQpts.auth_type = auth_type.join(',');
+    
+    if (authType.length) {
+      loginQpts.auth_type = authType.join(',');
+    }
 
     const response = await facebook.login(loginQpts);
     if (response.status !== 'connected') {
