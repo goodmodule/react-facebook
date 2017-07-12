@@ -5,7 +5,7 @@ export default class Login extends Process {
   static propTypes = {
     ...Process.propTypes,
     scope: PropTypes.string.isRequired,
-    fields: PropTypes.array.isRequired,
+    fields: PropTypes.arrayOf(PropTypes.string),
     returnScopes: PropTypes.bool,
     rerequest: PropTypes.bool,
     reauthorize: PropTypes.bool,
@@ -37,7 +37,7 @@ export default class Login extends Process {
     if (reauthorize) {
       authType.push('reauthenticate');
     }
-    
+
     if (authType.length) {
       loginQpts.auth_type = authType.join(',');
     }
