@@ -1,6 +1,6 @@
 {
   "name": "react-facebook",
-  "version": "4.0.14",
+  "version": "4.0.15",
   "description": "Facebook components like a Login button, Like, Share, Comments or Embedded Post",
   "author": {
     "name": "Zlatko Fedor",
@@ -39,7 +39,7 @@
     "test": "jest --coverage",
     "build": "babel-node ./node_modules/gulp/bin/gulp.js build",
     "eslint": "node ./node_modules/eslint/bin/eslint.js --ext .js,.jsx ./src"
-  },  
+  },
   "jest": {
     "setupFiles": [
       "<rootDir>/jest/setup.js"
