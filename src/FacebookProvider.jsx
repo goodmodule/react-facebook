@@ -70,6 +70,7 @@ export default class Facebook extends Component {
     }
 
     await this.facebook.init();
+
     return this.facebook;
   }
 
