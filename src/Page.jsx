@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Parser from './Parser';
 import getCurrentHref from './utils/getCurrentHref';
 
-export default function Page(props, context) {
+export default function Page(props) {
   const {
     className,
     style,
@@ -20,14 +20,11 @@ export default function Page(props, context) {
     onParse,
   } = props;
 
-  const appId = context.facebook && context.facebook.props.appId;
-
   return (
     <Parser className={className} onParse={onParse}>
       <div
         className="fb-page"
         style={style}
-        data-appID={appId}
         data-tabs={tabs}
         data-hide-cover={hideCover}
         data-show-facepile={showFacepile}
