@@ -75,7 +75,3 @@ Page.defaultProps = {
   className: undefined,
   onParse: undefined,
 };
-
-Page.contextTypes = {
-  facebook: PropTypes.object.isRequired,
-};
