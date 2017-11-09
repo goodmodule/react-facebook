@@ -1,16 +1,85 @@
 {
-  "presets": [
-    ["es2015", { "loose": true }],
-    "stage-0",
-    "react",
-  ],
-  "plugins": [
-    ["transform-runtime", {
-      "polyfill": false,
-      "regenerator": true
-    }],
-    "transform-decorators-legacy",
-    "transform-class-properties",
-    "transform-proto-to-assign",
-  ]
+  "env": {
+    "development": {
+      "presets": [
+        ["babel-preset-env", {
+          "targets": {
+            "node": "6.10"
+          }
+        }],
+        "stage-0",
+        "react"
+      ],
+      "plugins": [
+        ["transform-runtime", {
+          "polyfill": false,
+          "regenerator": true
+        }],
+        "transform-decorators",
+        "transform-class-properties"
+      ]
+    },
+    "test": {
+      "presets": [
+        ["babel-preset-env", {
+          "targets": {
+            "node": "6.10"
+          }
+        }],
+        "stage-0",
+        "react"
+      ],
+      "plugins": [
+        ["transform-runtime", {
+          "polyfill": false,
+          "regenerator": true
+        }],
+        "transform-decorators",
+        "transform-class-properties"
+      ]
+    },
+    "browser": {
+      "presets": [
+        ["babel-preset-env", {
+          "targets": {
+            "browsers": "last 3 versions, > 1%"
+          },
+          "modules": false,
+          "loose": true
+        }],
+        "stage-0",
+        "react"
+      ],
+      "plugins": [
+        ["transform-runtime", {
+          "polyfill": false,
+          "regenerator": true
+        }],
+        "transform-decorators-legacy",
+        "transform-class-properties",
+        "transform-proto-to-assign",
+      ]
+    },
+    "module": {
+      "presets": [
+        ["babel-preset-env", {
+          "targets": {
+            "node": "6.10"
+          },
+          "modules": false
+        }],
+        "stage-0",
+        "react"
+      ],
+      "plugins": [
+        ["transform-runtime", {
+          "polyfill": false,
+          "regenerator": true
+        }],
+        "transform-decorators",
+        "transform-class-properties"
+      ]
+    }
+  },
+  "sourceMaps": true
 }

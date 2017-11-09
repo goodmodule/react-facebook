@@ -1,3 +1,7 @@
+import debug from 'debug';
+
+const log = debug('react-facebook:facebook');
+
 export const LoginStatus = {
   CONNECTED: 'connected',
   NOT_AUTHORIZED: 'not_authorized',
@@ -57,6 +61,11 @@ export default class Facebook {
       };
 
       const fjs = document.getElementsByTagName('script')[0];
+      if (!fjs) {
+        log('Script tag does not exists in the DOM');
+        return;
+      }
+
       if (document.getElementById('facebook-jssdk')) {
         return;
       }

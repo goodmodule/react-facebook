@@ -1,6 +1,6 @@
 {
   "name": "react-facebook",
-  "version": "4.0.16",
+  "version": "4.1.0",
   "description": "Facebook components like a Login button, Like, Share, Comments or Embedded Post",
   "author": {
     "name": "Zlatko Fedor",
@@ -29,23 +29,31 @@
   ],
   "private": false,
   "license": "MIT",
-  "main": "./lib/index.js",
+  "main": "./dist/index.js",
+  "browser": "./lib/index.js",
+  "module": "./module/index.js",
   "esnext": "./src/index.js",
   "engines": {
     "node": ">= 0.12.0"
   },
   "scripts": {
     "prepublish": "npm run build",
-    "test": "jest --coverage",
-    "build": "babel-node ./node_modules/gulp/bin/gulp.js build",
+    "test": "jest ./src/",
+    "test:coverage": "jest --coverage ./src/",
+    "test:watch": "jest --watch ./src/",
+    "build-browser": "cross-env BABEL_ENV=browser babel ./src --out-dir ./lib --source-maps --copy-files",
+    "build-module": "cross-env BABEL_ENV=module babel ./src --out-dir ./module --source-maps --copy-files",
+    "build-node": "babel ./src --out-dir ./dist --source-maps --copy-files",
+    "build": "npm run build-node && npm run build-browser && npm run build-module",
     "eslint": "node ./node_modules/eslint/bin/eslint.js --ext .js,.jsx ./src"
   },
   "jest": {
     "setupFiles": [
-      "<rootDir>/jest/setup.js"
+      "<rootDir>/setupJest.js"
     ]
   },
   "dependencies": {
+    "debug": "^3.1.0",
     "react-spinner-children": "^1.0.8",
     "can-use-dom": "^0.1.0",
     "prop-types": "^15.6.0",
@@ -54,30 +62,28 @@
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
-    "babel-eslint": "^8.0.1",
+    "babel-eslint": "^8.0.2",
     "babel-plugin-transform-decorators-legacy": "^1.3.4",
     "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-plugin-transform-proto-to-assign": "^6.26.0",
-    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-env": "^1.6.1",
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-0": "^6.24.1",
     "babel-plugin-transform-runtime": "^6.23.0",
-    "eslint": "^4.7.2",
-    "eslint-config-airbnb": "^15.1.0",
+    "cross-env": "^5.1.1",
+    "eslint": "^4.10.0",
+    "eslint-config-airbnb": "^16.1.0",
     "eslint-loader": "^1.9.0",
     "eslint-plugin-react": "^7.4.0",
-    "eslint-plugin-jsx-a11y": "^5.1.1",
-    "eslint-plugin-import": "^2.7.0",
-    "gulp": "^3.9.1",
-    "gulp-babel": "^7.0.0",
-    "gulp-util": "^3.0.8",
+    "eslint-plugin-jsx-a11y": "^6.0.2",
+    "eslint-plugin-import": "^2.8.0",
     "jest": "^21.2.1",
     "jest-cli": "^21.2.1",
-    "enzyme": "^3.0.0",
-    "enzyme-adapter-react-16": "^1.0.0",
-    "react": "^16.0.0",
-    "react-dom": "^16.0.0",
-    "react-test-renderer": "^16.0.0"
+    "enzyme": "^3.1.1",
+    "enzyme-adapter-react-16": "^1.0.4",
+    "react": "^16.1.0",
+    "react-dom": "^16.1.0",
+    "react-test-renderer": "^16.1.0"
   },
   "peerDependencies": {
     "react": "15.x || 16.x"
