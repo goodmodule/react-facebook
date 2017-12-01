@@ -5,7 +5,7 @@ import Parser from './Parser';
 export default function CustomChat(props) {
   const {
     className,
-    ref,
+    dataRef,
     minimized,
     children,
     pageId,
@@ -17,7 +17,7 @@ export default function CustomChat(props) {
       <div
         className="fb-customerchat"
         data-page_id={pageId}
-        data-ref={ref}
+        data-ref={dataRef}
         data-minimized={minimized}
       >
         {children}
@@ -28,7 +28,7 @@ export default function CustomChat(props) {
 
 CustomChat.propTypes = {
   className: PropTypes.string,
-  ref: PropTypes.string,
+  dataRef: PropTypes.string,
   pageId: PropTypes.string.isRequired,
   minimized: PropTypes.bool,
   onParse: PropTypes.func,
@@ -39,6 +39,6 @@ CustomChat.defaultProps = {
   minimized: true,
   children: undefined,
   className: undefined,
-  ref: undefined,
+  dataRef: undefined,
   onParse: undefined,
 };
