@@ -1,15 +1,15 @@
 {
-  "name": "react-facebook",
-  "version": "4.1.1",
+  "name": "react-facebook-next",
+  "version": "4.1.3",
   "description": "Facebook components like a Login button, Like, Share, Comments or Embedded Post",
   "author": {
-    "name": "Zlatko Fedor",
-    "email": "zfedor@cherryprojects.com",
-    "url": "http://www.cherryprojects.com/"
+    "name": "Younes Benaomar",
+    "email": "contact@interactive-object.com",
+    "url": "http://www.interactive-object.com/"
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/CherryProjects/react-facebook.git"
+    "url": "git://github.comInteractiveObject/react-facebook.git"
   },
   "keywords": [
     "react",
@@ -53,34 +53,34 @@
     ]
   },
   "dependencies": {
-    "debug": "^3.1.0",
-    "react-spinner-children": "^1.0.8",
+    "babel-runtime": "^6.26.0",
     "can-use-dom": "^0.1.0",
+    "debug": "^3.1.0",
     "prop-types": "^15.6.0",
-    "babel-runtime": "^6.26.0"
+    "react-spinner-children": "^1.0.8"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
     "babel-eslint": "^8.0.2",
-    "babel-plugin-transform-decorators-legacy": "^1.3.4",
     "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-plugin-transform-decorators-legacy": "^1.3.4",
     "babel-plugin-transform-proto-to-assign": "^6.26.0",
+    "babel-plugin-transform-runtime": "^6.23.0",
     "babel-preset-env": "^1.6.1",
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-0": "^6.24.1",
-    "babel-plugin-transform-runtime": "^6.23.0",
     "cross-env": "^5.1.1",
+    "enzyme": "^3.1.1",
+    "enzyme-adapter-react-16": "^1.0.4",
     "eslint": "^4.10.0",
     "eslint-config-airbnb": "^16.1.0",
     "eslint-loader": "^1.9.0",
-    "eslint-plugin-react": "^7.4.0",
-    "eslint-plugin-jsx-a11y": "^6.0.2",
     "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-jsx-a11y": "^6.0.2",
+    "eslint-plugin-react": "^7.4.0",
     "jest": "^21.2.1",
     "jest-cli": "^21.2.1",
-    "enzyme": "^3.1.1",
-    "enzyme-adapter-react-16": "^1.0.4",
     "react": "^16.1.0",
     "react-dom": "^16.1.0",
     "react-test-renderer": "^16.1.0"
