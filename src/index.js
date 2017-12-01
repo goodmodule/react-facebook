@@ -14,9 +14,13 @@ export EmbeddedPost from './EmbeddedPost';
 export Comments from './Comments';
 export CommentsCount from './CommentsCount';
 export Feed from './Feed';
+export CustomChat from './CustomChat';
+
 
 export LikeSize from './constants/LikeSize';
 export LikeLayout from './constants/LikeLayout';
 export ColorScheme from './constants/ColorScheme';
 export LikeAction from './constants/LikeAction';
 export CommentsOrderBy from './constants/CommentsOrderBy';
+
+
