@@ -13,6 +13,7 @@ export default function Page(props) {
     width,
     height,
     showFacepile,
+    showPosts,
     hideCTA,
     smallHeader,
     adaptContainerWidth,
@@ -28,6 +29,7 @@ export default function Page(props) {
         data-tabs={tabs}
         data-hide-cover={hideCover}
         data-show-facepile={showFacepile}
+        data-show-posts={showPosts}
         data-hide-cta={hideCTA}
         data-href={href}
         data-small-header={smallHeader}
@@ -55,6 +57,7 @@ Page.propTypes = {
     PropTypes.string.isRequired,
   ]),
   showFacepile: PropTypes.bool,
+  showPosts: PropTypes.bool,
   hideCTA: PropTypes.bool,
   smallHeader: PropTypes.bool,
   adaptContainerWidth: PropTypes.bool,
@@ -68,6 +71,7 @@ Page.defaultProps = {
   tabs: 'timeline',
   hideCover: false,
   showFacepile: true,
+  showPosts: true,
   hideCTA: false,
   smallHeader: false,
   adaptContainerWidth: true,
