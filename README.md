@@ -222,6 +222,76 @@ export default class Example extends Component {
 }
 ```
 
+## MessageUs
+
+```js
+import React, { Component} from 'react';
+import FacebookProvider, { MessageUs } from 'react-facebook';
+
+export default class Example extends Component {
+  render() {
+    return (
+      <FacebookProvider appId="123456789">
+        <MessageUs appId="123456789" pageId="123456789"/>
+      </FacebookProvider>    
+    );
+  }
+}
+```
+
+## SendToMessenger
+
+```js
+import React, { Component} from 'react';
+import FacebookProvider, { SendToMessenger } from 'react-facebook';
+
+export default class Example extends Component {
+  render() {
+    return (
+      <FacebookProvider appId="123456789">
+        <SendToMessenger appId="123456789" pageId="123456789"/>
+      </FacebookProvider>    
+    );
+  }
+}
+```
+
+
+## MessengerCheckbox
+
+```js
+import React, { Component} from 'react';
+import FacebookProvider, { MessengerCheckbox } from 'react-facebook';
+
+export default class Example extends Component {
+  render() {
+    return (
+      <FacebookProvider appId="123456789">
+        <MessengerCheckbox appId="123456789" pageId="123456789"/>
+      </FacebookProvider>    
+    );
+  }
+}
+```
+
+
+## CustomChat
+
+```js
+import React, { Component} from 'react';
+import FacebookProvider, { CustomChat } from 'react-facebook';
+
+export default class Example extends Component {
+  render() {
+    return (
+      <FacebookProvider appId="123456789">
+        <CustomChat  pageId="123456789" minimized={false}/>
+      </FacebookProvider>    
+    );
+  }
+}
+```
+
 # Support us
 
 Star this project on [GitHub][github-url].
