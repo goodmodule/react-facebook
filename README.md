@@ -209,7 +209,7 @@ export default class Example extends Component {
 
 ```js
 import React, { Component} from 'react';
-import FacebookProvider, { EmbeddedPost } from 'react-facebook';
+import FacebookProvider, { Page } from 'react-facebook';
 
 export default class Example extends Component {
   render() {
