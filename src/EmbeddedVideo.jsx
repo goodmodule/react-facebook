@@ -42,7 +42,7 @@ EmbeddedVideo.propTypes = {
   showText: PropTypes.bool.isRequired,
   allowFullScreen: PropTypes.bool,
   autoPlay: PropTypes.bool,
-  showCaptions: PropTypes.bool
+  showCaptions: PropTypes.bool,
   children: PropTypes.node,
   onParse: PropTypes.func
 };
