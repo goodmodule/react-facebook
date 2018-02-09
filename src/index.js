@@ -11,6 +11,7 @@ export Page from './Page';
 export Login from './Login';
 export LoginButton from './LoginButton';
 export EmbeddedPost from './EmbeddedPost';
+export EmbeddedVideo from './EmbeddedVideo';
 export Comments from './Comments';
 export CommentsCount from './CommentsCount';
 export Feed from './Feed';
