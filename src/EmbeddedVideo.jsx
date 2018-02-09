@@ -32,7 +32,7 @@ export default function EmbeddedVideo(props) {
   );
 }
 
-EmbeddedPost.propTypes = {
+EmbeddedVideo.propTypes = {
   className: PropTypes.string,
   href: PropTypes.string.isRequired,
   width: PropTypes.oneOfType([
@@ -44,7 +44,7 @@ EmbeddedPost.propTypes = {
   onParse: PropTypes.func,
 };
 
-EmbeddedPost.defaultProps = {
+EmbeddedVideo.defaultProps = {
   href: 'http://www.facebook.com',
   width: 500, // 350 - 750
   showText: false,
