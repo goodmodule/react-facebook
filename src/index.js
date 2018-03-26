@@ -5,6 +5,7 @@ export Parser from './Parser';
 export InitFacebook from './InitFacebook';
 
 export Like from './Like';
+export Send from './Send';
 export Share from './Share';
 export ShareButton from './ShareButton';
 export Page from './Page';
