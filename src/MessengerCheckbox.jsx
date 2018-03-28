@@ -4,7 +4,6 @@ import Parser from './Parser';
 import MessengerSize from './constants/MessengerSize';
 import MessengerColor from './constants/MessengerColor';
 
-
 export default function MessengerCheckbox(props) {
   const {
     className,
