@@ -3,5 +3,5 @@ export default {
   MEDIUM: 'medium',
   STANDARD: 'standard',
   LARGE: 'large',
-  XLARGE: 'xlarge'
+  XLARGE: 'xlarge',
 };

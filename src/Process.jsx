@@ -1,18 +1,19 @@
+// @flow
+import type { Node } from 'react';
 import React, { Component, cloneElement } from 'react';
-import PropTypes from 'prop-types';
 import InitFacebook from './InitFacebook';
 
-export default class Process extends Component {
-  static propTypes = {
-    children: PropTypes.node,
-    render: PropTypes.func,
-    component: PropTypes.node,
-    onReady: PropTypes.func,
-    onError: PropTypes.func,
-    onResponse: PropTypes.func,
-    dontWait: PropTypes.bool,
-  };
+type Props = {
+  children?: Node,
+  render?: Function,
+  component?: Node,
+  onReady?: Function,
+  onError?: Function,
+  onResponse?: Function,
+  dontWait?: boolean,
+};
 
+export default class Process extends Component<Props> {
   static defaultProps = {
     children: undefined,
     render: undefined,
@@ -26,6 +27,42 @@ export default class Process extends Component {
   state = {
     isWorking: false,
   };
+
+  getElement() {
+    const {
+      children,
+      render,
+      component: CustomComponent,
+    } = this.props;
+
+    const { facebook, isWorking } = this.state;
+    const isLoading = !facebook;
+    const isReady = !isLoading && !isWorking;
+
+    if (render) {
+      return render({
+        isWorking,
+        isLoading,
+        isReady,
+        onClick: this.handleClick,
+      });
+    }
+
+    if (CustomComponent) {
+      return (
+        <CustomComponent
+          onClick={this.handleClick}
+          isLoading={isLoading}
+          isWorking={isWorking}
+          isReady={isReady}
+        />
+      );
+    }
+
+    return cloneElement(children, {
+      onClick: this.handleClick,
+    });
+  }
 
   handleClick = async (evn) => {
     evn.preventDefault();
@@ -78,42 +115,6 @@ export default class Process extends Component {
     if (onReady) {
       onReady(facebook);
     }
-  }
-
-  getElement() {
-    const {
-      children,
-      render,
-      component: CustomComponent,
-    } = this.props;
-
-    const { facebook, isWorking } = this.state;
-    const isLoading = !facebook;
-    const isReady = !isLoading && !isWorking;
-
-    if (render) {
-      return render({
-        isWorking,
-        isLoading,
-        isReady,
-        onClick: this.handleClick,
-      });
-    }
-
-    if (CustomComponent) {
-      return (
-        <CustomComponent
-          onClick={this.handleClick}
-          isLoading={isLoading}
-          isWorking={isWorking}
-          isReady={isReady}
-        />
-      );
-    }
-
-    return cloneElement(children, {
-      onClick: this.handleClick,
-    });
   }
 
   render() {

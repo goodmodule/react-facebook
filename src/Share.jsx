@@ -1,20 +1,19 @@
-import PropTypes from 'prop-types';
+// @flow
 import getCurrentHref from './utils/getCurrentHref';
 import clearUndefinedProperties from './utils/clearUndefinedProperties';
 import Process from './Process';
 
-export default class Share extends Process {
-  static propTypes = {
-    ...Process.propTypes,
-    href: PropTypes.string,
-    hashtag: PropTypes.string,
-    quote: PropTypes.string,
-    mobileIframe: PropTypes.bool,
-    display: PropTypes.string,
-    appId: PropTypes.string,
-    redirectURI: PropTypes.string,
-  };
+type Props = Process & {
+  href?: string,
+  hashtag?: string,
+  quote?: string,
+  mobileIframe?: boolean,
+  display?: string,
+  appId?: string,
+  redirectURI?: string,
+};
 
+export default class Share extends Process<Props> {
   static defaultProps = {
     ...Process.defaultProps,
     href: undefined,

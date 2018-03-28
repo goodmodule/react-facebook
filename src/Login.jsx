@@ -1,16 +1,15 @@
-import PropTypes from 'prop-types';
+// @flow
 import Process from './Process';
 
-export default class Login extends Process {
-  static propTypes = {
-    ...Process.propTypes,
-    scope: PropTypes.string.isRequired,
-    fields: PropTypes.arrayOf(PropTypes.string),
-    returnScopes: PropTypes.bool,
-    rerequest: PropTypes.bool,
-    reauthorize: PropTypes.bool,
-  };
+type Props = Process & {
+  scope: string,
+  fields?: string[],
+  returnScopes?: boolean,
+  rerequest?: boolean,
+  reauthorize?: boolean,
+};
 
+export default class Login extends Process<Props> {
   static defaultProps = {
     ...Process.defaultProps,
     scope: '',
@@ -22,7 +21,9 @@ export default class Login extends Process {
   };
 
   async process(facebook) {
-    const { scope, fields, returnScopes, rerequest, reauthorize } = this.props;
+    const {
+      scope, fields, returnScopes, rerequest, reauthorize,
+    } = this.props;
     const loginQpts = { scope };
     const authType = [];
 

@@ -1,24 +1,40 @@
+// @flow
 import React from 'react';
-import PropTypes from 'prop-types';
+import type { Node } from 'react';
 import Parser from './Parser';
 
-export default function CustomChat(props) {
+type Props = {
+  className?: string,
+  pageId: string,
+  minimized?: boolean,
+  onParse?: Function,
+  children?: Node,
+  themeColor?: string,
+  loggedInGreeting?: string,
+  loggedOutGreeting?: string,
+};
+
+export default function CustomChat(props: Props) {
   const {
     className,
-    dataRef,
     minimized,
     children,
     pageId,
     onParse,
+    themeColor,
+    loggedInGreeting,
+    loggedOutGreeting,
   } = props;
 
   return (
     <Parser className={className} onParse={onParse}>
       <div
         className="fb-customerchat"
-        data-page_id={pageId}
-        data-ref={dataRef}
-        data-minimized={minimized}
+        page_id={pageId}
+        minimized={minimized}
+        theme_color={themeColor}
+        logged_in_greeting={loggedInGreeting}
+        logged_out_greeting={loggedOutGreeting}
       >
         {children}
       </div>
@@ -26,19 +42,12 @@ export default function CustomChat(props) {
   );
 }
 
-CustomChat.propTypes = {
-  className: PropTypes.string,
-  dataRef: PropTypes.string,
-  pageId: PropTypes.string.isRequired,
-  minimized: PropTypes.bool,
-  onParse: PropTypes.func,
-  children: PropTypes.node
-};
-
 CustomChat.defaultProps = {
   minimized: true,
   children: undefined,
   className: undefined,
-  dataRef: undefined,
   onParse: undefined,
+  themeColor: undefined,
+  loggedInGreeting: undefined,
+  loggedOutGreeting: undefined,
 };

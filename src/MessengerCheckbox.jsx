@@ -1,10 +1,25 @@
+// @flow
 import React from 'react';
-import PropTypes from 'prop-types';
+import type { Node } from 'react';
 import Parser from './Parser';
 import MessengerSize from './constants/MessengerSize';
 import MessengerColor from './constants/MessengerColor';
 
-export default function MessengerCheckbox(props) {
+type Props = {
+  className?: string,
+  appId: string,
+  pageId: string,
+  color?: string,
+  userRef?: string,
+  origin?: string,
+  children?: Node,
+  size?: string,
+  prechecked?: boolean,
+  allowLogin?: boolean,
+  onParse?: Function,
+};
+
+export default function MessengerCheckbox(props: Props) {
   const {
     className,
     origin,
@@ -38,20 +53,6 @@ export default function MessengerCheckbox(props) {
   );
 }
 
-MessengerCheckbox.propTypes = {
-  className: PropTypes.string,
-  appId: PropTypes.string.isRequired,
-  pageId: PropTypes.string.isRequired,
-  color: PropTypes.string,
-  userRef: PropTypes.string,
-  origin: PropTypes.string.isRequired,
-  children: PropTypes.node,
-  size: PropTypes.string,
-  prechecked: PropTypes.bool,
-  allowLogin: PropTypes.bool,
-  onParse: PropTypes.func,
-};
-
 MessengerCheckbox.defaultProps = {
   color: MessengerColor.BLUE,
   size: MessengerSize.STANDARD,
@@ -61,4 +62,5 @@ MessengerCheckbox.defaultProps = {
   children: undefined,
   className: undefined,
   onParse: undefined,
+  origin: undefined,
 };

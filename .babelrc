@@ -16,7 +16,8 @@
           "regenerator": true
         }],
         "transform-decorators",
-        "transform-class-properties"
+        "transform-class-properties",
+        "transform-flow-strip-types"
       ]
     },
     "test": {
@@ -35,7 +36,8 @@
           "regenerator": true
         }],
         "transform-decorators",
-        "transform-class-properties"
+        "transform-class-properties",
+        "transform-flow-strip-types"
       ]
     },
     "browser": {
@@ -56,7 +58,8 @@
         }],
         "transform-decorators-legacy",
         "transform-class-properties",
-        "transform-proto-to-assign"
+        "transform-proto-to-assign",
+        "transform-flow-strip-types"
       ]
     },
     "module": {
@@ -76,7 +79,8 @@
           "regenerator": true
         }],
         "transform-decorators",
-        "transform-class-properties"
+        "transform-class-properties",
+        "transform-flow-strip-types"
       ]
     }
   },

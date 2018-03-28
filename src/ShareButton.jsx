@@ -1,8 +1,14 @@
+// @flow
 import React from 'react';
-import PropTypes from 'prop-types';
 import Share from './Share';
 
-export default function ShareButton(props) {
+type Props = Share & {
+  className?: string,
+  iconClassName?: string,
+  icon?: boolean,
+};
+
+export default function ShareButton(props: Props) {
   const {
     className,
     iconClassName,
@@ -28,13 +34,6 @@ export default function ShareButton(props) {
     />
   );
 }
-
-ShareButton.propTypes = {
-  ...Share.propTypes,
-  className: PropTypes.string,
-  iconClassName: PropTypes.string,
-  icon: PropTypes.bool,
-};
 
 ShareButton.defaultProps = {
   ...Share.defaultProps,

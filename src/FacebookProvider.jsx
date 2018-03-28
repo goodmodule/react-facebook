@@ -1,23 +1,25 @@
-import { Component } from 'react';
+// @flow
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import type { Node } from 'react';
 import FB from './Facebook';
 
 let facebookInstance = null;
 
-export default class Facebook extends Component {
-  static propTypes = {
-    appId: PropTypes.string.isRequired,
-    domain: PropTypes.string,
-    version: PropTypes.string,
-    cookie: PropTypes.bool,
-    status: PropTypes.bool,
-    xfbml: PropTypes.bool,
-    language: PropTypes.string,
-    frictionlessRequests: PropTypes.bool,
-    children: PropTypes.node,
-    wait: PropTypes.bool,
-  };
+type Props = {
+  appId: string,
+  domain?: string,
+  version?: string,
+  cookie?: boolean,
+  status?: boolean,
+  xfbml?: boolean,
+  language?: string,
+  frictionlessRequests?: boolean,
+  children?: Node,
+  wait?: boolean,
+};
 
+export default class Facebook extends Component<Props> {
   static childContextTypes = {
     facebook: PropTypes.object.isRequired,
   };

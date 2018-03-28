@@ -1,13 +1,15 @@
-import { Component } from 'react';
+// @flow
+import React, { Component } from 'react';
+import type { Node } from 'react';
 import PropTypes from 'prop-types';
 import canUseDOM from 'can-use-dom';
 
-export default class InitFacebook extends Component {
-  static propTypes = {
-    children: PropTypes.node,
-    onReady: PropTypes.func.isRequired,
-  };
+type Props = {
+  children?: Node,
+  onReady: Function
+};
 
+export default class InitFacebook extends Component<Props> {
   static defaultProps = {
     children: undefined,
   };

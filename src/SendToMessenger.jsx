@@ -1,11 +1,22 @@
+// @flow
 import React from 'react';
-import PropTypes from 'prop-types';
+import type { Node } from 'react';
 import Parser from './Parser';
 import MessengerSize from './constants/MessengerSize';
 import MessengerColor from './constants/MessengerColor';
 
+type Props = {
+  className?: string,
+  appId: string,
+  pageId: string,
+  color?: string,
+  children?: Node,
+  dataRef?: string,
+  size?: string,
+  onParse?: Function,
+};
 
-export default function SendToMessenger(props) {
+export default function SendToMessenger(props: Props) {
   const {
     className,
     color,
@@ -32,17 +43,6 @@ export default function SendToMessenger(props) {
     </Parser>
   );
 }
-
-SendToMessenger.propTypes = {
-  className: PropTypes.string,
-  appId: PropTypes.string.isRequired,
-  pageId: PropTypes.string.isRequired,
-  color: PropTypes.string,
-  children: PropTypes.node,
-  dataRef: PropTypes.string,
-  size: PropTypes.string,
-  onParse: PropTypes.func,
-};
 
 SendToMessenger.defaultProps = {
   color: MessengerColor.BLUE,

@@ -1,25 +1,24 @@
-import PropTypes from 'prop-types';
+// @flow
 import getCurrentHref from './utils/getCurrentHref';
 import clearUndefinedProperties from './utils/clearUndefinedProperties';
 import Process from './Process';
 
-export default class Feed extends Process {
-  static propTypes = {
-    ...Process.propTypes,
-    appId: PropTypes.string,
-    redirectURI: PropTypes.string,
-    display: PropTypes.string,
-    from: PropTypes.string,
-    to: PropTypes.string,
-    link: PropTypes.string,
-    source: PropTypes.string,
-    picture: PropTypes.string, // deprecated
-    name: PropTypes.string, // deprecated
-    caption: PropTypes.string, // deprecated
-    description: PropTypes.string, // deprecated
-    ref: PropTypes.string,
-  };
+type Props = Process & {
+  appId?: string,
+  redirectURI?: string,
+  display?: string,
+  from?: string,
+  to?: string,
+  link?: string,
+  source?: string,
+  picture?: string, // deprecated
+  name?: string, // deprecated
+  caption?: string, // deprecated
+  description?: string, // deprecated
+  ref?: string,
+};
 
+export default class Feed extends Process<Props> {
   static defaultProps = {
     ...Process.defaultProps,
     link: undefined,

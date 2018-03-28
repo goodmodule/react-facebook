@@ -1,8 +1,21 @@
+// @flow
 import React from 'react';
-import PropTypes from 'prop-types';
+import type { Node } from 'react';
 import Parser from './Parser';
 
-export default function EmbeddedVideo(props) {
+type Props = {
+  className?: string,
+  href: string,
+  width?: number | string,
+  showText?: boolean,
+  allowFullScreen?: boolean,
+  autoPlay?: boolean,
+  showCaptions?: boolean,
+  children?: Node,
+  onParse?: Function,
+};
+
+export default function EmbeddedVideo(props: Props): Node {
   const {
     className,
     href,
@@ -32,24 +45,8 @@ export default function EmbeddedVideo(props) {
   );
 }
 
-EmbeddedVideo.propTypes = {
-  className: PropTypes.string,
-  href: PropTypes.string.isRequired,
-  width: PropTypes.oneOfType([
-    PropTypes.number.isRequired,
-    PropTypes.string.isRequired,
-  ]),
-  showText: PropTypes.bool.isRequired,
-  allowFullScreen: PropTypes.bool,
-  autoPlay: PropTypes.bool,
-  showCaptions: PropTypes.bool,
-  children: PropTypes.node,
-  onParse: PropTypes.func
-};
-
 EmbeddedVideo.defaultProps = {
-  href: 'http://www.facebook.com',
-  width: 500, // 350 - 750
+  width: 'auto',
   showText: false,
   allowFullScreen: false,
   autoPlay: false,

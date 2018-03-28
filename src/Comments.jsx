@@ -1,11 +1,24 @@
+// @flow
 import React from 'react';
-import PropTypes from 'prop-types';
+import type { Node } from 'react';
 import Parser from './Parser';
 import getCurrentHref from './utils/getCurrentHref';
 import ColorScheme from './constants/ColorScheme';
 import CommentsOrderBy from './constants/CommentsOrderBy';
 
-export default function Comments(props) {
+type Props = {
+  className?: string,
+  href?: string,
+  numPosts?: number,
+  orderBy?: string,
+  width?: number | string,
+  colorScheme?: string,
+  children?: Node,
+  onParse?: Function,
+  mobile?: boolean,
+};
+
+export default function Comments(props: Props) {
   const {
     className,
     colorScheme,
@@ -15,6 +28,7 @@ export default function Comments(props) {
     width,
     children,
     onParse,
+    mobile,
   } = props;
 
   return (
@@ -27,6 +41,7 @@ export default function Comments(props) {
         data-order-by={orderBy}
         data-width={width}
         data-skin={colorScheme}
+        data-mobile={mobile}
       >
         {children}
       </div>
@@ -34,27 +49,14 @@ export default function Comments(props) {
   );
 }
 
-Comments.propTypes = {
-  className: PropTypes.string,
-  href: PropTypes.string,
-  numPosts: PropTypes.number.isRequired,
-  orderBy: PropTypes.string.isRequired,
-  width: PropTypes.oneOfType([
-    PropTypes.number.isRequired,
-    PropTypes.string.isRequired,
-  ]),
-  colorScheme: PropTypes.string.isRequired,
-  children: PropTypes.node,
-  onParse: PropTypes.func,
-};
-
 Comments.defaultProps = {
+  href: undefined,
   numPosts: 10,
   orderBy: CommentsOrderBy.SOCIAL,
   width: 550,
   colorScheme: ColorScheme.LIGHT,
   children: undefined,
   className: undefined,
-  href: undefined,
   onParse: undefined,
+  mobile: undefined,
 };

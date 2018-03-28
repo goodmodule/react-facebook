@@ -1,5 +1,6 @@
+// @flow
+import type { Node } from 'react';
 import React from 'react';
-import PropTypes from 'prop-types';
 import Parser from './Parser';
 import getCurrentHref from './utils/getCurrentHref';
 import LikeSize from './constants/LikeSize';
@@ -7,7 +8,23 @@ import LikeLayout from './constants/LikeLayout';
 import ColorScheme from './constants/ColorScheme';
 import LikeAction from './constants/LikeAction';
 
-export default function Like(props) {
+type Props = {
+  className?: string,
+  referral?: string,
+  href?: string,
+  layout?: string,
+  showFaces?: boolean,
+  colorScheme?: string,
+  action?: string,
+  share?: boolean,
+  children?: Node,
+  width?: number | string,
+  size?: string,
+  kidDirectedSite?: boolean,
+  onParse?: Function,
+};
+
+export default function Like(props: Props) {
   const {
     className,
     href = getCurrentHref(),
@@ -44,25 +61,6 @@ export default function Like(props) {
     </Parser>
   );
 }
-
-Like.propTypes = {
-  className: PropTypes.string,
-  referral: PropTypes.string,
-  href: PropTypes.string,
-  layout: PropTypes.string.isRequired,
-  showFaces: PropTypes.bool.isRequired,
-  colorScheme: PropTypes.string.isRequired,
-  action: PropTypes.string.isRequired,
-  share: PropTypes.bool.isRequired,
-  children: PropTypes.node,
-  width: PropTypes.oneOfType([
-    PropTypes.number.isRequired,
-    PropTypes.string.isRequired,
-  ]),
-  size: PropTypes.string,
-  kidDirectedSite: PropTypes.bool.isRequired,
-  onParse: PropTypes.func,
-};
 
 Like.defaultProps = {
   layout: LikeLayout.STANDARD,

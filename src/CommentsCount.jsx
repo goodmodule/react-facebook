@@ -1,9 +1,17 @@
+// @flow
 import React from 'react';
-import PropTypes from 'prop-types';
+import type { Node } from 'react';
 import Parser from './Parser';
 import getCurrentHref from './utils/getCurrentHref';
 
-export default function CommentsCount(props) {
+type Props = {
+  className?: string,
+  href?: string,
+  children?: Node,
+  onParse?: Function,
+};
+
+export default function CommentsCount(props: Props) {
   const {
     className,
     href = getCurrentHref(),
@@ -22,13 +30,6 @@ export default function CommentsCount(props) {
     </Parser>
   );
 }
-
-CommentsCount.propTypes = {
-  className: PropTypes.string,
-  href: PropTypes.string,
-  children: PropTypes.node,
-  onParse: PropTypes.func,
-};
 
 CommentsCount.defaultProps = {
   className: undefined,

@@ -1,7 +1,7 @@
 {
   "name": "react-facebook",
-  "version": "4.2.1",
-  "description": "Facebook components like a Login button, Like, Share, Comments or Embedded Post",
+  "version": "4.3.0",
+  "description": "Facebook components like a Login button, Like, Share, Comments, Embedded Post/Video, Messenger Chat and others",
   "author": {
     "name": "Zlatko Fedor",
     "email": "zfedor@cherryprojects.com",
@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/CherryProjects/react-facebook.git"
+    "url": "git://github.com/seeden/react-facebook.git"
   },
   "keywords": [
     "react",
@@ -25,7 +25,10 @@
     "comment",
     "comments",
     "feed",
-    "page"
+    "page",
+    "embedded",
+    "messenger",
+    "chat"
   ],
   "private": false,
   "license": "MIT",
@@ -56,13 +59,14 @@
     "debug": "^3.1.0",
     "react-spinner-children": "^1.0.8",
     "can-use-dom": "^0.1.0",
-    "prop-types": "^15.6.0",
+    "prop-types": "^15.6.1",
     "babel-runtime": "^6.26.0"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
-    "babel-eslint": "^8.0.3",
+    "babel-eslint": "^8.2.2",
+    "babel-plugin-transform-flow-strip-types": "6.22.0",
     "babel-plugin-transform-decorators-legacy": "^1.3.4",
     "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-plugin-transform-proto-to-assign": "^6.26.0",
@@ -70,16 +74,16 @@
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-0": "^6.24.1",
     "babel-plugin-transform-runtime": "^6.23.0",
-    "cross-env": "^5.1.1",
-    "eslint": "^4.13.1",
+    "cross-env": "^5.1.4",
+    "eslint": "^4.19.1",
     "eslint-config-airbnb": "^16.1.0",
-    "eslint-loader": "^1.9.0",
-    "eslint-plugin-react": "^7.5.1",
+    "eslint-loader": "^2.0.0",
+    "eslint-plugin-react": "^7.7.0",
     "eslint-plugin-jsx-a11y": "^6.0.3",
-    "eslint-plugin-import": "^2.8.0",
-    "jest": "^22.0.3",
-    "jest-cli": "^22.0.3",
-    "enzyme": "^3.2.0",
+    "eslint-plugin-import": "^2.9.0",
+    "jest": "^22.4.3",
+    "jest-cli": "^22.4.3",
+    "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.1",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",

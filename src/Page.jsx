@@ -1,9 +1,26 @@
+// @flow
 import React from 'react';
-import PropTypes from 'prop-types';
+import type { Node } from 'react';
 import Parser from './Parser';
 import getCurrentHref from './utils/getCurrentHref';
 
-export default function Page(props) {
+type Props = {
+  className?: string,
+  href?: string,
+  tabs?: string,
+  hideCover?: boolean,
+  height?: number | string,
+  width?: number | string,
+  showFacepile?: boolean,
+  hideCTA?: boolean,
+  smallHeader?: boolean,
+  adaptContainerWidth?: boolean,
+  children?: Node,
+  onParse?: Function,
+  style?: Object,
+};
+
+export default function Page(props: Props) {
   const {
     className,
     style,
@@ -41,27 +58,6 @@ export default function Page(props) {
   );
 }
 
-Page.propTypes = {
-  className: PropTypes.string,
-  href: PropTypes.string.isRequired,
-  tabs: PropTypes.string,
-  hideCover: PropTypes.bool,
-  height: PropTypes.oneOfType([
-    PropTypes.number.isRequired,
-    PropTypes.string.isRequired,
-  ]),
-  width: PropTypes.oneOfType([
-    PropTypes.number.isRequired,
-    PropTypes.string.isRequired,
-  ]),
-  showFacepile: PropTypes.bool,
-  hideCTA: PropTypes.bool,
-  smallHeader: PropTypes.bool,
-  adaptContainerWidth: PropTypes.bool,
-  children: PropTypes.node,
-  onParse: PropTypes.func,
-};
-
 Page.defaultProps = {
   width: 340,
   height: 500,
@@ -74,4 +70,6 @@ Page.defaultProps = {
   children: undefined,
   className: undefined,
   onParse: undefined,
+  style: undefined,
+  href: undefined,
 };

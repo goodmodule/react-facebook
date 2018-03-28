@@ -4,11 +4,11 @@
 
 [npm-image]: https://img.shields.io/npm/v/react-facebook.svg?style=flat-square
 [npm-url]: https://www.npmjs.com/react-facebook
-[travis-image]: https://img.shields.io/travis/CherryProjects/react-facebook/master.svg?style=flat-square
-[travis-url]: https://travis-ci.org/CherryProjects/react-facebook
-[coveralls-image]: https://img.shields.io/coveralls/CherryProjects/react-facebook/master.svg?style=flat-square
-[coveralls-url]: https://coveralls.io/r/CherryProjects/react-facebook?branch=master
-[github-url]: https://github.com/CherryProjects/react-facebook
+[travis-image]: https://img.shields.io/travis/seeden/react-facebook/master.svg?style=flat-square
+[travis-url]: https://travis-ci.org/seeden/react-facebook
+[coveralls-image]: https://img.shields.io/coveralls/seeden/react-facebook/master.svg?style=flat-square
+[coveralls-url]: https://coveralls.io/r/seeden/react-facebook?branch=master
+[github-url]: https://github.com/seeden/react-facebook
 
 # Components
 
@@ -19,8 +19,11 @@
 - Comments
 - Comments count
 - Embedded post
+- Embedded video
 - Page
 - Feed
+- Message Us
+- Customer Chat
 
 # Support us
 

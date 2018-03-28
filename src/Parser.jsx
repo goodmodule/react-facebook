@@ -1,22 +1,19 @@
+// @flow
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import type { Node } from 'react';
 import InitFacebook from './InitFacebook';
 
-export default class Parser extends Component {
-  static propTypes = {
-    className: PropTypes.string,
-    children: PropTypes.node.isRequired,
-    onParse: PropTypes.func,
-  };
+type Props = {
+  className?: string,
+  children?: Node,
+  onParse?: Function,
+};
 
+export default class Parser extends Component<Props> {
   static defaultProps = {
     className: undefined,
     onParse: undefined,
   };
-
-  shouldComponentUpdate() {
-    return false;
-  }
 
   componentWillReceiveProps(props) {
     const oldChildren = this.props.children;
@@ -36,6 +33,10 @@ export default class Parser extends Component {
     if (changed) {
       this.rerender();
     }
+  }
+
+  shouldComponentUpdate() {
+    return false;
   }
 
   rerender() {

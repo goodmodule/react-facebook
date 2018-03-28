@@ -1,8 +1,18 @@
+// @flow
 import React from 'react';
-import PropTypes from 'prop-types';
+import type { Node } from 'react';
 import Parser from './Parser';
 
-export default function EmbeddedPost(props) {
+type Props = {
+  className?: string,
+  href: string,
+  width?: string | number,
+  showText?: boolean,
+  children?: Node,
+  onParse?: Function,
+};
+
+export default function EmbeddedPost(props: Props) {
   const {
     className,
     href,
@@ -26,20 +36,7 @@ export default function EmbeddedPost(props) {
   );
 }
 
-EmbeddedPost.propTypes = {
-  className: PropTypes.string,
-  href: PropTypes.string.isRequired,
-  width: PropTypes.oneOfType([
-    PropTypes.number.isRequired,
-    PropTypes.string.isRequired,
-  ]),
-  showText: PropTypes.bool.isRequired,
-  children: PropTypes.node,
-  onParse: PropTypes.func,
-};
-
 EmbeddedPost.defaultProps = {
-  href: 'http://www.facebook.com',
   width: 500, // 350 - 750
   showText: false,
   children: undefined,
