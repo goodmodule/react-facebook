@@ -235,7 +235,7 @@ export default class Example extends Component {
   render() {
     return (
       <FacebookProvider appId="123456789">
-        <MessageUs appId="123456789" pageId="123456789"/>
+        <MessageUs messengerAppId="123456789" pageId="123456789"/>
       </FacebookProvider>    
     );
   }
@@ -252,7 +252,7 @@ export default class Example extends Component {
   render() {
     return (
       <FacebookProvider appId="123456789">
-        <SendToMessenger appId="123456789" pageId="123456789"/>
+        <SendToMessenger messengerAppId="123456789" pageId="123456789"/>
       </FacebookProvider>    
     );
   }
@@ -270,7 +270,7 @@ export default class Example extends Component {
   render() {
     return (
       <FacebookProvider appId="123456789">
-        <MessengerCheckbox appId="123456789" pageId="123456789"/>
+        <MessengerCheckbox messengerAppId="123456789" pageId="123456789"/>
       </FacebookProvider>    
     );
   }

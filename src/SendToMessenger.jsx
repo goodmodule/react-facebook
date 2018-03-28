@@ -20,7 +20,7 @@ export default function SendToMessenger(props: Props) {
   const {
     className,
     color,
-    appId,
+    messengerAppId,
     pageId,
     children,
     dataRef,
@@ -32,7 +32,7 @@ export default function SendToMessenger(props: Props) {
     <Parser className={className} onParse={onParse}>
       <div
         className="fb-send-to-messenger"
-        messenger_app_id={appId}
+        messenger_app_id={messengerAppId}
         page_id={pageId}
         data-color={color}
         data-size={size}
