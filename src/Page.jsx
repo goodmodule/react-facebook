@@ -59,14 +59,14 @@ export default function Page(props: Props) {
 }
 
 Page.defaultProps = {
-  width: 340,
-  height: 500,
-  tabs: 'timeline',
-  hideCover: false,
-  showFacepile: true,
-  hideCTA: false,
-  smallHeader: false,
-  adaptContainerWidth: true,
+  width: undefined,
+  height: undefined,
+  tabs: undefined,
+  hideCover: undefined,
+  showFacepile: undefined,
+  hideCTA: undefined,
+  smallHeader: undefined,
+  adaptContainerWidth: undefined,
   children: undefined,
   className: undefined,
   onParse: undefined,

@@ -46,11 +46,11 @@ export default function EmbeddedVideo(props: Props): Node {
 }
 
 EmbeddedVideo.defaultProps = {
-  width: 'auto',
-  showText: false,
-  allowFullScreen: false,
-  autoPlay: false,
-  showCaptions: false,
+  width: undefined,
+  showText: undefined,
+  allowFullScreen: undefined,
+  autoPlay: undefined,
+  showCaptions: undefined,
   children: undefined,
   className: undefined,
   onParse: undefined,

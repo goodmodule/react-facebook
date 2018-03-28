@@ -51,10 +51,10 @@ export default function Comments(props: Props) {
 
 Comments.defaultProps = {
   href: undefined,
-  numPosts: 10,
-  orderBy: CommentsOrderBy.SOCIAL,
-  width: 550,
-  colorScheme: ColorScheme.LIGHT,
+  numPosts: undefined,
+  orderBy: undefined,
+  width: undefined,
+  colorScheme: undefined,
   children: undefined,
   className: undefined,
   onParse: undefined,

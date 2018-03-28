@@ -37,8 +37,8 @@ export default function EmbeddedPost(props: Props) {
 }
 
 EmbeddedPost.defaultProps = {
-  width: 500, // 350 - 750
-  showText: false,
+  width: undefined,
+  showText: undefined,
   children: undefined,
   className: undefined,
   onParse: undefined,

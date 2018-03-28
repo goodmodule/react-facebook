@@ -43,7 +43,7 @@ export default function CustomChat(props: Props) {
 }
 
 CustomChat.defaultProps = {
-  minimized: true,
+  minimized: undefined,
   children: undefined,
   className: undefined,
   onParse: undefined,

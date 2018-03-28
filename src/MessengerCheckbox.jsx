@@ -2,14 +2,11 @@
 import React from 'react';
 import type { Node } from 'react';
 import Parser from './Parser';
-import MessengerSize from './constants/MessengerSize';
-import MessengerColor from './constants/MessengerColor';
 
 type Props = {
   className?: string,
-  appId: string,
+  messengerAppId: string,
   pageId: string,
-  color?: string,
   userRef?: string,
   origin?: string,
   children?: Node,
@@ -17,6 +14,8 @@ type Props = {
   prechecked?: boolean,
   allowLogin?: boolean,
   onParse?: Function,
+  centerAlign?: boolean,
+  skin?: string,
 };
 
 export default function MessengerCheckbox(props: Props) {
@@ -26,26 +25,28 @@ export default function MessengerCheckbox(props: Props) {
     prechecked,
     allowLogin,
     userRef,
-    color,
-    appId,
+    messengerAppId,
     pageId,
     children,
     size,
     onParse,
+    centerAlign,
+    skin,
   } = props;
 
   return (
     <Parser className={className} onParse={onParse}>
       <div
         className="fb-messenger-checkbox"
-        messenger_app_id={appId}
+        messenger_app_id={messengerAppId}
         page_id={pageId}
-        data-color={color}
-        data-size={size}
-        data-origin={origin}
+        size={size}
+        origin={origin}
         user_ref={userRef}
         prechecked={prechecked}
         allow_login={allowLogin}
+        skin={skin}
+        center_align={centerAlign}
       >
         {children}
       </div>
@@ -54,13 +55,14 @@ export default function MessengerCheckbox(props: Props) {
 }
 
 MessengerCheckbox.defaultProps = {
-  color: MessengerColor.BLUE,
-  size: MessengerSize.STANDARD,
-  allowLogin: true,
-  prechecked: false,
+  size: undefined,
+  allowLogin: undefined,
+  prechecked: undefined,
   userRef: undefined,
   children: undefined,
   className: undefined,
   onParse: undefined,
   origin: undefined,
+  skin: undefined,
+  centerAlign: undefined,
 };

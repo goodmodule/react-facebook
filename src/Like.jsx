@@ -3,10 +3,6 @@ import type { Node } from 'react';
 import React from 'react';
 import Parser from './Parser';
 import getCurrentHref from './utils/getCurrentHref';
-import LikeSize from './constants/LikeSize';
-import LikeLayout from './constants/LikeLayout';
-import ColorScheme from './constants/ColorScheme';
-import LikeAction from './constants/LikeAction';
 
 type Props = {
   className?: string,
@@ -63,13 +59,13 @@ export default function Like(props: Props) {
 }
 
 Like.defaultProps = {
-  layout: LikeLayout.STANDARD,
-  showFaces: false,
-  colorScheme: ColorScheme.LIGHT,
-  action: LikeAction.LIKE,
-  share: false,
-  size: LikeSize.SMALL,
-  kidDirectedSite: false,
+  layout: undefined,
+  showFaces: undefined,
+  colorScheme: undefined,
+  action: undefined,
+  share: undefined,
+  size: undefined,
+  kidDirectedSite: undefined,
   children: undefined,
   className: undefined,
   href: undefined,

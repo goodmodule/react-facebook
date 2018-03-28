@@ -45,8 +45,8 @@ export default function SendToMessenger(props: Props) {
 }
 
 SendToMessenger.defaultProps = {
-  color: MessengerColor.BLUE,
-  size: MessengerSize.STANDARD,
+  color: undefined,
+  size: undefined,
   dataRef: undefined,
   children: undefined,
   className: undefined,
