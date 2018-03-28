@@ -13,7 +13,11 @@ type Props = {
   dontWait?: boolean,
 };
 
-export default class Process extends Component<Props> {
+type State = {
+  isMounted: boolean,
+};
+
+export default class Process extends Component<Props, State> {
   static defaultProps = {
     children: undefined,
     render: undefined,
@@ -24,9 +28,16 @@ export default class Process extends Component<Props> {
     dontWait: undefined,
   };
 
-  state = {
+  state: State = {
     isWorking: false,
+    isMounted: true,
   };
+
+  componentWillUnmount() {
+    this.setState({
+      isMounted: false,
+    });
+  }
 
   getElement() {
     const {
@@ -103,17 +114,23 @@ export default class Process extends Component<Props> {
       }
     }
 
-    this.setState({
-      isWorking: false,
-    });
+    const { isMounted } = this.state;
+    if (isMounted) {
+      this.setState({
+        isWorking: false,
+      });
+    }
   }
 
   handleFacebookReady = (facebook) => {
-    this.setState({ facebook });
+    const { isMounted } = this.state;
+    if (isMounted) {
+      this.setState({ facebook });
 
-    const { onReady } = this.props;
-    if (onReady) {
-      onReady(facebook);
+      const { onReady } = this.props;
+      if (onReady) {
+        onReady(facebook);
+      }
     }
   }
 
