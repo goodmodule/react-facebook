@@ -1,1 +1,0 @@
-{"version":3,"sources":["../../src/constants/MessengerColor.js"],"names":["BLUE","WHITE"],"mappings":";;;;;kBAAe;AACbA,QAAM,MADO;AAEbC,SAAO;AAFM,C","file":"MessengerColor.js","sourcesContent":["export default {\n  BLUE: 'blue',\n  WHITE: 'white',\n};\n"]}

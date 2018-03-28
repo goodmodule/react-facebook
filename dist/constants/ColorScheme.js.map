@@ -1,1 +1,0 @@
-{"version":3,"sources":["../../src/constants/ColorScheme.js"],"names":["LIGHT","DARK"],"mappings":";;;;;kBAAe;AACbA,SAAO,OADM;AAEbC,QAAM;AAFO,C","file":"ColorScheme.js","sourcesContent":["export default {\n  LIGHT: 'light',\n  DARK: 'dark',\n};\n"]}

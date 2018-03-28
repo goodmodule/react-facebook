@@ -1,1 +1,0 @@
-{"version":3,"sources":["../../src/constants/CommentsOrderBy.js"],"names":["SOCIAL","REVERSE_TIME","TIME"],"mappings":"AAAA,eAAe;AACbA,UAAQ,QADK;AAEbC,gBAAc,cAFD;AAGbC,QAAM;AAHO,CAAf","file":"CommentsOrderBy.js","sourcesContent":["export default {\n  SOCIAL: 'social',\n  REVERSE_TIME: 'reverse_time',\n  TIME: 'time',\n};\n"]}
