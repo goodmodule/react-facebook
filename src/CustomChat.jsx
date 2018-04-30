@@ -12,6 +12,7 @@ type Props = {
   themeColor?: string,
   loggedInGreeting?: string,
   loggedOutGreeting?: string,
+  dataRef?: string,
 };
 
 export default function CustomChat(props: Props) {
@@ -24,6 +25,7 @@ export default function CustomChat(props: Props) {
     themeColor,
     loggedInGreeting,
     loggedOutGreeting,
+    dataRef,
   } = props;
 
   return (
@@ -35,6 +37,7 @@ export default function CustomChat(props: Props) {
         theme_color={themeColor}
         logged_in_greeting={loggedInGreeting}
         logged_out_greeting={loggedOutGreeting}
+        data-ref={dataRef}
       >
         {children}
       </div>
