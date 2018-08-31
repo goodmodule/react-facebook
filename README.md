@@ -225,6 +225,23 @@ export default class Example extends Component {
 }
 ```
 
+## Feed
+
+```js
+import React, { Component} from 'react';
+import FacebookProvider, { Feed } from 'react-facebook';
+
+export default class Example extends Component {
+  render() {
+    return (
+      <FacebookProvider appId="123456789">
+        <Feed link="https://www.facebook.com" />
+      </FacebookProvider>    
+    );
+  }
+}
+```
+
 ## MessageUs
 
 ```js
