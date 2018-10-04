@@ -1,29 +1,25 @@
 // @flow
-import React from 'react';
-import type { Node } from 'react';
-import Parser from './Parser';
+import React, { type Node } from 'react';
+import Parser, { type ParserProps } from './Parser';
 
-type Props = {
-  className?: string,
+type Props = ParserProps & {
   href: string,
   width?: string | number,
   showText?: boolean,
   children?: Node,
-  onParse?: Function,
 };
 
 export default function EmbeddedPost(props: Props) {
   const {
-    className,
     href,
     width,
     showText,
     children,
-    onParse,
+    ...rest
   } = props;
 
   return (
-    <Parser className={className} onParse={onParse}>
+    <Parser {...rest}>
       <div
         className="fb-post"
         data-href={href}
@@ -37,9 +33,8 @@ export default function EmbeddedPost(props: Props) {
 }
 
 EmbeddedPost.defaultProps = {
+  ...Parser.defaultProps,
   width: undefined,
   showText: undefined,
   children: undefined,
-  className: undefined,
-  onParse: undefined,
 };

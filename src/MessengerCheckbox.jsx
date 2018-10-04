@@ -1,9 +1,8 @@
 // @flow
-import React from 'react';
-import type { Node } from 'react';
-import Parser from './Parser';
+import React, { type Node } from 'react';
+import Parser, { type ParserProps } from './Parser';
 
-type Props = {
+type Props = ParserProps & {
   className?: string,
   messengerAppId: string,
   pageId: string,
@@ -20,7 +19,6 @@ type Props = {
 
 export default function MessengerCheckbox(props: Props) {
   const {
-    className,
     origin,
     prechecked,
     allowLogin,
@@ -29,13 +27,13 @@ export default function MessengerCheckbox(props: Props) {
     pageId,
     children,
     size,
-    onParse,
     centerAlign,
     skin,
+    ...rest
   } = props;
 
   return (
-    <Parser className={className} onParse={onParse}>
+    <Parser {...rest}>
       <div
         className="fb-messenger-checkbox"
         messenger_app_id={messengerAppId}
@@ -55,13 +53,12 @@ export default function MessengerCheckbox(props: Props) {
 }
 
 MessengerCheckbox.defaultProps = {
+  ...Parser.defaultProps,
   size: undefined,
   allowLogin: undefined,
   prechecked: undefined,
   userRef: undefined,
   children: undefined,
-  className: undefined,
-  onParse: undefined,
   origin: undefined,
   skin: undefined,
   centerAlign: undefined,

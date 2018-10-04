@@ -1,9 +1,8 @@
 // @flow
-import React from 'react';
-import type { Node } from 'react';
-import Parser from './Parser';
+import React, { type Node } from 'react';
+import Parser, { type ParserProps } from './Parser';
 
-type Props = {
+type Props = ParserProps & {
   className?: string,
   href: string,
   width?: number | string,
@@ -17,7 +16,6 @@ type Props = {
 
 export default function EmbeddedVideo(props: Props): Node {
   const {
-    className,
     href,
     width,
     showText,
@@ -25,11 +23,11 @@ export default function EmbeddedVideo(props: Props): Node {
     autoPlay,
     showCaptions,
     children,
-    onParse,
+    ...rest
   } = props;
 
   return (
-    <Parser className={className} onParse={onParse}>
+    <Parser {...rest}>
       <div
         className="fb-video"
         data-href={href}
@@ -46,12 +44,11 @@ export default function EmbeddedVideo(props: Props): Node {
 }
 
 EmbeddedVideo.defaultProps = {
+  ...Parser.defaultProps,
   width: undefined,
   showText: undefined,
   allowFullScreen: undefined,
   autoPlay: undefined,
   showCaptions: undefined,
   children: undefined,
-  className: undefined,
-  onParse: undefined,
 };

@@ -5,5 +5,5 @@ export default function getCurrentHref() {
     return 'https://www.facebook.com';
   }
 
-  return location.href;
+  return window.location.href;
 }

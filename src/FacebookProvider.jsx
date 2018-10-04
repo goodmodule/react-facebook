@@ -1,10 +1,10 @@
 // @flow
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import type { Node } from 'react';
+import React, { Component, createContext, type Node } from 'react';
+import canUseDOM from 'can-use-dom';
 import FB from './Facebook';
 
-let facebookInstance = null;
+export const FacebookContext = createContext();
+let fb = null;
 
 type Props = {
   appId: string,
@@ -19,13 +19,13 @@ type Props = {
   wait?: boolean,
 };
 
-export default class Facebook extends Component<Props> {
-  static childContextTypes = {
-    facebook: PropTypes.object.isRequired,
-  };
+type State = {
+  isReady: boolean,
+};
 
+export default class Facebook extends Component<Props, State> {
   static defaultProps = {
-    version: 'v2.9',
+    version: 'v3.1',
     cookie: false,
     status: false,
     xfbml: false,
@@ -36,14 +36,29 @@ export default class Facebook extends Component<Props> {
     wait: false,
   };
 
-  getChildContext() {
-    return {
-      facebook: this,
-    };
+  state: State = {
+    isReady: false,
+  };
+
+  componentDidMount(): void {
+    const { wait } = this.props;
+    if (!wait) {
+      this.init();
+    }
   }
 
-  async init() {
-    if (!this.facebook) {
+  init = async (): Promise<FB> => {
+    // do not run if SSR
+    if (!canUseDOM) {
+      throw new Error('You can not use Facebook without DOM');
+    }
+
+    const { isReady } = this.state;
+    if (isReady) {
+      return fb;
+    }
+
+    if (!fb) {
       const {
         domain,
         version,
@@ -56,7 +71,7 @@ export default class Facebook extends Component<Props> {
         wait,
       } = this.props;
 
-      this.facebook = facebookInstance || new FB({
+      fb = new FB({
         domain,
         appId,
         version,
@@ -67,16 +82,35 @@ export default class Facebook extends Component<Props> {
         frictionlessRequests,
         wait,
       });
-
-      facebookInstance = this.facebook;
     }
 
-    await this.facebook.init();
+    await fb.init();
 
-    return this.facebook;
+    if (!this.state.isReady) {
+      this.setState({
+        isReady: true,
+      });
+    }
+
+    return fb;
   }
 
   render() {
-    return this.props.children;
+    const { children } = this.props;
+    const { isReady, error } = this.state;
+    const { init } = this;
+
+    const value = {
+      isReady,
+      error,
+      init,
+      fb: isReady ? fb : undefined,
+    };
+
+    return (
+      <FacebookContext.Provider value={value}>
+        {children}
+      </FacebookContext.Provider>
+    );
   }
 }

@@ -1,8 +1,7 @@
-export default from './FacebookProvider';
 export FacebookProvider from './FacebookProvider';
 
 export Parser from './Parser';
-export InitFacebook from './InitFacebook';
+export Initialize from './Initialize';
 
 export Like from './Like';
 export Send from './Send';

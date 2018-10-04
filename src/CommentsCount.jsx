@@ -1,26 +1,22 @@
 // @flow
-import React from 'react';
-import type { Node } from 'react';
-import Parser from './Parser';
+import React, { type Node } from 'react';
+import Parser, { type ParserProps } from './Parser';
 import getCurrentHref from './utils/getCurrentHref';
 
-type Props = {
-  className?: string,
+type Props = ParserProps & {
   href?: string,
   children?: Node,
-  onParse?: Function,
 };
 
 export default function CommentsCount(props: Props) {
   const {
-    className,
     href = getCurrentHref(),
     children,
-    onParse,
+    ...rest
   } = props;
 
   return (
-    <Parser className={className} onParse={onParse}>
+    <Parser {...rest}>
       <span
         className="fb-comments-count"
         data-href={href}
@@ -32,8 +28,7 @@ export default function CommentsCount(props: Props) {
 }
 
 CommentsCount.defaultProps = {
-  className: undefined,
+  ...Parser.defaultProps,
   href: undefined,
   children: undefined,
-  onParse: undefined,
 };

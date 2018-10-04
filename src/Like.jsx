@@ -1,11 +1,9 @@
 // @flow
-import type { Node } from 'react';
-import React from 'react';
-import Parser from './Parser';
+import React, { type Node } from 'react';
+import Parser, { type ParserProps } from './Parser';
 import getCurrentHref from './utils/getCurrentHref';
 
-type Props = {
-  className?: string,
+type Props = ParserProps & {
   referral?: string,
   href?: string,
   layout?: string,
@@ -17,12 +15,10 @@ type Props = {
   width?: number | string,
   size?: string,
   kidDirectedSite?: boolean,
-  onParse?: Function,
 };
 
 export default function Like(props: Props) {
   const {
-    className,
     href = getCurrentHref(),
     layout,
     colorScheme,
@@ -34,11 +30,11 @@ export default function Like(props: Props) {
     size,
     kidDirectedSite,
     referral,
-    onParse,
+    ...rest
   } = props;
 
   return (
-    <Parser className={className} onParse={onParse}>
+    <Parser {...rest}>
       <div
         className="fb-like"
         data-ref={referral}
@@ -59,6 +55,7 @@ export default function Like(props: Props) {
 }
 
 Like.defaultProps = {
+  ...Parser.defaultProps,
   layout: undefined,
   showFaces: undefined,
   colorScheme: undefined,
@@ -67,9 +64,7 @@ Like.defaultProps = {
   size: undefined,
   kidDirectedSite: undefined,
   children: undefined,
-  className: undefined,
   href: undefined,
   referral: undefined,
   width: undefined,
-  onParse: undefined,
 };

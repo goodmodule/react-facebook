@@ -25,7 +25,7 @@ export default class Share extends Process<Props> {
     redirectURI: undefined,
   };
 
-  async process(facebook) {
+  handleProcess = async (facebook) => {
     const {
       href = getCurrentHref(),
       display,
@@ -46,5 +46,15 @@ export default class Share extends Process<Props> {
       quote,
       mobile_iframe: mobileIframe,
     }));
+  }
+
+  render() {
+    const { children } = this.props;
+
+    return (
+      <Process onProcess={this.handleProcess}>
+        {children}
+      </Process>
+    );
   }
 }

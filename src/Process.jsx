@@ -1,144 +1,82 @@
 // @flow
-import type { Node } from 'react';
-import React, { Component, cloneElement } from 'react';
-import InitFacebook from './InitFacebook';
+import React, { Component, type Node } from 'react';
+import Initialize from './Initialize';
 
-type Props = {
-  children?: Node,
-  render?: Function,
-  component?: Node,
+export type Props = {
+  children: Function,
   onReady?: Function,
-  onError?: Function,
-  onResponse?: Function,
-  dontWait?: boolean,
 };
 
 type State = {
-  isMounted: boolean,
+  fb?: Object,
+  loading: boolean,
+  data?: any,
+  error?: Error,
 };
 
 export default class Process extends Component<Props, State> {
-  static defaultProps = {
-    children: undefined,
-    render: undefined,
-    component: undefined,
-    onReady: undefined,
-    onError: undefined,
-    onResponse: undefined,
-    dontWait: undefined,
-  };
-
   state: State = {
-    isWorking: false,
-    isMounted: true,
+    loading: false,
   };
 
-  componentWillUnmount() {
-    this.setState({
-      isMounted: false,
-    });
+  async process() {
+    throw new Error('Override process function');
   }
 
-  getElement() {
-    const {
-      children,
-      render,
-      component: CustomComponent,
-    } = this.props;
-
-    const { facebook, isWorking } = this.state;
-    const isLoading = !facebook;
-    const isReady = !isLoading && !isWorking;
-
-    if (render) {
-      return render({
-        isWorking,
-        isLoading,
-        isReady,
-        onClick: this.handleClick,
-      });
-    }
-
-    if (CustomComponent) {
-      return (
-        <CustomComponent
-          onClick={this.handleClick}
-          isLoading={isLoading}
-          isWorking={isWorking}
-          isReady={isReady}
-        />
-      );
-    }
-
-    return cloneElement(children, {
-      onClick: this.handleClick,
-    });
-  }
-
-  handleClick = async (evn) => {
-    evn.preventDefault();
-    evn.stopPropagation();
-
+  handleProcess = async () => {
     this.setState({
-      isWorking: true,
+      error: undefined,
+      data: undefined,
+      processing: true,
     });
 
     try {
-      const { facebook } = this.state;
-      if (!facebook) {
-        throw new Error('Facebook is not initialized');
+      const { fb } = this.state;
+      if (!fb) {
+        throw new Error('Facebook is not initialized. Wait for initialization');
       }
 
-      const { dontWait, onResponse, onError } = this.props;
-      if (dontWait) {
-        this.process(facebook).then((response) => {
-          if (onResponse) {
-            onResponse(response);
-          }
-        }, (error) => {
-          if (onError) {
-            onError(error);
-          }
-        });
-      } else {
-        const response = await this.process(facebook);
+      const data = await this.process(fb);
 
-        if (onResponse) {
-          await onResponse(response);
-        }
-      }
-    } catch (e) {
-      const { onError } = this.props;
-      if (onError) {
-        await onError(e);
-      }
-    }
-
-    const { isMounted } = this.state;
-    if (isMounted) {
       this.setState({
-        isWorking: false,
+        data,
+        processing: false,
+      });
+    } catch (error) {
+      this.setState({
+        error,
+        processing: false,
       });
     }
   }
 
-  handleFacebookReady = (facebook) => {
-    const { isMounted } = this.state;
-    if (isMounted) {
-      this.setState({ facebook });
+  handleFacebookReady = (fb) => {
+    const { onReady } = this.props;
 
-      const { onReady } = this.props;
-      if (onReady) {
-        onReady(facebook);
-      }
+    this.setState({
+      fb,
+    });
+
+    if (onReady) {
+      onReady(fb);
     }
   }
 
   render() {
+    const { children } = this.props;
+    const { data, error, processing } = this.state;
+
     return (
-      <InitFacebook onReady={this.handleFacebookReady}>
-        {this.getElement()}
-      </InitFacebook>
+      <Initialize onReady={this.handleFacebookReady}>
+        {(facebookProps) => children({
+          ...facebookProps,
+          data,
+          error,
+          processing,
+          loading: processing || !facebookProps.isReady,
+          handleProcess: this.handleProcess,
+        })}
+      </Initialize>
     );
   }
 }

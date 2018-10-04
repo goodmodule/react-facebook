@@ -1,38 +1,32 @@
 // @flow
-import React from 'react';
-import type { Node } from 'react';
-import Parser from './Parser';
+import React, { type Node } from 'react';
+import Parser, { type ParserProps } from './Parser';
 import getCurrentHref from './utils/getCurrentHref';
-import ColorScheme from './constants/ColorScheme';
-import CommentsOrderBy from './constants/CommentsOrderBy';
 
-type Props = {
-  className?: string,
+type Props = ParserProps & {
   href?: string,
   numPosts?: number,
   orderBy?: string,
   width?: number | string,
   colorScheme?: string,
   children?: Node,
-  onParse?: Function,
   mobile?: boolean,
 };
 
 export default function Comments(props: Props) {
   const {
-    className,
     colorScheme,
     href = getCurrentHref(),
     numPosts,
     orderBy,
     width,
     children,
-    onParse,
     mobile,
+    ...rest
   } = props;
 
   return (
-    <Parser className={className} onParse={onParse}>
+    <Parser {...rest}>
       <div
         className="fb-comments"
         data-colorscheme={colorScheme}
@@ -50,13 +44,12 @@ export default function Comments(props: Props) {
 }
 
 Comments.defaultProps = {
+  ...Parser.defaultProps,
   href: undefined,
   numPosts: undefined,
   orderBy: undefined,
   width: undefined,
   colorScheme: undefined,
   children: undefined,
-  className: undefined,
-  onParse: undefined,
   mobile: undefined,
 };

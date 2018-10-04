@@ -1,10 +1,9 @@
 // @flow
-import React from 'react';
-import type { Node } from 'react';
-import Parser from './Parser';
+import React, { type Node } from 'react';
+import Parser, { type ParserProps } from './Parser';
 import getCurrentHref from './utils/getCurrentHref';
 
-type Props = {
+type Props = ParserProps & {
   className?: string,
   href?: string,
   tabs?: string,
@@ -22,7 +21,6 @@ type Props = {
 
 export default function Page(props: Props) {
   const {
-    className,
     style,
     href = getCurrentHref(),
     tabs,
@@ -34,11 +32,11 @@ export default function Page(props: Props) {
     smallHeader,
     adaptContainerWidth,
     children,
-    onParse,
+    ...rest
   } = props;
 
   return (
-    <Parser className={className} onParse={onParse}>
+    <Parser {...rest}>
       <div
         className="fb-page"
         style={style}
@@ -59,6 +57,7 @@ export default function Page(props: Props) {
 }
 
 Page.defaultProps = {
+  ...Parser.defaultProps,
   width: undefined,
   height: undefined,
   tabs: undefined,
@@ -68,8 +67,6 @@ Page.defaultProps = {
   smallHeader: undefined,
   adaptContainerWidth: undefined,
   children: undefined,
-  className: undefined,
-  onParse: undefined,
   style: undefined,
   href: undefined,
 };

@@ -1,22 +1,22 @@
 // @flow
-import React, { Component } from 'react';
-import type { Node } from 'react';
-import InitFacebook from './InitFacebook';
+import React, { Component, type Node } from 'react';
+import Initialize from './Initialize';
 
-type Props = {
+export type ParserProps = {
   className?: string,
   children?: Node,
   onParse?: Function,
 };
 
-export default class Parser extends Component<Props> {
+export default class Parser extends Component<ParserProps> {
   static defaultProps = {
+    children: undefined,
     className: undefined,
     onParse: undefined,
   };
 
-  componentWillReceiveProps(props) {
-    const oldChildren = this.props.children;
+  componentWillReceiveProps(props: ParserProps): void {
+    const { children: oldChildren } = this.props;
     const { children } = props;
 
     if (!children || !oldChildren) {
@@ -35,24 +35,24 @@ export default class Parser extends Component<Props> {
     }
   }
 
-  shouldComponentUpdate() {
+  shouldComponentUpdate(): boolean {
     return false;
+  }
+
+  handleFacebookReady = (facebook: Object): void => {
+    this.facebook = facebook;
+    this.parse();
+  }
+
+  handleContainer = (container): void => {
+    this.container = container;
+    this.parse();
   }
 
   rerender() {
     this.forceUpdate();
 
     this.parsed = false;
-    this.parse();
-  }
-
-  handleFacebookReady = (facebook) => {
-    this.facebook = facebook;
-    this.parse();
-  }
-
-  handleContainer = (container) => {
-    this.container = container;
     this.parse();
   }
 
@@ -78,11 +78,11 @@ export default class Parser extends Component<Props> {
     const { className, children } = this.props;
 
     return (
-      <InitFacebook onReady={this.handleFacebookReady}>
+      <Initialize onReady={this.handleFacebookReady}>
         <div className={className} ref={this.handleContainer}>
           {children}
         </div>
-      </InitFacebook>
+      </Initialize>
     );
   }
 }

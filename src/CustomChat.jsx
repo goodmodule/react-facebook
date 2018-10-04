@@ -1,13 +1,10 @@
 // @flow
-import React from 'react';
-import type { Node } from 'react';
-import Parser from './Parser';
+import React, { type Node } from 'react';
+import Parser, { type ParserProps } from './Parser';
 
-type Props = {
-  className?: string,
+type Props = ParserProps & {
   pageId: string,
   minimized?: boolean,
-  onParse?: Function,
   children?: Node,
   themeColor?: string,
   loggedInGreeting?: string,
@@ -17,19 +14,18 @@ type Props = {
 
 export default function CustomChat(props: Props) {
   const {
-    className,
     minimized,
     children,
     pageId,
-    onParse,
     themeColor,
     loggedInGreeting,
     loggedOutGreeting,
     dataRef,
+    ...rest
   } = props;
 
   return (
-    <Parser className={className} onParse={onParse}>
+    <Parser {...rest}>
       <div
         className="fb-customerchat"
         page_id={pageId}
@@ -46,10 +42,9 @@ export default function CustomChat(props: Props) {
 }
 
 CustomChat.defaultProps = {
+  ...Parser.defaultProps,
   minimized: undefined,
   children: undefined,
-  className: undefined,
-  onParse: undefined,
   themeColor: undefined,
   loggedInGreeting: undefined,
   loggedOutGreeting: undefined,

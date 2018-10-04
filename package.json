@@ -1,6 +1,6 @@
 {
   "name": "react-facebook",
-  "version": "5.0.3",
+  "version": "6.0.3",
   "description": "Facebook components like a Login button, Like, Share, Comments, Embedded Post/Video, Messenger Chat and others",
   "author": {
     "name": "Zlatko Fedor",
@@ -56,40 +56,39 @@
     ]
   },
   "dependencies": {
-    "debug": "^3.1.0",
+    "debug": "^4.0.1",
     "react-spinner-children": "^1.0.8",
     "can-use-dom": "^0.1.0",
-    "prop-types": "^15.6.1",
     "babel-runtime": "^6.26.0"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
-    "babel-core": "^6.26.0",
-    "babel-eslint": "^8.2.2",
+    "babel-core": "^6.26.3",
+    "babel-eslint": "^10.0.1",
     "babel-plugin-transform-flow-strip-types": "6.22.0",
-    "babel-plugin-transform-decorators-legacy": "^1.3.4",
+    "babel-plugin-transform-decorators-legacy": "^1.3.5",
     "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-plugin-transform-proto-to-assign": "^6.26.0",
-    "babel-preset-env": "^1.6.1",
+    "babel-preset-env": "^1.7.0",
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-0": "^6.24.1",
     "babel-plugin-transform-runtime": "^6.23.0",
-    "cross-env": "^5.1.4",
-    "eslint": "^4.19.1",
-    "eslint-config-airbnb": "^16.1.0",
-    "eslint-loader": "^2.0.0",
-    "eslint-plugin-react": "^7.7.0",
-    "eslint-plugin-jsx-a11y": "^6.0.3",
-    "eslint-plugin-import": "^2.9.0",
-    "jest": "^22.4.3",
-    "jest-cli": "^22.4.3",
-    "enzyme": "^3.3.0",
-    "enzyme-adapter-react-16": "^1.1.1",
-    "react": "^16.2.0",
-    "react-dom": "^16.2.0",
-    "react-test-renderer": "^16.2.0"
+    "cross-env": "^5.2.0",
+    "eslint": "^5.6.1",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-loader": "^2.1.1",
+    "eslint-plugin-react": "^7.11.1",
+    "eslint-plugin-jsx-a11y": "^6.1.1",
+    "eslint-plugin-import": "^2.14.0",
+    "jest": "^23.6.0",
+    "jest-cli": "^23.6.0",
+    "enzyme": "^3.6.0",
+    "enzyme-adapter-react-16": "^1.5.0",
+    "react": "^16.5.2",
+    "react-dom": "^16.5.2",
+    "react-test-renderer": "^16.5.2"
   },
   "peerDependencies": {
-    "react": "15.x || 16.x"
+    "react": "16.x"
   }
 }

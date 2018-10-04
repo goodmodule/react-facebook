@@ -1,7 +1,7 @@
 // @flow
-import Process from './Process';
+import Process, { type ProcessProps } from './Process';
 
-type Props = Process & {
+type Props = ProcessProps & {
   scope: string,
   fields?: string[],
   returnScopes?: boolean,

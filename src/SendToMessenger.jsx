@@ -1,35 +1,31 @@
 // @flow
-import React from 'react';
-import type { Node } from 'react';
-import Parser from './Parser';
+import React, { type Node } from 'react';
+import Parser, { type ParserProps } from './Parser';
 import MessengerSize from './constants/MessengerSize';
 import MessengerColor from './constants/MessengerColor';
 
-type Props = {
-  className?: string,
+type Props = ParserProps & {
   appId: string,
   pageId: string,
   color?: string,
   children?: Node,
   dataRef?: string,
   size?: string,
-  onParse?: Function,
 };
 
 export default function SendToMessenger(props: Props) {
   const {
-    className,
     color,
     messengerAppId,
     pageId,
     children,
     dataRef,
     size,
-    onParse,
+    ...rest
   } = props;
 
   return (
-    <Parser className={className} onParse={onParse}>
+    <Parser {...rest}>
       <div
         className="fb-send-to-messenger"
         messenger_app_id={messengerAppId}
@@ -45,10 +41,9 @@ export default function SendToMessenger(props: Props) {
 }
 
 SendToMessenger.defaultProps = {
+  ...Parser.defaultProps,
   color: undefined,
   size: undefined,
   dataRef: undefined,
   children: undefined,
-  className: undefined,
-  onParse: undefined,
 };

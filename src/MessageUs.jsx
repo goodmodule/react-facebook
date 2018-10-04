@@ -1,31 +1,27 @@
 // @flow
-import React from 'react';
-import type { Node } from 'react';
-import Parser from './Parser';
+import React, { type Node } from 'react';
+import Parser, { type ParserProps } from './Parser';
 
-type Props = {
-  className?: string,
+type Props = ParserProps & {
   messengerAppId: string,
   pageId: string,
   color?: string,
   children?: Node,
   size?: string,
-  onParse?: Function,
 };
 
 export default function MessageUs(props: Props) {
   const {
-    className,
     color,
     messengerAppId,
     pageId,
     children,
     size,
-    onParse,
+    ...rest
   } = props;
 
   return (
-    <Parser className={className} onParse={onParse}>
+    <Parser {...rest}>
       <div
         className="fb-messengermessageus"
         messenger_app_id={messengerAppId}
@@ -40,9 +36,8 @@ export default function MessageUs(props: Props) {
 }
 
 MessageUs.defaultProps = {
+  ...Parser.defaultProps,
   color: undefined,
   size: undefined,
   children: undefined,
-  className: undefined,
-  onParse: undefined,
 };

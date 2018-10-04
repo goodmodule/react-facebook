@@ -17,7 +17,7 @@ export default class Facebook {
   constructor(options = {}) {
     this.options = {
       domain: 'connect.facebook.net',
-      version: 'v2.9',
+      version: 'v3.1',
       cookie: false,
       status: false,
       xfbml: false,
@@ -60,17 +60,17 @@ export default class Facebook {
         resolve(window.FB);
       };
 
-      const fjs = document.getElementsByTagName('script')[0];
+      const fjs = window.document.getElementsByTagName('script')[0];
       if (!fjs) {
         log('Script tag does not exists in the DOM');
         return;
       }
 
-      if (document.getElementById('facebook-jssdk')) {
+      if (window.document.getElementById('facebook-jssdk')) {
         return;
       }
 
-      const js = document.createElement('script');
+      const js = window.document.createElement('script');
       js.id = 'facebook-jssdk';
       js.async = true;
       js.src = `https://${options.domain}/${options.language}/sdk.js`;
@@ -181,10 +181,12 @@ export default class Facebook {
     const usersPermissions = await this.getPermissions();
 
     const findedPermissions = permissions.filter((p) => {
-      return !!usersPermissions.find((row) => {
+      const currentPermission = usersPermissions.find((row) => {
         const { permission, status } = row;
         return status === 'granted' && permission === p;
       });
+
+      return !!currentPermission;
     });
 
     return findedPermissions.length === permissions.length;
@@ -324,7 +326,7 @@ export default class Facebook {
           return callback(err);
         }
 
-        var fqlQuery = 'SELECT uid FROM page_fan WHERE page_id = ' + pageID + ' and uid =  '+ userID;
+        var fqlQuery = `SELECT uid FROM page_fan WHERE page_id = ${pageID} and uid = ${userID}`;
         var query = FB.Data.query(fqlQuery);
 
         query.wait(function(rows) {
@@ -384,7 +386,14 @@ export default class Facebook {
         return callback(err);
       }
 
-      FB.api('fql', { q: 'SELECT uid, name, first_name, last_name, online_presence, status FROM user WHERE uid IN ( SELECT uid2 FROM friend WHERE uid1 = me()) ORDER BY name' }, function (response)
+      FB.api('fql', {
+        q: `
+          SELECT uid, name, first_name, last_name, online_presence, status
+          FROM user
+          WHERE uid IN
+            ( SELECT uid2 FROM friend WHERE uid1 = me()) ORDER BY name
+        `,
+      }, function (response)
       {
         var users = fbApi._prepareUsers(response.data);
         callback(null, users, response);
