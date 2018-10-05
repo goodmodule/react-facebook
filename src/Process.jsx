@@ -65,7 +65,7 @@ export default class Process extends Component<Props, State> {
       <Initialize onReady={this.handleReady}>
         {children({
           loading: !api || loading,
-          process: this.handleProcess,
+          handleProcess: this.handleProcess,
           data,
           error,
         })}
