@@ -35,7 +35,7 @@ class Login extends Component<Props> {
     const { handleProcess, onCompleted, onError } = this.props;
 
     try {
-      const data = handleProcess(async (api) => {
+      await handleProcess(async (api) => {
         const {
           scope, fields, returnScopes, rerequest, reauthorize,
         } = this.props;
@@ -63,12 +63,14 @@ class Login extends Component<Props> {
           throw new Error('Unauthorized user');
         }
 
-        return api.getTokenDetailWithProfile({ fields });
-      });
+        const data = api.getTokenDetailWithProfile({ fields });
 
-      if (onCompleted) {
-        onCompleted(data);
-      }
+        if (onCompleted) {
+          await onCompleted(data);
+        }
+
+        return data;
+      });
     } catch (error) {
       if (onError) {
         onError(error);
