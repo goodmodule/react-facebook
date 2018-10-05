@@ -1,9 +1,8 @@
 // @flow
-import React, { type Node } from 'react';
-import Parser, { type ParserProps } from './Parser';
+import React, { type Node, PureComponent, forwardRef } from 'react';
+import Parser from './Parser';
 
-type Props = ParserProps & {
-  className?: string,
+type Props = {
   messengerAppId: string,
   pageId: string,
   userRef?: string,
@@ -12,28 +11,43 @@ type Props = ParserProps & {
   size?: string,
   prechecked?: boolean,
   allowLogin?: boolean,
-  onParse?: Function,
   centerAlign?: boolean,
   skin?: string,
+  handleParse: Function,
 };
 
-export default function MessengerCheckbox(props: Props) {
-  const {
-    origin,
-    prechecked,
-    allowLogin,
-    userRef,
-    messengerAppId,
-    pageId,
-    children,
-    size,
-    centerAlign,
-    skin,
-    ...rest
-  } = props;
+class MessengerCheckbox extends PureComponent<Props> {
+  static defaultProps = {
+    size: undefined,
+    allowLogin: undefined,
+    prechecked: undefined,
+    userRef: undefined,
+    children: undefined,
+    origin: undefined,
+    skin: undefined,
+    centerAlign: undefined,
+  };
 
-  return (
-    <Parser {...rest}>
+  componentDidUpdate() {
+    const { handleParse } = this.props;
+    handleParse();
+  }
+
+  render() {
+    const {
+      origin,
+      prechecked,
+      allowLogin,
+      userRef,
+      messengerAppId,
+      pageId,
+      children,
+      size,
+      centerAlign,
+      skin,
+    } = this.props;
+
+    return (
       <div
         className="fb-messenger-checkbox"
         messenger_app_id={messengerAppId}
@@ -48,18 +62,18 @@ export default function MessengerCheckbox(props: Props) {
       >
         {children}
       </div>
-    </Parser>
-  );
+    );
+  }
 }
 
-MessengerCheckbox.defaultProps = {
-  ...Parser.defaultProps,
-  size: undefined,
-  allowLogin: undefined,
-  prechecked: undefined,
-  userRef: undefined,
-  children: undefined,
-  origin: undefined,
-  skin: undefined,
-  centerAlign: undefined,
-};
+export default forwardRef((props, ref) => (
+  <Parser>
+    {({ handleParse }) => (
+      <MessengerCheckbox
+        {...props}
+        handleParse={handleParse}
+        ref={ref}
+      />
+    )}
+  </Parser>
+));

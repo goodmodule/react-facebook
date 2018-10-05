@@ -1,8 +1,8 @@
 // @flow
-import React, { type Node } from 'react';
-import Parser, { type ParserProps } from './Parser';
+import React, { type Node, PureComponent, forwardRef } from 'react';
+import Parser from './Parser';
 
-type Props = ParserProps & {
+type Props = {
   pageId: string,
   minimized?: boolean,
   children?: Node,
@@ -10,22 +10,36 @@ type Props = ParserProps & {
   loggedInGreeting?: string,
   loggedOutGreeting?: string,
   dataRef?: string,
+  handleParse: Function,
 };
 
-export default function CustomChat(props: Props) {
-  const {
-    minimized,
-    children,
-    pageId,
-    themeColor,
-    loggedInGreeting,
-    loggedOutGreeting,
-    dataRef,
-    ...rest
-  } = props;
+class CustomChat extends PureComponent<Props> {
+  static defaultProps = {
+    minimized: undefined,
+    children: undefined,
+    themeColor: undefined,
+    loggedInGreeting: undefined,
+    loggedOutGreeting: undefined,
+    dataRef: undefined,
+  };
 
-  return (
-    <Parser {...rest}>
+  componentDidUpdate() {
+    const { handleParse } = this.props;
+    handleParse();
+  }
+
+  render() {
+    const {
+      minimized,
+      children,
+      pageId,
+      themeColor,
+      loggedInGreeting,
+      loggedOutGreeting,
+      dataRef,
+    } = this.props;
+
+    return (
       <div
         className="fb-customerchat"
         page_id={pageId}
@@ -37,15 +51,18 @@ export default function CustomChat(props: Props) {
       >
         {children}
       </div>
-    </Parser>
-  );
+    );
+  }
 }
 
-CustomChat.defaultProps = {
-  ...Parser.defaultProps,
-  minimized: undefined,
-  children: undefined,
-  themeColor: undefined,
-  loggedInGreeting: undefined,
-  loggedOutGreeting: undefined,
-};
+export default forwardRef((props, ref) => (
+  <Parser>
+    {({ handleParse }) => (
+      <CustomChat
+        {...props}
+        handleParse={handleParse}
+        ref={ref}
+      />
+    )}
+  </Parser>
+));

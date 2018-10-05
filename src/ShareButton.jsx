@@ -4,27 +4,23 @@ import Share from './Share';
 
 type Props = Share & {
   className?: string,
-  iconClassName?: string,
-  icon?: boolean,
 };
 
 export default function ShareButton(props: Props) {
   const {
     className,
-    iconClassName,
-    icon,
     children,
     ...rest
   } = props;
 
   return (
     <Share {...rest}>
-      {({ loading, handleProcess }) => (
+      {({ loading, handleClick }) => (
         <button
           type="button"
           disabled={loading}
           className={className}
-          onClick={handleProcess}
+          onClick={handleClick}
         >
           {children}
         </button>
@@ -35,7 +31,5 @@ export default function ShareButton(props: Props) {
 
 ShareButton.defaultProps = {
   ...Share.defaultProps,
-  className: 'btn btn-lg',
-  iconClassName: 'fa fa-facebook pull-left',
-  icon: true,
+  className: undefined,
 };

@@ -29,13 +29,20 @@
 
 Star this project on [GitHub][github-url].
 
+# Initialisation
+
+By default FacebookProvider is loading facebook script immediately with componentDidMount (you are able to use it with SSR).
+If you want to download facebook script only when facebook component is rendered you need to add parameter wait to FacebookProvider.
+Use only one instance of the FacebookProvider on your page.
+
+
 # Usage
 
 ## Like button
 
 ```js
 import React, { Component} from 'react';
-import FacebookProvider, { Like } from 'react-facebook';
+import { FacebookProvider, Like } from 'react-facebook';
 
 export default class Example extends Component {
   render() {
@@ -52,14 +59,16 @@ export default class Example extends Component {
 
 ```js
 import React, { Component} from 'react';
-import FacebookProvider, { Share } from 'react-facebook';
+import { FacebookProvider, Share } from 'react-facebook';
 
 export default class Example extends Component {
   render() {
     return (
       <FacebookProvider appId="123456789">
         <Share href="http://www.facebook.com">
-          <button type="button">Share</button>
+          {({ handleClick, loading }) => (
+            <button type="button" disabled="loading" onClick={handleClick}>Share</button>
+          )}
         </Share>
       </FacebookProvider>
     );
@@ -73,13 +82,15 @@ You can use predefined button with bootstrap and font awesome classNames
 
 ```js
 import React, { Component} from 'react';
-import FacebookProvider, { ShareButton } from 'react-facebook';
+import { FacebookProvider, ShareButton } from 'react-facebook';
 
 export default class Example extends Component {
   render() {
     return (
       <FacebookProvider appId="123456789">
-        <ShareButton href="http://www.facebook.com" />
+        <ShareButton href="http://www.facebook.com">
+          Share
+        </ShareButton>
       </FacebookProvider>
     );
   }
@@ -90,7 +101,7 @@ export default class Example extends Component {
 
 ```js
 import React, { Component} from 'react';
-import FacebookProvider, { Comments } from 'react-facebook';
+import { FacebookProvider, Comments } from 'react-facebook';
 
 export default class Example extends Component {
   render() {
@@ -107,7 +118,7 @@ export default class Example extends Component {
 
 ```js
 import React, { Component} from 'react';
-import FacebookProvider, { CommentsCount } from 'react-facebook';
+import { FacebookProvider, CommentsCount } from 'react-facebook';
 
 export default class Example extends Component {
   render() {
@@ -120,11 +131,11 @@ export default class Example extends Component {
 }
 ```
 
-## Login
+## Login Button
 
 ```js
 import React, { Component} from 'react';
-import FacebookProvider, { Login } from 'react-facebook';
+import { FacebookProvider, LoginButton } from 'react-facebook';
 
 export default class Example extends Component {
   handleResponse = (data) => {
@@ -138,13 +149,13 @@ export default class Example extends Component {
   render() {
     return (
       <FacebookProvider appId="123456789">
-        <Login
+        <LoginButton
           scope="email"
-          onResponse={this.handleResponse}
+          onCompleted={this.handleResponse}
           onError={this.handleError}
         >
           <span>Login via Facebook</span>
-        </Login>
+        </LoginButton>
       </FacebookProvider>
     );
   }
@@ -153,11 +164,11 @@ export default class Example extends Component {
 
 ### Custom login render
 
-If you want to use custom component you can use render or component property.
+If you want to use custom component you can use children as function.
 
 ```js
 import React, { Component} from 'react';
-import FacebookProvider, { Login } from 'react-facebook';
+import { FacebookProvider, Login } from 'react-facebook';
 
 export default class Example extends Component {
   handleResponse = (data) => {
@@ -173,17 +184,18 @@ export default class Example extends Component {
       <FacebookProvider appId="123456789">
         <Login
           scope="email"
-          onResponse={this.handleResponse}
+          onCompleted={this.handleResponse}
           onError={this.handleError}
-          render={({ isLoading, isWorking, onClick }) => (
-            <span onClick={onClick}>
+        >
+          {({ loading, handleClick, error, data }) => (
+            <span onClick={handleClick}>
               Login via Facebook
-              {(isLoading || isWorking) && (
+              {loading && (
                 <span>Loading...</span>
               )}
             </span>
           )}
-        />
+        </Login>
       </FacebookProvider>
     );
   }
@@ -194,7 +206,7 @@ export default class Example extends Component {
 
 ```js
 import React, { Component} from 'react';
-import FacebookProvider, { EmbeddedPost } from 'react-facebook';
+import { FacebookProvider, EmbeddedPost } from 'react-facebook';
 
 export default class Example extends Component {
   render() {
@@ -212,7 +224,7 @@ export default class Example extends Component {
 
 ```js
 import React, { Component} from 'react';
-import FacebookProvider, { Page } from 'react-facebook';
+import { FacebookProvider, Page } from 'react-facebook';
 
 export default class Example extends Component {
   render() {
@@ -229,13 +241,17 @@ export default class Example extends Component {
 
 ```js
 import React, { Component} from 'react';
-import FacebookProvider, { Feed } from 'react-facebook';
+import { FacebookProvider, Feed } from 'react-facebook';
 
 export default class Example extends Component {
   render() {
     return (
       <FacebookProvider appId="123456789">
-        <Feed link="https://www.facebook.com" />
+        <Feed link="https://www.facebook.com">
+          {({ handleClick }) => (
+            <button type="button" onClick={handleClick}>Share on Feed</button>
+          )}
+        </Feed>
       </FacebookProvider>    
     );
   }
@@ -246,7 +262,7 @@ export default class Example extends Component {
 
 ```js
 import React, { Component} from 'react';
-import FacebookProvider, { MessageUs } from 'react-facebook';
+import { FacebookProvider, MessageUs } from 'react-facebook';
 
 export default class Example extends Component {
   render() {
@@ -263,7 +279,7 @@ export default class Example extends Component {
 
 ```js
 import React, { Component} from 'react';
-import FacebookProvider, { SendToMessenger } from 'react-facebook';
+import { FacebookProvider, SendToMessenger } from 'react-facebook';
 
 export default class Example extends Component {
   render() {
@@ -281,7 +297,7 @@ export default class Example extends Component {
 
 ```js
 import React, { Component} from 'react';
-import FacebookProvider, { MessengerCheckbox } from 'react-facebook';
+import { FacebookProvider, MessengerCheckbox } from 'react-facebook';
 
 export default class Example extends Component {
   render() {
@@ -299,13 +315,35 @@ export default class Example extends Component {
 
 ```js
 import React, { Component} from 'react';
-import FacebookProvider, { CustomChat } from 'react-facebook';
+import { FacebookProvider, CustomChat } from 'react-facebook';
 
 export default class Example extends Component {
   render() {
     return (
       <FacebookProvider appId="123456789">
-        <CustomChat  pageId="123456789" minimized={false}/>
+        <CustomChat pageId="123456789" minimized={false}/>
+      </FacebookProvider>    
+    );
+  }
+}
+```
+
+## API Access
+
+```js
+import React, { Component} from 'react';
+import { FacebookProvider, Initialize } from 'react-facebook';
+
+export default class Example extends Component {
+  render() {
+    return (
+      <FacebookProvider appId="123456789">
+        <Initialize>
+          {({ isReady, api }) => {
+            api.ui(...) // our custom async/await api
+            // original FB api is available via window.FB
+          }}
+        <Initialize>
       </FacebookProvider>    
     );
   }

@@ -4,7 +4,7 @@ import FacebookProvider from './FacebookProvider';
 import Share from './Share';
 
 describe('Provider', () => {
-  it('should be able to create simple instance', () => {
+  it('should be able to create simple instance of provider', () => {
     const wrapper = mount(
       <FacebookProvider appId="123456789">
         <span>Test</span>
@@ -18,16 +18,16 @@ describe('Provider', () => {
     const wrapper = mount((
       <FacebookProvider appId="123456789">
         <Share>
-          <button type="button" onClick={done}>
-            Test
-          </button>
+          {({ handleClick }) => (
+            <button type="button" onClick={done}>
+              Test
+            </button>
+          )}
         </Share>
       </FacebookProvider>
     ));
 
     expect(wrapper.html()).toBe('<button type="button">Test</button>');
-
-    wrapper.find('button').first().simulate('click');
 
     done();
   });

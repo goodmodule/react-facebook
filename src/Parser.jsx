@@ -2,87 +2,55 @@
 import React, { Component, type Node } from 'react';
 import Initialize from './Initialize';
 
-export type ParserProps = {
+type Props = {
   className?: string,
-  children?: Node,
-  onParse?: Function,
+  children: Function,
 };
 
-export default class Parser extends Component<ParserProps> {
+type State = {
+  api?: Object,
+  container?: Node,
+};
+
+export default class Parser extends Component<Props, State> {
   static defaultProps = {
-    children: undefined,
     className: undefined,
-    onParse: undefined,
   };
 
-  componentWillReceiveProps(props: ParserProps): void {
-    const { children: oldChildren } = this.props;
-    const { children } = props;
+  state: State = {};
 
-    if (!children || !oldChildren) {
+  handleReady = (api: Object): void => {
+    this.setState({
+      api,
+    }, this.handleParse);
+  }
+
+  handleContainer = (container: Node): void => {
+    this.setState({
+      container,
+    }, this.handleParse);
+  }
+
+  handleParse = (): void => {
+    const { api, container } = this.state;
+    if (!api || !container) {
       return;
     }
 
-    const changed = Object.keys(oldChildren.props).find((propName) => {
-      const oldValue = oldChildren.props[propName];
-      const newValue = children.props[propName];
-
-      return oldValue !== newValue;
-    });
-
-    if (changed) {
-      this.rerender();
-    }
-  }
-
-  shouldComponentUpdate(): boolean {
-    return false;
-  }
-
-  handleFacebookReady = (facebook: Object): void => {
-    this.facebook = facebook;
-    this.parse();
-  }
-
-  handleContainer = (container): void => {
-    this.container = container;
-    this.parse();
-  }
-
-  rerender() {
-    this.forceUpdate();
-
-    this.parsed = false;
-    this.parse();
-  }
-
-  parse() {
-    const { parsed, container, facebook } = this;
-    if (parsed || !container || !facebook) {
-      return false;
-    }
-
-    this.parsed = true;
-
-    const parseResponse = facebook.parse(container);
-
-    const { onParse } = this.props;
-    if (onParse) {
-      onParse(parseResponse);
-    }
-
-    return parseResponse;
+    api.parse(container);
   }
 
   render() {
     const { className, children } = this.props;
 
     return (
-      <Initialize onReady={this.handleFacebookReady}>
-        <div className={className} ref={this.handleContainer}>
-          {children}
-        </div>
-      </Initialize>
+      <div className={className} ref={this.handleContainer}>
+        <Initialize onReady={this.handleReady}>
+          {children({
+            handleParse: this.handleParse,
+          })}
+        </Initialize>
+      </div>
     );
   }
 }

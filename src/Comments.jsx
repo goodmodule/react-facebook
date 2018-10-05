@@ -1,9 +1,9 @@
 // @flow
-import React, { type Node } from 'react';
-import Parser, { type ParserProps } from './Parser';
+import React, { forwardRef, PureComponent, type Node } from 'react';
+import Parser from './Parser';
 import getCurrentHref from './utils/getCurrentHref';
 
-type Props = ParserProps & {
+type Props = {
   href?: string,
   numPosts?: number,
   orderBy?: string,
@@ -11,22 +11,37 @@ type Props = ParserProps & {
   colorScheme?: string,
   children?: Node,
   mobile?: boolean,
+  handleParse: Function,
 };
 
-export default function Comments(props: Props) {
-  const {
-    colorScheme,
-    href = getCurrentHref(),
-    numPosts,
-    orderBy,
-    width,
-    children,
-    mobile,
-    ...rest
-  } = props;
+class Comments extends PureComponent<Props> {
+  static defaultProps = {
+    href: undefined,
+    numPosts: undefined,
+    orderBy: undefined,
+    width: undefined,
+    colorScheme: undefined,
+    children: undefined,
+    mobile: undefined,
+  };
 
-  return (
-    <Parser {...rest}>
+  componentDidUpdate() {
+    const { handleParse } = this.props;
+    handleParse();
+  }
+
+  render() {
+    const {
+      colorScheme,
+      href = getCurrentHref(),
+      numPosts,
+      orderBy,
+      width,
+      children,
+      mobile,
+    } = this.props;
+
+    return (
       <div
         className="fb-comments"
         data-colorscheme={colorScheme}
@@ -39,17 +54,18 @@ export default function Comments(props: Props) {
       >
         {children}
       </div>
-    </Parser>
-  );
+    );
+  }
 }
 
-Comments.defaultProps = {
-  ...Parser.defaultProps,
-  href: undefined,
-  numPosts: undefined,
-  orderBy: undefined,
-  width: undefined,
-  colorScheme: undefined,
-  children: undefined,
-  mobile: undefined,
-};
+export default forwardRef((props, ref) => (
+  <Parser>
+    {({ handleParse }) => (
+      <Comments
+        {...props}
+        handleParse={handleParse}
+        ref={ref}
+      />
+    )}
+  </Parser>
+));

@@ -1,34 +1,50 @@
 // @flow
-import React, { type Node } from 'react';
-import Parser, { type ParserProps } from './Parser';
+import React, { type Node, forwardRef, PureComponent } from 'react';
+import Parser from './Parser';
 import getCurrentHref from './utils/getCurrentHref';
 
-type Props = ParserProps & {
+type Props = {
   href?: string,
   children?: Node,
+  handleParse: Function,
 };
 
-export default function CommentsCount(props: Props) {
-  const {
-    href = getCurrentHref(),
-    children,
-    ...rest
-  } = props;
+class CommentsCount extends PureComponent<Props> {
+  static defaultProps = {
+    href: undefined,
+    children: undefined,
+  };
 
-  return (
-    <Parser {...rest}>
+  componentDidUpdate() {
+    const { handleParse } = this.props;
+    handleParse();
+  }
+
+  render() {
+    const {
+      href = getCurrentHref(),
+      children,
+    } = this.props;
+
+    return (
       <span
         className="fb-comments-count"
         data-href={href}
       >
         {children}
       </span>
-    </Parser>
-  );
+    );
+  }
 }
 
-CommentsCount.defaultProps = {
-  ...Parser.defaultProps,
-  href: undefined,
-  children: undefined,
-};
+export default forwardRef((props, ref) => (
+  <Parser>
+    {({ handleParse }) => (
+      <CommentsCount
+        {...props}
+        handleParse={handleParse}
+        ref={ref}
+      />
+    )}
+  </Parser>
+));

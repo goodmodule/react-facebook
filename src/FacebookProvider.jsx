@@ -4,7 +4,7 @@ import canUseDOM from 'can-use-dom';
 import FB from './Facebook';
 
 export const FacebookContext = createContext();
-let fb = null;
+let api = null;
 
 type Props = {
   appId: string,
@@ -43,11 +43,11 @@ export default class Facebook extends Component<Props, State> {
   componentDidMount(): void {
     const { wait } = this.props;
     if (!wait) {
-      this.init();
+      this.handleInit();
     }
   }
 
-  init = async (): Promise<FB> => {
+  handleInit = async (): Promise<FB> => {
     // do not run if SSR
     if (!canUseDOM) {
       throw new Error('You can not use Facebook without DOM');
@@ -55,10 +55,10 @@ export default class Facebook extends Component<Props, State> {
 
     const { isReady } = this.state;
     if (isReady) {
-      return fb;
+      return api;
     }
 
-    if (!fb) {
+    if (!api) {
       const {
         domain,
         version,
@@ -71,7 +71,7 @@ export default class Facebook extends Component<Props, State> {
         wait,
       } = this.props;
 
-      fb = new FB({
+      api = new FB({
         domain,
         appId,
         version,
@@ -84,7 +84,7 @@ export default class Facebook extends Component<Props, State> {
       });
     }
 
-    await fb.init();
+    await api.init();
 
     if (!this.state.isReady) {
       this.setState({
@@ -92,19 +92,19 @@ export default class Facebook extends Component<Props, State> {
       });
     }
 
-    return fb;
+    return api;
   }
 
   render() {
     const { children } = this.props;
     const { isReady, error } = this.state;
-    const { init } = this;
+    const { handleInit } = this;
 
     const value = {
       isReady,
       error,
-      init,
-      fb: isReady ? fb : undefined,
+      handleInit,
+      api,
     };
 
     return (

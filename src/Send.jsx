@@ -1,9 +1,13 @@
 // @flow
+import React, { Component, forwardRef } from 'react';
 import getCurrentHref from './utils/getCurrentHref';
 import clearUndefinedProperties from './utils/clearUndefinedProperties';
 import Process from './Process';
 
-type Props = Process & {
+type Props = {
+  children: Function,
+  handleProcess: Function,
+  loading: boolean,
   link: string,
   to?: string,
   display?: string,
@@ -11,31 +15,58 @@ type Props = Process & {
   redirectURI?: string,
 };
 
-export default class Send extends Process<Props> {
+class Send extends Component<Props> {
   static defaultProps = {
-    ...Process.defaultProps,
     to: undefined,
     display: undefined,
     appId: undefined,
     redirectURI: undefined,
   };
 
-  async process(facebook) {
-    const {
-      link = getCurrentHref(),
-      display,
-      appId = facebook.getAppId(),
-      to,
-      redirectURI,
-    } = this.props;
+  handleClick = async (evn) => {
+    evn.preventDefault();
 
-    return facebook.ui(clearUndefinedProperties({
-      method: 'send',
-      link,
-      display,
-      app_id: appId,
-      to,
-      redirect_uri: redirectURI,
-    }));
+    const { handleProcess } = this.props;
+
+    return handleProcess(async (api) => {
+      const {
+        link = getCurrentHref(),
+        display,
+        appId = api.getAppId(),
+        to,
+        redirectURI,
+      } = this.props;
+
+      return api.ui(clearUndefinedProperties({
+        method: 'send',
+        link,
+        display,
+        app_id: appId,
+        to,
+        redirect_uri: redirectURI,
+      }));
+    });
+  }
+
+  render() {
+    const { children, loading } = this.props;
+
+    return children({
+      loading,
+      handleClick: this.handleClick,
+    });
   }
 }
+
+export default forwardRef((props, ref) => (
+  <Process>
+    {({ loading, handleProcess }) => (
+      <Send
+        {...props}
+        loading={loading}
+        handleProcess={handleProcess}
+        ref={ref}
+      />
+    )}
+  </Process>
+));

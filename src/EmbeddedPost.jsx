@@ -1,25 +1,36 @@
 // @flow
-import React, { type Node } from 'react';
-import Parser, { type ParserProps } from './Parser';
+import React, { type Node, PureComponent, forwardRef } from 'react';
+import Parser from './Parser';
 
-type Props = ParserProps & {
+type Props = {
   href: string,
   width?: string | number,
   showText?: boolean,
   children?: Node,
+  handleParse: Function,
 };
 
-export default function EmbeddedPost(props: Props) {
-  const {
-    href,
-    width,
-    showText,
-    children,
-    ...rest
-  } = props;
+class EmbeddedPost extends PureComponent<Props> {
+  static defaultProps = {
+    width: undefined,
+    showText: undefined,
+    children: undefined,
+  };
 
-  return (
-    <Parser {...rest}>
+  componentDidUpdate() {
+    const { handleParse } = this.props;
+    handleParse();
+  }
+
+  render() {
+    const {
+      href,
+      width,
+      showText,
+      children,
+    } = this.props;
+
+    return (
       <div
         className="fb-post"
         data-href={href}
@@ -28,13 +39,18 @@ export default function EmbeddedPost(props: Props) {
       >
         {children}
       </div>
-    </Parser>
-  );
+    );
+  }
 }
 
-EmbeddedPost.defaultProps = {
-  ...Parser.defaultProps,
-  width: undefined,
-  showText: undefined,
-  children: undefined,
-};
+export default forwardRef((props, ref) => (
+  <Parser>
+    {({ handleParse }) => (
+      <EmbeddedPost
+        {...props}
+        handleParse={handleParse}
+        ref={ref}
+      />
+    )}
+  </Parser>
+));

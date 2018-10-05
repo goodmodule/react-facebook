@@ -1,52 +1,59 @@
 // @flow
-import React, { Component } from 'react';
+import React, { forwardRef, Component } from 'react';
 import { FacebookContext } from './FacebookProvider';
 
 type Props = {
   children: Function,
   onReady?: Function,
+  handleInit: Function,
+  isReady: boolean,
+  api?: Object,
 };
 
-export default class Initialize extends Component<Props> {
+class Initialize extends Component<Props> {
   static defaultProps = {
     onReady: undefined,
+    api: undefined,
   };
 
   componentDidMount() {
     this.prepare();
   }
 
-  init: ?Function;
-
   async prepare() {
-    const { init, props: { onReady } } = this;
-    if (init) {
-      const fb = await init();
-      if (onReady) {
-        onReady(fb);
-      }
+    const { onReady, handleInit } = this.props;
+    const api = await handleInit();
+    if (onReady) {
+      onReady(api);
     }
   }
 
-  renderChildren = (facebookProps: Object) => {
-    const { children } = this.props;
+  render() {
+    const { children, isReady, api } = this.props;
 
-    if (!this.init) {
-      this.init = facebookProps.init;
-    }
+    const childrenProps = {
+      isReady,
+      api,
+    };
 
     if (typeof children === 'function') {
-      return children(facebookProps);
+      return children(childrenProps);
     }
 
     return children;
   }
-
-  render() {
-    return (
-      <FacebookContext.Consumer>
-        {this.renderChildren}
-      </FacebookContext.Consumer>
-    );
-  }
 }
+
+export default forwardRef((props, ref) => (
+  <FacebookContext.Consumer>
+    {({ handleInit, isReady, api }) => (
+      <Initialize
+        {...props}
+        handleInit={handleInit}
+        isReady={isReady}
+        api={api}
+        ref={ref}
+      />
+    )}
+  </FacebookContext.Consumer>
+));

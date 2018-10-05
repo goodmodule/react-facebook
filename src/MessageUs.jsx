@@ -1,27 +1,38 @@
 // @flow
-import React, { type Node } from 'react';
-import Parser, { type ParserProps } from './Parser';
+import React, { type Node, PureComponent, forwardRef } from 'react';
+import Parser from './Parser';
 
-type Props = ParserProps & {
+type Props = {
   messengerAppId: string,
   pageId: string,
   color?: string,
   children?: Node,
   size?: string,
+  handleParse: Function,
 };
 
-export default function MessageUs(props: Props) {
-  const {
-    color,
-    messengerAppId,
-    pageId,
-    children,
-    size,
-    ...rest
-  } = props;
+class MessageUs extends PureComponent<Props> {
+  static defaultProps = {
+    color: undefined,
+    size: undefined,
+    children: undefined,
+  };
 
-  return (
-    <Parser {...rest}>
+  componentDidUpdate() {
+    const { handleParse } = this.props;
+    handleParse();
+  }
+
+  render() {
+    const {
+      color,
+      messengerAppId,
+      pageId,
+      children,
+      size,
+    } = this.props;
+
+    return (
       <div
         className="fb-messengermessageus"
         messenger_app_id={messengerAppId}
@@ -31,13 +42,18 @@ export default function MessageUs(props: Props) {
       >
         {children}
       </div>
-    </Parser>
-  );
+    );
+  }
 }
 
-MessageUs.defaultProps = {
-  ...Parser.defaultProps,
-  color: undefined,
-  size: undefined,
-  children: undefined,
-};
+export default forwardRef((props, ref) => (
+  <Parser>
+    {({ handleParse }) => (
+      <MessageUs
+        {...props}
+        handleParse={handleParse}
+        ref={ref}
+      />
+    )}
+  </Parser>
+));

@@ -1,31 +1,43 @@
 // @flow
-import React, { type Node } from 'react';
-import Parser, { type ParserProps } from './Parser';
-import MessengerSize from './constants/MessengerSize';
-import MessengerColor from './constants/MessengerColor';
+import React, { type Node, PureComponent, forwardRef } from 'react';
+import Parser from './Parser';
+// import MessengerSize from './constants/MessengerSize';
+// import MessengerColor from './constants/MessengerColor';
 
-type Props = ParserProps & {
-  appId: string,
+type Props = {
+  messengerAppId: string,
   pageId: string,
   color?: string,
   children?: Node,
   dataRef?: string,
   size?: string,
+  handleParse: Function,
 };
 
-export default function SendToMessenger(props: Props) {
-  const {
-    color,
-    messengerAppId,
-    pageId,
-    children,
-    dataRef,
-    size,
-    ...rest
-  } = props;
+class SendToMessenger extends PureComponent<Props> {
+  static defaultProps = {
+    color: undefined,
+    size: undefined,
+    dataRef: undefined,
+    children: undefined,
+  };
 
-  return (
-    <Parser {...rest}>
+  componentDidUpdate() {
+    const { handleParse } = this.props;
+    handleParse();
+  }
+
+  render() {
+    const {
+      color,
+      messengerAppId,
+      pageId,
+      children,
+      dataRef,
+      size,
+    } = this.props;
+
+    return (
       <div
         className="fb-send-to-messenger"
         messenger_app_id={messengerAppId}
@@ -36,14 +48,18 @@ export default function SendToMessenger(props: Props) {
       >
         {children}
       </div>
-    </Parser>
-  );
+    );
+  }
 }
 
-SendToMessenger.defaultProps = {
-  ...Parser.defaultProps,
-  color: undefined,
-  size: undefined,
-  dataRef: undefined,
-  children: undefined,
-};
+export default forwardRef((props, ref) => (
+  <Parser>
+    {({ handleParse }) => (
+      <SendToMessenger
+        {...props}
+        handleParse={handleParse}
+        ref={ref}
+      />
+    )}
+  </Parser>
+));

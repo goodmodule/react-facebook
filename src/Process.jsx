@@ -1,80 +1,73 @@
 // @flow
-import React, { Component, type Node } from 'react';
+import React, { Component } from 'react';
 import Initialize from './Initialize';
 
 export type Props = {
   children: Function,
-  onReady?: Function,
 };
 
 type State = {
-  fb?: Object,
-  loading: boolean,
-  data?: any,
+  api?: Object,
+  isProcessing?: boolean,
   error?: Error,
+  data?: any,
 };
 
 export default class Process extends Component<Props, State> {
   state: State = {
-    loading: false,
+    api: undefined,
   };
 
-  async process() {
-    throw new Error('Override process function');
-  }
-
-  handleProcess = async () => {
+  handleProcess = async (fn: Function): Promise<any> => {
     this.setState({
-      error: undefined,
       data: undefined,
-      processing: true,
+      error: undefined,
+      loading: true,
     });
 
     try {
-      const { fb } = this.state;
-      if (!fb) {
-        throw new Error('Facebook is not initialized. Wait for initialization');
+      const { api } = this.state;
+      if (!api) {
+        throw new Error('Facebook is not initialized. Wait for isReady');
       }
 
-      const data = await this.process(fb);
+      const data = await fn(api);
 
       this.setState({
         data,
-        processing: false,
+        loading: false,
       });
+
+      return data;
     } catch (error) {
       this.setState({
         error,
-        processing: false,
+        loading: false,
       });
+
+      throw error;
     }
   }
 
-  handleFacebookReady = (fb) => {
-    const { onReady } = this.props;
-
+  handleReady = (api: Object): void => {
     this.setState({
-      fb,
+      api,
     });
-
-    if (onReady) {
-      onReady(fb);
-    }
   }
 
   render() {
     const { children } = this.props;
-    const { data, error, processing } = this.state;
+    const {
+      api, loading, data, error,
+    } = this.state;
 
     return (
-      <Initialize onReady={this.handleFacebookReady}>
-        {(facebookProps) => children({
-          ...facebookProps,
+      <Initialize onReady={this.handleReady}>
+        {children({
+          loading: !api || loading,
+          process: this.handleProcess,
           data,
           error,
-          processing,
-          loading: processing || !facebookProps.isReady,
-          handleProcess: this.handleProcess,
         })}
       </Initialize>
     );

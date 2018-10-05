@@ -1,9 +1,15 @@
 // @flow
+import React, { Component, forwardRef } from 'react';
 import getCurrentHref from './utils/getCurrentHref';
 import clearUndefinedProperties from './utils/clearUndefinedProperties';
 import Process from './Process';
 
-type Props = Process & {
+type Props = {
+  children: Function,
+  loading: boolean,
+  handleProcess: Function,
+  data: any,
+  error: Error,
   appId?: string,
   redirectURI?: string,
   display?: string,
@@ -15,48 +21,91 @@ type Props = Process & {
   name?: string, // deprecated
   caption?: string, // deprecated
   description?: string, // deprecated
-  ref?: string,
+  dataRef?: string,
 };
 
-export default class Feed extends Process<Props> {
+class Feed extends Component<Props> {
   static defaultProps = {
-    ...Process.defaultProps,
     link: undefined,
     display: undefined,
     appId: undefined,
     redirectURI: undefined,
+    from: undefined,
+    to: undefined,
+    source: undefined,
+    picture: undefined,
+    name: undefined,
+    caption: undefined,
+    description: undefined,
+    dataRef: undefined,
   };
 
-  async process(facebook) {
+  handleClick = async (evn) => {
+    evn.preventDefault();
+
+    const { handleProcess } = this.props;
+
+    return handleProcess(async (api) => {
+      const {
+        link = getCurrentHref(),
+        display,
+        appId = api.getAppId(),
+        redirectURI,
+        from,
+        to,
+        picture,
+        source,
+        name,
+        caption,
+        description,
+        dataRef,
+      } = this.props;
+
+      return api.ui(clearUndefinedProperties({
+        method: 'feed',
+        link,
+        display,
+        app_id: appId,
+        redirect_uri: redirectURI,
+        from,
+        to,
+        picture,
+        source,
+        name,
+        caption,
+        description,
+        ref: dataRef,
+      }));
+    });
+  }
+
+  render() {
     const {
-      link = getCurrentHref(),
-      display,
-      appId = facebook.getAppId(),
-      redirectURI,
-      from,
-      to,
-      picture,
-      source,
-      name,
-      caption,
-      description,
-      ref,
+      children, loading, error, data,
     } = this.props;
 
-    return facebook.ui(clearUndefinedProperties({
-      method: 'feed',
-      link,
-      display,
-      app_id: appId,
-      redirect_uri: redirectURI,
-      from,
-      to,
-      picture,
-      source,
-      name,
-      caption,
-      description,
-      ref,
-    }));
+    return children({
+      loading,
+      handleClick: this.handleClick,
+      error,
+      data,
+    });
   }
 }
+
+export default forwardRef((props, ref) => (
+  <Process>
+    {({
+      loading, handleProcess, error, data,
+    }) => (
+      <Feed
+        {...props}
+        loading={loading}
+        handleProcess={handleProcess}
+        data={data}
+        error={error}
+        ref={ref}
+      />
+    )}
+  </Process>
+));

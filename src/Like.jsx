@@ -1,9 +1,9 @@
 // @flow
-import React, { type Node } from 'react';
-import Parser, { type ParserProps } from './Parser';
+import React, { type Node, PureComponent, forwardRef } from 'react';
+import Parser from './Parser';
 import getCurrentHref from './utils/getCurrentHref';
 
-type Props = ParserProps & {
+type Props = {
   referral?: string,
   href?: string,
   layout?: string,
@@ -15,26 +15,45 @@ type Props = ParserProps & {
   width?: number | string,
   size?: string,
   kidDirectedSite?: boolean,
+  handleParse: Function,
 };
 
-export default function Like(props: Props) {
-  const {
-    href = getCurrentHref(),
-    layout,
-    colorScheme,
-    action,
-    showFaces,
-    share,
-    children,
-    width,
-    size,
-    kidDirectedSite,
-    referral,
-    ...rest
-  } = props;
+class Like extends PureComponent<Props> {
+  static defaultProps = {
+    layout: undefined,
+    showFaces: undefined,
+    colorScheme: undefined,
+    action: undefined,
+    share: undefined,
+    size: undefined,
+    kidDirectedSite: undefined,
+    children: undefined,
+    href: undefined,
+    referral: undefined,
+    width: undefined,
+  };
 
-  return (
-    <Parser {...rest}>
+  componentDidUpdate() {
+    const { handleParse } = this.props;
+    handleParse();
+  }
+
+  render() {
+    const {
+      href = getCurrentHref(),
+      layout,
+      colorScheme,
+      action,
+      showFaces,
+      share,
+      children,
+      width,
+      size,
+      kidDirectedSite,
+      referral,
+    } = this.props;
+
+    return (
       <div
         className="fb-like"
         data-ref={referral}
@@ -50,21 +69,18 @@ export default function Like(props: Props) {
       >
         {children}
       </div>
-    </Parser>
-  );
+    );
+  }
 }
 
-Like.defaultProps = {
-  ...Parser.defaultProps,
-  layout: undefined,
-  showFaces: undefined,
-  colorScheme: undefined,
-  action: undefined,
-  share: undefined,
-  size: undefined,
-  kidDirectedSite: undefined,
-  children: undefined,
-  href: undefined,
-  referral: undefined,
-  width: undefined,
-};
+export default forwardRef((props, ref) => (
+  <Parser>
+    {({ handleParse }) => (
+      <Like
+        {...props}
+        handleParse={handleParse}
+        ref={ref}
+      />
+    )}
+  </Parser>
+));
