@@ -15,6 +15,7 @@ export EmbeddedVideo from './EmbeddedVideo';
 export Comments from './Comments';
 export CommentsCount from './CommentsCount';
 export Feed from './Feed';
+export Group from './Group';
 
 export CustomChat from './CustomChat';
 export MessageUs from './MessageUs';
