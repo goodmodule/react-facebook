@@ -22,6 +22,7 @@
 - Embedded video
 - Page
 - Feed
+- Group
 - Message Us
 - Customer Chat
 
