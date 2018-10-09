@@ -1,11 +1,7 @@
 import debug from 'debug';
+import LoginStatus from './constants/LoginStatus';
 
 const log = debug('react-facebook:facebook');
-
-export const LoginStatus = {
-  CONNECTED: 'connected',
-  NOT_AUTHORIZED: 'not_authorized',
-};
 
 export const Method = {
   GET: 'get',

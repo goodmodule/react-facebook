@@ -1,3 +1,4 @@
+// @flow
 export FacebookProvider from './FacebookProvider';
 
 export Parser from './Parser';
@@ -15,6 +16,9 @@ export EmbeddedVideo from './EmbeddedVideo';
 export Comments from './Comments';
 export CommentsCount from './CommentsCount';
 export Feed from './Feed';
+export Subscribe from './Subscribe';
+export Status from './Status';
+export Profile from './Profile';
 
 export CustomChat from './CustomChat';
 export MessageUs from './MessageUs';
@@ -29,3 +33,6 @@ export CommentsOrderBy from './constants/CommentsOrderBy';
 
 export MessengerSize from './constants/MessengerSize';
 export MessengerColor from './constants/MessengerColor';
+
+export LoginStatus from './constants/LoginStatus';
+export Fields from './constants/Fields';

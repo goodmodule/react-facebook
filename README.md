@@ -24,6 +24,9 @@
 - Feed
 - Message Us
 - Customer Chat
+- Status
+- Subscribe
+- User Profile
 
 # Support us
 
@@ -344,6 +347,85 @@ export default class Example extends Component {
             // original FB api is available via window.FB
           }}
         <Initialize>
+      </FacebookProvider>    
+    );
+  }
+}
+```
+
+## Subscribe
+
+```js
+import React, { Component} from 'react';
+import { FacebookProvider, Subscribe } from 'react-facebook';
+
+export default class Example extends Component {
+  handleChange = (response) => {
+    console.log(response);
+  } 
+
+  render() {
+    return (
+      <FacebookProvider appId="123456789">
+        <Subscribe event="auth.statusChange" onChange={this.handleChange} />
+      </FacebookProvider>    
+    );
+  }
+}
+```
+
+## Login Status
+
+```js
+import React, { Component} from 'react';
+import { FacebookProvider, Status } from 'react-facebook';
+
+export default class Example extends Component {
+  handleChange = (response) => {
+    console.log(response);
+  } 
+
+  render() {
+    return (
+      <FacebookProvider appId="123456789">
+        <Status>
+          {({ loading, status }) => (
+            <div>
+              {...}
+            </div>
+          )}
+        </Status>
+      </FacebookProvider>    
+    );
+  }
+}
+```
+
+## User Profile
+
+This component will not sign user. You need to do that with another component.
+Default scope: 'id', 'first_name', 'last_name', 'middle_name', 'name', 'name_format', 'picture', 'short_name', 'email'
+
+```js
+import React, { Component} from 'react';
+import { FacebookProvider, Profile } from 'react-facebook';
+
+export default class Example extends Component {
+  handleChange = (response) => {
+    console.log(response);
+  } 
+
+  render() {
+    return (
+      <FacebookProvider appId="123456789">
+        <Profile>
+          {({ loading, profile }) => (
+            <div>
+              {profile.picture}
+              {profile.name} 
+            </div>
+          )}
+        </Profile>
       </FacebookProvider>    
     );
   }
