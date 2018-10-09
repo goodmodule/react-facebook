@@ -16,6 +16,7 @@ type Props = {
   reauthorize?: boolean,
   onCompleted?: Function,
   onError?: Function,
+  eventKey?: any,
 };
 
 class Login extends Component<Props> {
@@ -27,6 +28,7 @@ class Login extends Component<Props> {
     reauthorize: false,
     onCompleted: undefined,
     onError: undefined,
+    eventKey: undefined,
   };
 
   handleClick = async (evn) => {
@@ -37,7 +39,7 @@ class Login extends Component<Props> {
     try {
       await handleProcess(async (api) => {
         const {
-          scope, fields, returnScopes, rerequest, reauthorize,
+          scope, fields, returnScopes, rerequest, reauthorize, eventKey,
         } = this.props;
         const loginQpts = { scope };
         const authType = [];
@@ -66,7 +68,10 @@ class Login extends Component<Props> {
         const data = await api.getTokenDetailWithProfile({ fields });
 
         if (onCompleted) {
-          await onCompleted(data);
+          await onCompleted({
+            ...data,
+            eventKey,
+          });
         }
 
         return data;
