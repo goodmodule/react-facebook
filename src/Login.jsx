@@ -1,6 +1,7 @@
 // @flow
 import React, { Component, forwardRef } from 'react';
 import Process from './Process';
+import Fields from './constants/Fields';
 
 type Props = {
   children: Function,
@@ -20,8 +21,7 @@ type Props = {
 class Login extends Component<Props> {
   static defaultProps = {
     scope: '',
-    fields: ['id', 'first_name', 'last_name', 'middle_name',
-      'name', 'email', 'locale', 'gender', 'timezone', 'verified', 'link'],
+    fields: Fields,
     returnScopes: false,
     rerequest: false,
     reauthorize: false,
@@ -63,7 +63,7 @@ class Login extends Component<Props> {
           throw new Error('Unauthorized user');
         }
 
-        const data = api.getTokenDetailWithProfile({ fields });
+        const data = await api.getTokenDetailWithProfile({ fields });
 
         if (onCompleted) {
           await onCompleted(data);

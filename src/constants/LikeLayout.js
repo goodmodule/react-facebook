@@ -1,3 +1,4 @@
+// @flow
 export default {
   STANDARD: 'standard',
   BUTTON_COUNT: 'button_count',
