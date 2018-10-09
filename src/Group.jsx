@@ -22,7 +22,7 @@ class Group extends PureComponent<Props> {
     children: undefined,
     style: undefined,
     href: undefined,
-    skin: undefined
+    skin: undefined,
   };
 
   componentDidUpdate() {
@@ -38,7 +38,7 @@ class Group extends PureComponent<Props> {
       showSocialContext,
       showMetaData,
       children,
-      skin
+      skin,
     } = this.props;
 
     return (
