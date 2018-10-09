@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import Initialize from './Initialize';
 import Subscribe from './Subscribe';
 import Fields from './constants/Fields';
+import LoginStatus from './constants/LoginStatus';
 
 type Props = {
   children: Function,
@@ -41,6 +42,15 @@ export default class Profile extends Component<Props, State> {
     }
 
     try {
+      const response = await api.getLoginStatus();
+      if (response.status !== LoginStatus.CONNECTED) {
+        this.setState({
+          profile: undefined,
+          loading: false,
+          error: undefined,
+        });
+      }
+
       const profile = await api.getProfile({
         fields,
       });
