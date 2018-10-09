@@ -82,12 +82,19 @@ export default class Facebook {
 
     return new Promise((resolve, reject) => {
       fb[method](...before, (response) => {
-        if (!response || response.error) {
-          reject(new Error((response && response.error) || 'Response is undefined'));
-          return;
-        }
+        if (!response) {
+          reject(new Error('Response is undefined'));
+        } else if (response.error) {
+          const { code, type, message } = response.error;
 
-        resolve(response);
+          const error = new Error(message);
+          error.code = code;
+          error.type = type;
+
+          reject(error);
+        } else {
+          resolve(response);
+        }
       }, ...after);
     });
   }
