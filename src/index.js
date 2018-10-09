@@ -16,6 +16,7 @@ export EmbeddedVideo from './EmbeddedVideo';
 export Comments from './Comments';
 export CommentsCount from './CommentsCount';
 export Feed from './Feed';
+export Group from './Group';
 export Subscribe from './Subscribe';
 export Status from './Status';
 export Profile from './Profile';
