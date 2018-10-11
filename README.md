@@ -428,7 +428,8 @@ export default class Example extends Component {
 ## User Profile
 
 This component will not sign user. You need to do that with another component.
-Default scope: 'id', 'first_name', 'last_name', 'middle_name', 'name', 'name_format', 'picture', 'short_name', 'email'
+Default scope: 'id', 'first_name', 'last_name', 'middle_name', 'name', 'name_format', 'picture', 'short_name', 'email'.
+If profile is undefined login status !== LoginStatus.CONNECTED
 
 ```js
 import React, { Component} from 'react';

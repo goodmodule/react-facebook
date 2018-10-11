@@ -49,11 +49,14 @@ export default class Profile extends Component<Props, State> {
           loading: false,
           error: undefined,
         });
+
+        return;
       }
 
       const profile = await api.getProfile({
         fields,
       });
+
       this.setState({
         profile,
         loading: false,
