@@ -44,9 +44,9 @@
     "test": "jest ./src/",
     "test:coverage": "jest --coverage ./src/",
     "test:watch": "jest --watch ./src/",
-    "build-browser": "cross-env BABEL_ENV=browser babel ./src --out-dir ./lib --source-maps --copy-files",
-    "build-module": "cross-env BABEL_ENV=module babel ./src --out-dir ./module --source-maps --copy-files",
-    "build-node": "babel ./src --out-dir ./dist --source-maps --copy-files",
+    "build-browser": "rm -rf lib && cross-env BABEL_ENV=browser babel ./src --out-dir ./lib",
+    "build-module": "rm -rf module && cross-env BABEL_ENV=module babel ./src --out-dir ./module --source-maps --copy-files",
+    "build-node": "rm -rf dist && babel ./src --out-dir ./dist --source-maps --copy-files",
     "build": "npm run build-node && npm run build-browser && npm run build-module",
     "eslint": "node ./node_modules/eslint/bin/eslint.js --ext .js,.jsx ./src"
   },
