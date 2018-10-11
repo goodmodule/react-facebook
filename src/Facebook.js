@@ -1,4 +1,7 @@
-import debug from 'debug';
+// Referring to built file so its compatible with all browsers
+// Especially Phantom.js. Before this fix, Google Fetch would fail
+// reading a SPA app. This fixes it.
+import debug from '../node_modules/debug/dist/debug';
 import LoginStatus from './constants/LoginStatus';
 
 const log = debug('react-facebook:facebook');
