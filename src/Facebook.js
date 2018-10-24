@@ -1,7 +1,5 @@
-import debug from 'debug';
+// @flow
 import LoginStatus from './constants/LoginStatus';
-
-const log = debug('react-facebook:facebook');
 
 export const Method = {
   GET: 'get',
@@ -31,7 +29,7 @@ export default class Facebook {
     }
   }
 
-  getAppId() {
+  getAppId(): string {
     return this.options.appId;
   }
 
@@ -58,7 +56,6 @@ export default class Facebook {
 
       const fjs = window.document.getElementsByTagName('script')[0];
       if (!fjs) {
-        log('Script tag does not exists in the DOM');
         return;
       }
 

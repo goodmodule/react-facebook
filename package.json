@@ -1,6 +1,6 @@
 {
   "name": "react-facebook",
-  "version": "6.0.14",
+  "version": "6.0.15",
   "description": "Facebook components like a Login button, Like, Share, Comments, Embedded Post/Video, Messenger Chat and others",
   "author": {
     "name": "Zlatko Fedor",
@@ -56,7 +56,6 @@
     ]
   },
   "dependencies": {
-    "debug": "^4.0.1",
     "react-spinner-children": "^1.0.8",
     "can-use-dom": "^0.1.0",
     "babel-runtime": "^6.26.0"
@@ -74,19 +73,19 @@
     "babel-preset-stage-0": "^6.24.1",
     "babel-plugin-transform-runtime": "^6.23.0",
     "cross-env": "^5.2.0",
-    "eslint": "^5.6.1",
+    "eslint": "^5.7.0",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-loader": "^2.1.1",
     "eslint-plugin-react": "^7.11.1",
-    "eslint-plugin-jsx-a11y": "^6.1.1",
+    "eslint-plugin-jsx-a11y": "^6.1.2",
     "eslint-plugin-import": "^2.14.0",
     "jest": "^23.6.0",
     "jest-cli": "^23.6.0",
-    "enzyme": "^3.6.0",
-    "enzyme-adapter-react-16": "^1.5.0",
-    "react": "^16.5.2",
-    "react-dom": "^16.5.2",
-    "react-test-renderer": "^16.5.2"
+    "enzyme": "^3.7.0",
+    "enzyme-adapter-react-16": "^1.6.0",
+    "react": "^16.6.0",
+    "react-dom": "^16.6.0",
+    "react-test-renderer": "^16.6.0"
   },
   "peerDependencies": {
     "react": "16.x"
