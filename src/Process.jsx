@@ -18,7 +18,7 @@ export default class Process extends Component<Props, State> {
     api: undefined,
   };
 
-  handleProcess = async (fn: Function): Promise<any> => {
+  handleProcess = async (fn: Function, handleSuccess: Function = () => {}): Promise<any> => {
     this.setState({
       data: undefined,
       error: undefined,
@@ -33,10 +33,13 @@ export default class Process extends Component<Props, State> {
 
       const data = await fn(api);
 
-      this.setState({
-        data,
-        loading: false,
-      });
+      this.setState(
+        {
+          data,
+          loading: false,
+        },
+        handleSuccess,
+      );
 
       return data;
     } catch (error) {
