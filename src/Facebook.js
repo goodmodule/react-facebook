@@ -17,6 +17,7 @@ export default class Facebook {
       xfbml: false,
       language: 'en_US',
       frictionlessRequests: false,
+      debug: false,
       ...options,
     };
 
@@ -39,15 +40,20 @@ export default class Facebook {
     }
 
     this.loadingPromise = new Promise((resolve) => {
-      const { options } = this;
+      const { 
+        domain,
+        language,
+        debug,
+        ...restOptions
+      } = this.options;
 
       window.fbAsyncInit = () => {
         window.FB.init({
-          appId: options.appId,
-          version: options.version,
-          cookie: options.cookie,
-          status: options.status,
-          xfbml: options.xfbml,
+          appId: restOptions.appId,
+          version: restOptions.version,
+          cookie: restOptions.cookie,
+          status: restOptions.status,
+          xfbml: restOptions.xfbml,
           frictionlessRequests: this.frictionlessRequests,
         });
 
@@ -66,7 +72,7 @@ export default class Facebook {
       const js = window.document.createElement('script');
       js.id = 'facebook-jssdk';
       js.async = true;
-      js.src = `https://${options.domain}/${options.language}/sdk.js`;
+      js.src = `https://${domain}/${language}/sdk${debug ? '/debug' : ''}.js`;
 
       fjs.parentNode.insertBefore(js, fjs);
     });
