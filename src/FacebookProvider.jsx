@@ -17,6 +17,7 @@ type Props = {
   frictionlessRequests?: boolean,
   children?: Node,
   wait?: boolean,
+  debug: boolean,
 };
 
 type State = {
@@ -34,6 +35,7 @@ export default class Facebook extends Component<Props, State> {
     domain: 'connect.facebook.net',
     children: undefined,
     wait: false,
+    debug: false,
   };
 
   state: State = {
@@ -69,6 +71,7 @@ export default class Facebook extends Component<Props, State> {
         language,
         frictionlessRequests,
         wait,
+        debug,
       } = this.props;
 
       api = new FB({
@@ -81,6 +84,7 @@ export default class Facebook extends Component<Props, State> {
         language,
         frictionlessRequests,
         wait,
+        debug,
       });
     }
 
