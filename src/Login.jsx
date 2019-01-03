@@ -34,7 +34,9 @@ class Login extends Component<Props> {
   handleClick = async (evn) => {
     evn.preventDefault();
 
-    const { handleProcess, onCompleted, onError } = this.props;
+    const {
+      handleProcess, onCompleted, onError, onSuccess,
+    } = this.props;
 
     try {
       await handleProcess(async (api) => {
@@ -75,7 +77,7 @@ class Login extends Component<Props> {
         }
 
         return data;
-      });
+      }, onSuccess);
     } catch (error) {
       if (onError) {
         onError(error);
