@@ -60,11 +60,6 @@ export default class Facebook {
         resolve(window.FB);
       };
 
-      const fjs = window.document.getElementsByTagName('script')[0];
-      if (!fjs) {
-        return;
-      }
-
       if (window.document.getElementById('facebook-jssdk')) {
         return;
       }
@@ -72,9 +67,10 @@ export default class Facebook {
       const js = window.document.createElement('script');
       js.id = 'facebook-jssdk';
       js.async = true;
+      js.defer = true;
       js.src = `https://${domain}/${language}/sdk${debug ? '/debug' : ''}.js`;
 
-      fjs.parentNode.insertBefore(js, fjs);
+      window.document.body.appendChild(js);
     });
 
     return this.loadingPromise;
