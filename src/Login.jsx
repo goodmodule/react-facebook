@@ -62,12 +62,12 @@ class Login extends Component<Props> {
           loginQpts.auth_type = authType.join(',');
         }
 
-        const response = await api.login(loginQpts);
-        if (response.status !== 'connected') {
+        const loginResponse = await api.login(loginQpts);
+        if (loginResponse.status !== 'connected') {
           throw new Error('Unauthorized user');
         }
 
-        const data = await api.getTokenDetailWithProfile({ fields }, response);
+        const data = await api.getTokenDetailWithProfile({ fields }, loginResponse);
 
         if (onCompleted) {
           await onCompleted({
