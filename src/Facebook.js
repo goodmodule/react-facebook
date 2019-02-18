@@ -11,7 +11,7 @@ export default class Facebook {
   constructor(options = {}) {
     this.options = {
       domain: 'connect.facebook.net',
-      version: 'v3.1',
+      version: 'v3.2',
       cookie: false,
       status: false,
       xfbml: false,
