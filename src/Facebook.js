@@ -126,8 +126,13 @@ export default class Facebook {
     return this.process('getAuthResponse');
   }
 
-  async getTokenDetail() {
-    const response = await this.getLoginStatus();
+  async getTokenDetail(response = null) {
+    if (response !== null) {
+      return response.authResponse
+    }
+
+    response = await this.getLoginStatus();
+    
     if (response.status === LoginStatus.CONNECTED && response.authResponse) {
       return response.authResponse;
     }
@@ -139,8 +144,8 @@ export default class Facebook {
     return this.api('/me', Method.GET, params);
   }
 
-  async getTokenDetailWithProfile(params) {
-    const tokenDetail = await this.getTokenDetail();
+  async getTokenDetailWithProfile(params, response = null) {
+    const tokenDetail = await this.getTokenDetail(response);
     const profile = await this.getProfile(params);
 
     return {

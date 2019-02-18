@@ -67,7 +67,7 @@ class Login extends Component<Props> {
           throw new Error('Unauthorized user');
         }
 
-        const data = await api.getTokenDetailWithProfile({ fields });
+        const data = await api.getTokenDetailWithProfile({ fields }, response);
 
         if (onCompleted) {
           await onCompleted({
