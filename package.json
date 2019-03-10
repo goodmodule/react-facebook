@@ -1,10 +1,10 @@
 {
   "name": "react-facebook",
-  "version": "7.0.2",
+  "version": "7.0.3",
   "description": "Facebook components like a Login button, Like, Share, Comments, Embedded Post/Video, Messenger Chat and others",
   "author": {
     "name": "Zlatko Fedor",
-    "email": "zfedor@cherryprojects.com",
+    "email": "zfedor@gmail.com",
     "url": "http://www.cherryprojects.com/"
   },
   "repository": {
@@ -36,8 +36,9 @@
   "browser": "./lib/index.js",
   "module": "./module/index.js",
   "esnext": "./src/index.js",
+  "sideEffects": false,
   "engines": {
-    "node": ">= 0.12.0"
+    "node": ">= 6.0.0"
   },
   "scripts": {
     "prepublish": "npm run build",
@@ -56,14 +57,14 @@
     ]
   },
   "dependencies": {
-    "@babel/runtime": "^7.3.1",
+    "@babel/runtime": "^7.3.4",
     "can-use-dom": "^0.1.0",
     "react-spinner-children": "^1.0.8"
   },
   "devDependencies": {
     "@babel/cli": "^7.2.3",
-    "@babel/core": "^7.3.3",
-    "@babel/plugin-proposal-class-properties": "^7.3.3",
+    "@babel/core": "^7.3.4",
+    "@babel/plugin-proposal-class-properties": "^7.3.4",
     "@babel/plugin-proposal-decorators": "^7.3.0",
     "@babel/plugin-proposal-do-expressions": "^7.2.0",
     "@babel/plugin-proposal-export-default-from": "^7.2.0",
@@ -78,28 +79,29 @@
     "@babel/plugin-proposal-throw-expressions": "^7.2.0",
     "@babel/plugin-syntax-dynamic-import": "^7.2.0",
     "@babel/plugin-syntax-import-meta": "^7.2.0",
-    "@babel/plugin-transform-flow-strip-types": "^7.2.3",
+    "@babel/plugin-transform-flow-strip-types": "^7.3.4",
     "@babel/plugin-transform-proto-to-assign": "^7.2.0",
-    "@babel/plugin-transform-runtime": "^7.2.0",
-    "@babel/preset-env": "^7.3.1",
+    "@babel/plugin-transform-runtime": "^7.3.4",
+    "@babel/preset-env": "^7.3.4",
     "@babel/preset-react": "^7.0.0",
     "babel-core": "^7.0.0-bridge.0",
     "babel-eslint": "^10.0.1",
-    "babel-jest": "^24.1.0",
+    "babel-jest": "^24.3.1",
     "cross-env": "^5.2.0",
     "enzyme": "^3.9.0",
-    "enzyme-adapter-react-16": "^1.9.1",
-    "eslint": "^5.14.0",
+    "enzyme-adapter-react-16": "^1.10.0",
+    "eslint": "^5.15.1",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-loader": "^2.1.2",
     "eslint-plugin-import": "^2.16.0",
+    "eslint-plugin-jest": "^22.3.0",
     "eslint-plugin-jsx-a11y": "^6.2.1",
     "eslint-plugin-react": "^7.12.4",
-    "jest": "^24.1.0",
-    "jest-cli": "^24.1.0",
-    "react": "^16.8.2",
-    "react-dom": "^16.8.2",
-    "react-test-renderer": "^16.8.2"
+    "jest": "^24.3.1",
+    "jest-cli": "^24.3.1",
+    "react": "^16.8.4",
+    "react-dom": "^16.8.4",
+    "react-test-renderer": "^16.8.4"
   },
   "peerDependencies": {
     "react": "16.x"

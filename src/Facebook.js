@@ -40,7 +40,7 @@ export default class Facebook {
     }
 
     this.loadingPromise = new Promise((resolve) => {
-      const { 
+      const {
         domain,
         language,
         debug,
