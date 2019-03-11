@@ -1,6 +1,6 @@
 {
   "name": "react-facebook",
-  "version": "7.0.4",
+  "version": "7.0.5",
   "description": "Facebook components like a Login button, Like, Share, Comments, Embedded Post/Video, Messenger Chat and others",
   "author": {
     "name": "Zlatko Fedor",
@@ -36,7 +36,7 @@
   "browser": "./lib/index.js",
   "module": "./module/index.js",
   "esnext": "./src/index.js",
-  "sideEffects": false,
+  "sideEffects": "false",
   "engines": {
     "node": ">= 6.0.0"
   },
