@@ -17,18 +17,18 @@ class Initialize extends Component<Props> {
   };
 
   componentDidMount() {
-    this.isMounted = true;
+    this.$isMounted = true;
     this.prepare();
   }
 
   componentWillUnmount() {
-    this.isMounted = false;
+    this.$isMounted = false;
   }
 
   async prepare() {
     const { onReady, handleInit } = this.props;
     const api = await handleInit();
-    if (onReady && this.isMounted) {
+    if (onReady && this.$isMounted) {
       onReady(api);
     }
   }
