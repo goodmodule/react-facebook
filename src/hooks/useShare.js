@@ -1,12 +1,11 @@
 // @flow
-import { useContext } from 'react';
 import clearUndefinedProperties from '../utils/clearUndefinedProperties';
-import FacebookContext from '../FacebookContext';
+import useApi from './useApi';
 
 export default () => {
-  const { api } = useContext(FacebookContext);
+  const [, prepareApi] = useApi();
 
-  function handleShare(options: Object) {
+  async function handleShare(options: Object) {
     const {
       href,
       display,
@@ -16,6 +15,8 @@ export default () => {
       mobileIframe,
       ...rest
     } = options;
+
+    const api = await prepareApi();
 
     return api.ui(clearUndefinedProperties({
       method: 'share',

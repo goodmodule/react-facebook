@@ -41,3 +41,4 @@ export Fields from './constants/Fields';
 export FacebookContext from './FacebookContext';
 
 export useShare from './hooks/useShare';
+export useApi from './hooks/useApi';
