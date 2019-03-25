@@ -1,9 +1,9 @@
 // @flow
-import React, { Component, createContext, type Node } from 'react';
+import React, { Component, type Node } from 'react';
 import canUseDOM from 'can-use-dom';
 import FB from './Facebook';
+import FacebookContext from './FacebookContext';
 
-export const FacebookContext = createContext();
 let api = null;
 
 type Props = {

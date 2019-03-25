@@ -37,3 +37,7 @@ export MessengerColor from './constants/MessengerColor';
 
 export LoginStatus from './constants/LoginStatus';
 export Fields from './constants/Fields';
+
+export FacebookContext from './FacebookContext';
+
+export useShare from './hooks/useShare';

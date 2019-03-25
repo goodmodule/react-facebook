@@ -9,6 +9,6 @@ script: npm test
 notifications:
     email:
         recipients:
-            - zlatkofedor@cherryprojects.com
+            - zfedor@gmail.com
         on_success: change
         on_failure: always
