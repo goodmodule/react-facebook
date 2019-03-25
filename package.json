@@ -1,6 +1,6 @@
 {
   "name": "react-facebook",
-  "version": "7.1.0",
+  "version": "8.0.1",
   "description": "Facebook components like a Login button, Like, Share, Comments, Embedded Post/Video, Messenger Chat and others",
   "author": {
     "name": "Zlatko Fedor",
@@ -103,6 +103,6 @@
     "react-test-renderer": "^16.8.5"
   },
   "peerDependencies": {
-    "react": "16.x"
+    "react": ">= 16.8.0"
   }
 }
