@@ -1,6 +1,6 @@
 // @flow
 import React, { forwardRef, Component } from 'react';
-import { FacebookContext } from './FacebookProvider';
+import FacebookContext from './FacebookContext';
 
 type Props = {
   children: Function,
