@@ -1,5 +1,6 @@
 // @flow
 import { useContext, useState } from 'react';
+import canUseDom from 'can-use-dom';
 import FacebookContext from '../FacebookContext';
 
 export default (onReady?: Function) => {
@@ -9,9 +10,11 @@ export default (onReady?: Function) => {
   } = useContext(FacebookContext);
 
   useState(async () => {
-    const api2 = await handleInit();
-    if (onReady) {
-      onReady(api2);
+    if (canUseDom) {
+      const api2 = await handleInit();
+      if (onReady) {
+        onReady(api2);
+      }
     }
   });
 
