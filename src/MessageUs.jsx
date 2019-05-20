@@ -39,6 +39,7 @@ class MessageUs extends PureComponent<Props> {
         page_id={pageId}
         color={color}
         size={size}
+        data-size={size}
       >
         {children}
       </div>
