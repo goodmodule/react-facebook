@@ -68,7 +68,7 @@ export default class Facebook {
       js.id = 'facebook-jssdk';
       js.async = true;
       js.defer = true;
-      js.src = `https://${domain}/${language}/sdk${debug ? '/debug' : ''}/xfbml.customerchat.js`;
+      js.src = `https://${domain}/${language}/sdk/xfbml.customerchat${debug ? '/debug' : ''}.js`;
 
       window.document.body.appendChild(js);
     });
