@@ -18,6 +18,7 @@ type Props = {
   children?: Node,
   wait?: boolean,
   debug: boolean,
+  chatSupport: boolean,
 };
 
 type State = {
@@ -36,6 +37,7 @@ export default class Facebook extends Component<Props, State> {
     children: undefined,
     wait: false,
     debug: false,
+    chatSupport: false,
   };
 
   state: State = {
@@ -72,6 +74,7 @@ export default class Facebook extends Component<Props, State> {
         frictionlessRequests,
         wait,
         debug,
+        chatSupport,
       } = this.props;
 
       api = new FB({
@@ -85,6 +88,7 @@ export default class Facebook extends Component<Props, State> {
         frictionlessRequests,
         wait,
         debug,
+        chatSupport,
       });
     }
 
