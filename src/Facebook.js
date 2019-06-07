@@ -18,6 +18,7 @@ export default class Facebook {
       language: 'en_US',
       frictionlessRequests: false,
       debug: false,
+      chatSupport: false,
       ...options,
     };
 
@@ -44,6 +45,7 @@ export default class Facebook {
         domain,
         language,
         debug,
+        chatSupport,
         ...restOptions
       } = this.options;
 
@@ -68,7 +70,7 @@ export default class Facebook {
       js.id = 'facebook-jssdk';
       js.async = true;
       js.defer = true;
-      js.src = `https://${domain}/${language}/sdk${debug ? '/debug' : ''}.js`;
+      js.src = `https://${domain}/${language}/sdk${chatSupport ? '/xfbml.customerchat' : ''}${debug ? '/debug' : ''}.js`;
 
       window.document.body.appendChild(js);
     });
