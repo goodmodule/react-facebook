@@ -71,7 +71,7 @@ export default class Example extends Component {
       <FacebookProvider appId="123456789">
         <Share href="http://www.facebook.com">
           {({ handleClick, loading }) => (
-            <button type="button" disabled="loading" onClick={handleClick}>Share</button>
+            <button type="button" disabled={loading} onClick={handleClick}>Share</button>
           )}
         </Share>
       </FacebookProvider>
