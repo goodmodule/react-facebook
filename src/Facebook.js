@@ -63,7 +63,7 @@ export default class Facebook {
       };
 
       if (window.document.getElementById('facebook-jssdk')) {
-        return;
+        return resolve(window.FB);
       }
 
       const js = window.document.createElement('script');
