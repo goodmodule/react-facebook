@@ -84,6 +84,7 @@ export default class Facebook {
     return new Promise((resolve, reject) => {
       fb[method](...before, (response) => {
         if (!response) {
+          if (method === 'ui') return;
           reject(new Error('Response is undefined'));
         } else if (response.error) {
           const { code, type, message } = response.error;
