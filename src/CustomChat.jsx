@@ -4,23 +4,25 @@ import Parser from './Parser';
 
 type Props = {
   pageId: string,
-  minimized?: boolean,
   children?: Node,
   themeColor?: string,
   loggedInGreeting?: string,
   loggedOutGreeting?: string,
   dataRef?: string,
   handleParse: Function,
+  greetingDialogDisplay?: string,
+  greetingDialogDelay?: string,
 };
 
 class CustomChat extends PureComponent<Props> {
   static defaultProps = {
-    minimized: undefined,
     children: undefined,
     themeColor: undefined,
     loggedInGreeting: undefined,
     loggedOutGreeting: undefined,
     dataRef: undefined,
+    greetingDialogDisplay: undefined,
+    greetingDialogDelay: undefined,
   };
 
   componentDidUpdate() {
@@ -30,23 +32,25 @@ class CustomChat extends PureComponent<Props> {
 
   render() {
     const {
-      minimized,
       children,
       pageId,
       themeColor,
       loggedInGreeting,
       loggedOutGreeting,
       dataRef,
+      greetingDialogDisplay,
+      greetingDialogDelay,
     } = this.props;
 
     return (
       <div
         className="fb-customerchat"
         page_id={pageId}
-        minimized={minimized}
         theme_color={themeColor}
         logged_in_greeting={loggedInGreeting}
         logged_out_greeting={loggedOutGreeting}
+        greeting_dialog_display={greetingDialogDisplay}
+        greeting_dialog_delay={greetingDialogDelay}
         data-ref={dataRef}
       >
         {children}
