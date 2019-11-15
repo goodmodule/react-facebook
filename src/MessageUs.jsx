@@ -37,8 +37,7 @@ class MessageUs extends PureComponent<Props> {
         className="fb-messengermessageus"
         messenger_app_id={messengerAppId}
         page_id={pageId}
-        color={color}
-        size={size}
+        data-color={color}
         data-size={size}
       >
         {children}

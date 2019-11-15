@@ -18,7 +18,7 @@ type Props = {
   children?: Node,
   wait?: boolean,
   debug: boolean,
-  chatSupport: boolean,
+  chatSupport?: boolean,
 };
 
 type State = {
