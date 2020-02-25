@@ -49,6 +49,10 @@ export default class Facebook {
         ...restOptions
       } = this.options;
 
+      if (window.document.getElementById('facebook-jssdk')) {
+        return resolve(window.FB);
+      }
+
       window.fbAsyncInit = () => {
         window.FB.init({
           appId: restOptions.appId,
@@ -61,11 +65,7 @@ export default class Facebook {
 
         resolve(window.FB);
       };
-
-      if (window.document.getElementById('facebook-jssdk')) {
-        return resolve(window.FB);
-      }
-
+      
       const js = window.document.createElement('script');
       js.id = 'facebook-jssdk';
       js.async = true;
