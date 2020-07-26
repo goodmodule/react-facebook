@@ -37,6 +37,7 @@
   "module": "./module/index.js",
   "esnext": "./src/index.js",
   "sideEffects": "false",
+  "types": "./src/index.d.ts",
   "engines": {
     "node": ">= 6.0.0"
   },
