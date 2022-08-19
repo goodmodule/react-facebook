@@ -1,37 +1,77 @@
-// @flow
-import LoginStatus from './constants/LoginStatus';
+import LoginStatus from '../constants/LoginStatus';
+import FBError from '../errors/FBError';
 
-export const Method = {
-  GET: 'get',
-  POST: 'post',
-  DELETE: 'delete',
+declare global {
+  interface Window { 
+    fbAsyncInit: () => void;
+    FB: any;
+  }
+}
+
+export enum Method {
+  GET = 'get',
+  POST = 'post',
+  DELETE = 'delete',
+};
+
+export enum Namespace {
+  UI = 'ui',
+  API = 'api',
+  LOGIN = 'login',
+  LOGOUT = 'logout',
+  GET_LOGIN_STATUS = 'getLoginStatus',
+  GET_AUTH_RESPONSE = 'getAuthResponse',
+}
+
+export type FacebookOptions = {
+  domain?: string;
+  version?: string;
+  cookie?: boolean;
+  status?: boolean;
+  xfbml?: boolean;
+  language?: string;
+  frictionlessRequests?: boolean;
+  debug?: boolean;
+  chatSupport?: boolean;
+  appId: string;
+  autoLogAppEvents?: boolean;
+  wait?: boolean;
+};
+
+const defaultOptions: Omit<FacebookOptions, 'appId'> = {
+  domain: 'connect.facebook.net',
+  version: 'v14.0',
+  cookie: false,
+  status: false,
+  xfbml: false,
+  language: 'en_US',
+  frictionlessRequests: false,
+  debug: false,
+  chatSupport: false,
+  autoLogAppEvents: true,
+  wait: false,
 };
 
 export default class Facebook {
-  constructor(options = {}) {
-    this.options = {
-      domain: 'connect.facebook.net',
-      version: 'v3.2',
-      cookie: false,
-      status: false,
-      xfbml: false,
-      language: 'en_US',
-      frictionlessRequests: false,
-      debug: false,
-      chatSupport: false,
-      ...options,
-    };
+  options: FacebookOptions;
+  loadingPromise: Promise<any>;
 
-    if (!this.options.appId) {
+  constructor(options: FacebookOptions) {
+    if (!options.appId) {
       throw new Error('You need to set appId');
     }
+
+    this.options = {
+      ...defaultOptions,
+      ...options,
+    };
 
     if (!this.options.wait) {
       this.init();
     }
   }
 
-  getAppId(): string {
+  get appId() {
     return this.options.appId;
   }
 
@@ -56,7 +96,7 @@ export default class Facebook {
           cookie: restOptions.cookie,
           status: restOptions.status,
           xfbml: restOptions.xfbml,
-          frictionlessRequests: this.frictionlessRequests,
+          frictionlessRequests: restOptions.frictionlessRequests,
         });
 
         resolve(window.FB);
@@ -65,11 +105,12 @@ export default class Facebook {
       if (window.document.getElementById('facebook-jssdk')) {
         return resolve(window.FB);
       }
-
+      
       const js = window.document.createElement('script');
       js.id = 'facebook-jssdk';
       js.async = true;
       js.defer = true;
+      js.crossOrigin = 'anonymous';
       js.src = `https://${domain}/${language}/sdk${chatSupport ? '/xfbml.customerchat' : ''}${debug ? '/debug' : ''}.js`;
 
       window.document.body.appendChild(js);
@@ -78,22 +119,18 @@ export default class Facebook {
     return this.loadingPromise;
   }
 
-  async process(method, before = [], after = []) {
+  async process(namespace: Namespace, before: any[] = [], after: any[] = []) {
     const fb = await this.init();
 
     return new Promise((resolve, reject) => {
-      fb[method](...before, (response) => {
+      fb[namespace](...before, (response) => {
         if (!response) {
-          if (method === 'ui') return;
+          if (namespace === Namespace.UI) return;
           reject(new Error('Response is undefined'));
         } else if (response.error) {
           const { code, type, message } = response.error;
 
-          const error = new Error(message);
-          error.code = code;
-          error.type = type;
-
-          reject(error);
+          reject(new FBError(message, code, type));
         } else {
           resolve(response);
         }
@@ -102,27 +139,27 @@ export default class Facebook {
   }
 
   async ui(options) {
-    return this.process('ui', [options]);
+    return this.process(Namespace.UI, [options]);
   }
 
   async api(path, method = Method.GET, params = {}) {
-    return this.process('api', [path, method, params]);
+    return this.process(Namespace.API, [path, method, params]);
   }
 
   async login(opts = null) {
-    return this.process('login', [], [opts]);
+    return this.process(Namespace.LOGIN, [], [opts]);
   }
 
   async logout() {
-    return this.process('logout');
+    return this.process(Namespace.LOGOUT);
   }
 
   async getLoginStatus() {
-    return this.process('getLoginStatus');
+    return this.process(Namespace.GET_LOGIN_STATUS);
   }
 
   async getAuthResponse() {
-    return this.process('getAuthResponse');
+    return this.process(Namespace.GET_AUTH_RESPONSE);
   }
 
   async getTokenDetail(loginResponse) {

@@ -1,8 +1,9 @@
-// @flow
 import clearUndefinedProperties from '../utils/clearUndefinedProperties';
 import useApi from './useApi';
 
-export default () => {
+type Options = {};
+
+export default function useShare() {
   const [, prepareApi] = useApi();
 
   async function handleShare(options: Object) {
@@ -32,4 +33,4 @@ export default () => {
   }
 
   return handleShare;
-};
+}

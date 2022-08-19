@@ -33,42 +33,25 @@
   "private": false,
   "license": "MIT",
   "main": "./dist/index.js",
-  "browser": "./lib/index.js",
-  "module": "./module/index.js",
-  "esnext": "./src/index.js",
+  "browser": "./dist/index.js",
+  "module": "./dist/index.js",
+  "esnext": "./dist/index.js",
   "sideEffects": "false",
   "engines": {
     "node": ">= 6.0.0"
   },
   "scripts": {
-    "prepublish": "npm run build",
-    "build": "tsup",
-    "eslint": "node ./node_modules/eslint/bin/eslint.js --ext .js,.jsx ./src"
-  },
-  "jest": {
-    "setupFiles": [
-      "<rootDir>/setupJest.js"
-    ]
+    "build": "tsup"
   },
   "dependencies": {
     "@babel/runtime": "^7.18.9",
     "can-use-dom": "^0.1.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.18.10",
-    "@babel/core": "^7.18.10",
-    "@babel/preset-env": "^7.18.10",
-    "@babel/preset-react": "^7.18.6",
-    "babel-eslint": "^10.1.0",
-    "babel-jest": "^28.1.3",
+    "@types/react": "^18.0.17",
     "cross-env": "^7.0.3",
     "cypress": "^10.6.0",
-    "eslint": "^8.22.0",
-    "eslint-config-airbnb": "^19.0.4",
-    "eslint-plugin-import": "^2.26.0",
-    "eslint-plugin-jest": "^26.8.3",
-    "eslint-plugin-jsx-a11y": "^6.6.1",
-    "eslint-plugin-react": "^7.30.1",
+    "prettier": "^2.7.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-test-renderer": "^18.2.0",

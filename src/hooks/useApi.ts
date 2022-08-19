@@ -1,9 +1,8 @@
-// @flow
 import { useContext, useState } from 'react';
 import canUseDom from 'can-use-dom';
-import FacebookContext from '../FacebookContext';
+import FacebookContext from '../components/FacebookContext';
 
-export default (onReady?: Function) => {
+export default function useApi(onReady?: (api: API) => void) {
   const {
     handleInit,
     api,
@@ -19,4 +18,4 @@ export default (onReady?: Function) => {
   });
 
   return [api, handleInit];
-};
+}

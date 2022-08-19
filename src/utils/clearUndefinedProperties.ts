@@ -1,4 +1,4 @@
-export default function clearUndefinedProperties(obj) {
+export default function clearUndefinedProperties(obj: Record<string, any>): Record<string, any> {
   if (!obj) {
     return obj;
   }
