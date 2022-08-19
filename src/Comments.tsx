@@ -1,20 +1,19 @@
-// @flow
-import React, { forwardRef, PureComponent, type Node } from 'react';
+import React, { forwardRef, PureComponent, type ReactNode } from 'react';
 import Parser from './Parser';
 import getCurrentHref from './utils/getCurrentHref';
 
-type Props = {
-  href?: string,
-  numPosts?: number,
-  orderBy?: string,
-  width?: number | string,
-  colorScheme?: string,
-  children?: Node,
-  mobile?: boolean,
-  handleParse: Function,
+export type CommentsProps = {
+  href?: string;
+  numPosts?: number;
+  orderBy?: string;
+  width?: number | string;
+  colorScheme?: string;
+  children?: ReactNode;
+  mobile?: boolean;
+  handleParse: Function;
 };
 
-class Comments extends PureComponent<Props> {
+class Comments extends PureComponent<CommentsProps> {
   static defaultProps = {
     href: undefined,
     numPosts: undefined,

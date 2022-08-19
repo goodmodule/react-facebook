@@ -1,11 +1,11 @@
 {
   "name": "react-facebook",
-  "version": "8.1.4",
+  "version": "9.0.0",
   "description": "Facebook components like a Login button, Like, Share, Comments, Embedded Post/Video, Messenger Chat and others",
   "author": {
     "name": "Zlatko Fedor",
-    "email": "zfedor@gmail.com",
-    "url": "http://www.cherryprojects.com/"
+    "email": "react-facebook@zlatkofedor.com",
+    "url": "https://www.zlatkofedor.com/"
   },
   "repository": {
     "type": "git",
@@ -42,13 +42,7 @@
   },
   "scripts": {
     "prepublish": "npm run build",
-    "test": "jest ./src/",
-    "test:coverage": "jest --coverage ./src/",
-    "test:watch": "jest --watch ./src/",
-    "build-browser": "cross-env BABEL_ENV=browser babel ./src --out-dir ./lib --source-maps --copy-files",
-    "build-module": "cross-env BABEL_ENV=module babel ./src --out-dir ./module --source-maps --copy-files",
-    "build-node": "babel ./src --out-dir ./dist --source-maps --copy-files",
-    "build": "npm run build-node && npm run build-browser && npm run build-module",
+    "build": "tsup",
     "eslint": "node ./node_modules/eslint/bin/eslint.js --ext .js,.jsx ./src"
   },
   "jest": {
@@ -57,50 +51,28 @@
     ]
   },
   "dependencies": {
-    "@babel/runtime": "^7.7.2",
-    "can-use-dom": "^0.1.0",
-    "react-spinner-children": "^1.0.8"
+    "@babel/runtime": "^7.18.9",
+    "can-use-dom": "^0.1.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.7.0",
-    "@babel/core": "^7.7.2",
-    "@babel/plugin-proposal-class-properties": "^7.7.0",
-    "@babel/plugin-proposal-decorators": "^7.7.0",
-    "@babel/plugin-proposal-do-expressions": "^7.6.0",
-    "@babel/plugin-proposal-export-default-from": "^7.5.2",
-    "@babel/plugin-proposal-export-namespace-from": "^7.5.2",
-    "@babel/plugin-proposal-function-bind": "^7.2.0",
-    "@babel/plugin-proposal-function-sent": "^7.7.0",
-    "@babel/plugin-proposal-logical-assignment-operators": "^7.2.0",
-    "@babel/plugin-proposal-nullish-coalescing-operator": "^7.4.4",
-    "@babel/plugin-proposal-numeric-separator": "^7.2.0",
-    "@babel/plugin-proposal-optional-chaining": "^7.6.0",
-    "@babel/plugin-proposal-pipeline-operator": "^7.5.0",
-    "@babel/plugin-proposal-throw-expressions": "^7.2.0",
-    "@babel/plugin-syntax-dynamic-import": "^7.2.0",
-    "@babel/plugin-syntax-import-meta": "^7.2.0",
-    "@babel/plugin-transform-flow-strip-types": "^7.6.3",
-    "@babel/plugin-transform-proto-to-assign": "^7.5.5",
-    "@babel/plugin-transform-runtime": "^7.6.2",
-    "@babel/preset-env": "^7.7.1",
-    "@babel/preset-react": "^7.7.0",
-    "babel-eslint": "^10.0.3",
-    "babel-jest": "^24.9.0",
-    "cross-env": "^6.0.3",
-    "enzyme": "^3.10.0",
-    "enzyme-adapter-react-16": "^1.15.1",
-    "eslint": "^6.6.0",
-    "eslint-config-airbnb": "^18.0.1",
-    "eslint-loader": "^3.0.2",
-    "eslint-plugin-import": "^2.18.2",
-    "eslint-plugin-jest": "^23.0.3",
-    "eslint-plugin-jsx-a11y": "^6.2.3",
-    "eslint-plugin-react": "^7.16.0",
-    "jest": "^24.9.0",
-    "jest-cli": "^24.9.0",
-    "react": "^16.11.0",
-    "react-dom": "^16.11.0",
-    "react-test-renderer": "^16.11.0"
+    "@babel/cli": "^7.18.10",
+    "@babel/core": "^7.18.10",
+    "@babel/preset-env": "^7.18.10",
+    "@babel/preset-react": "^7.18.6",
+    "babel-eslint": "^10.1.0",
+    "babel-jest": "^28.1.3",
+    "cross-env": "^7.0.3",
+    "cypress": "^10.6.0",
+    "eslint": "^8.22.0",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-jest": "^26.8.3",
+    "eslint-plugin-jsx-a11y": "^6.6.1",
+    "eslint-plugin-react": "^7.30.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-test-renderer": "^18.2.0",
+    "tsup": "^6.2.2"
   },
   "peerDependencies": {
     "react": ">= 16.8.0"

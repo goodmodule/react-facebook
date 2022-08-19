@@ -1,6 +1,6 @@
 {
   "parser": "babel-eslint",
-  "extends": ["airbnb", "plugin:jest/recommended"],
+  "extends": ["airbnb"],
   "env": {
     "node": true,
     "jest": true
