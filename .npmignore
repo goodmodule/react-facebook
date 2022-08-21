@@ -2,3 +2,6 @@ coverage
 node_modules
 .DS_Store
 package-lock.json
+cypress
+vite.config.ts
+cypress.config.ts
