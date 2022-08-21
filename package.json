@@ -34,9 +34,8 @@
   "license": "MIT",
   "main": "./dist/index.js",
   "browser": "./dist/index.js",
-  "module": "./dist/index.js",
-  "esnext": "./dist/index.js",
-  "sideEffects": "false",
+  "module": "./dist/index.mjs",
+  "sideEffects": false,
   "engines": {
     "node": ">= 6.0.0"
   },
@@ -49,13 +48,16 @@
   },
   "devDependencies": {
     "@types/react": "^18.0.17",
+    "@vitejs/plugin-react": "^2.0.1",
     "cross-env": "^7.0.3",
     "cypress": "^10.6.0",
+    "cypress-iframe": "^1.0.1",
     "prettier": "^2.7.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-test-renderer": "^18.2.0",
-    "tsup": "^6.2.2"
+    "tsup": "^6.2.2",
+    "vite": "^3.0.9"
   },
   "peerDependencies": {
     "react": ">= 16.8.0"

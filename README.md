@@ -457,6 +457,12 @@ export default class Example extends Component {
 }
 ```
 
+# Testing
+
+```sh
+npx cypress open --component
+```
+
 # Support us
 
 Star this project on [GitHub][github-url].

@@ -1,29 +1,20 @@
 import { useState } from 'react';
 import clearUndefinedProperties from '../utils/clearUndefinedProperties';
 import useFacebook from './useFacebook';
+import getCurrentHref from '../utils/getCurrentHref';
 
-export type ShareOptions = {
-  href: string;
-  display: 'iframe' | 'popup' | 'async' | 'page';
-  hashtag?: string;
-  redirectUri?: string;
-};
-
-export default function useShare() {
+export default function useSend() {
   const { init } = useFacebook();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<Error | undefined>(undefined);
 
-  async function handleShare(options: ShareOptions) {
+  async function handleSend(options: {
+    link?: string,
+    appId?: string;
+    to: string;
+    redirectURI?: string;
+  }) {
     try {
-      const {
-        href,
-        display,
-        hashtag,
-        redirectUri,
-        ...rest
-      } = options;
-
       setError(undefined);
       setIsLoading(true);
   
@@ -31,15 +22,22 @@ export default function useShare() {
       if (!api) {
         throw new Error('Facebook API is not initialized');
       }
+
+      const {
+        link = getCurrentHref(),
+        display,
+        appId = api.appId,
+        to,
+        redirectURI,
+      } = options;
   
       return api.ui(clearUndefinedProperties({
-        method: 'share',
-        href,
+        method: 'send',
+        link,
         display,
-        app_id: api.appId,
-        hashtag,
-        redirect_uri: redirectUri,
-        ...rest,
+        app_id: appId,
+        to,
+        redirect_uri: redirectURI,
       }));
     } catch (error) {
       setError(error);
@@ -51,6 +49,6 @@ export default function useShare() {
   return {
     isLoading,
     error,
-    share: handleShare,
+    send: handleSend,
   };
 }

@@ -1,6 +1,25 @@
 import LoginStatus from '../constants/LoginStatus';
 import FBError from '../errors/FBError';
 
+export type AuthResponse = {
+  userID: string; 
+  accessToken: string;
+};
+
+export type LoginResponse = {
+  status: LoginStatus.CONNECTED,
+  authResponse: AuthResponse,
+} | {
+  status: Exclude<LoginStatus, LoginStatus.CONNECTED>,
+};
+
+export type LoginOptions = {
+  scope?: string;
+  returnScopes?: boolean;
+  authType?: string[];
+  rerequest?: boolean;
+  reauthorize?: boolean;
+};
 declare global {
   interface Window { 
     fbAsyncInit: () => void;
@@ -35,7 +54,7 @@ export type FacebookOptions = {
   chatSupport?: boolean;
   appId: string;
   autoLogAppEvents?: boolean;
-  wait?: boolean;
+  lazy?: boolean;
 };
 
 const defaultOptions: Omit<FacebookOptions, 'appId'> = {
@@ -49,7 +68,7 @@ const defaultOptions: Omit<FacebookOptions, 'appId'> = {
   debug: false,
   chatSupport: false,
   autoLogAppEvents: true,
-  wait: false,
+  lazy: false,
 };
 
 export default class Facebook {
@@ -66,7 +85,7 @@ export default class Facebook {
       ...options,
     };
 
-    if (!this.options.wait) {
+    if (!this.options.lazy) {
       this.init();
     }
   }
@@ -75,7 +94,11 @@ export default class Facebook {
     return this.options.appId;
   }
 
-  async init() {
+  get FB() {
+    return window.FB;
+  }
+
+  async init(): Promise<Facebook> {
     if (this.loadingPromise) {
       return this.loadingPromise;
     }
@@ -99,7 +122,7 @@ export default class Facebook {
           frictionlessRequests: restOptions.frictionlessRequests,
         });
 
-        resolve(window.FB);
+        resolve(this);
       };
 
       if (window.document.getElementById('facebook-jssdk')) {
@@ -119,15 +142,15 @@ export default class Facebook {
     return this.loadingPromise;
   }
 
-  async process(namespace: Namespace, before: any[] = [], after: any[] = []) {
+  async process<Response>(namespace: Namespace, before: any[] = [], after: any[] = []): Promise<Response> {
     const fb = await this.init();
 
     return new Promise((resolve, reject) => {
-      fb[namespace](...before, (response) => {
+      fb[namespace](...before, (response: Response | { error: { code: number, type: string, message: string} }) => {
         if (!response) {
           if (namespace === Namespace.UI) return;
           reject(new Error('Response is undefined'));
-        } else if (response.error) {
+        } else if ('error' in response) {
           const { code, type, message } = response.error;
 
           reject(new FBError(message, code, type));
@@ -146,30 +169,52 @@ export default class Facebook {
     return this.process(Namespace.API, [path, method, params]);
   }
 
-  async login(opts = null) {
-    return this.process(Namespace.LOGIN, [], [opts]);
+  async login(options: LoginOptions) {
+    const { scope, authType = [], returnScopes, rerequest, reauthorize } = options;
+    const loginOptions = {
+      scope,
+    };
+
+    if (returnScopes) {
+      loginOptions.return_scopes = true;
+    }
+
+    if (rerequest) {
+      authType.push('rerequest');
+    }
+
+    if (reauthorize) {
+      authType.push('reauthenticate');
+    }
+
+    if (authType.length) {
+      loginOptions.auth_type = authType.join(',');
+    }
+
+    return this.process<LoginResponse>(Namespace.LOGIN, [], [loginOptions]);
   }
 
   async logout() {
     return this.process(Namespace.LOGOUT);
   }
 
-  async getLoginStatus() {
-    return this.process(Namespace.GET_LOGIN_STATUS);
+
+  async getLoginStatus(): Promise<LoginResponse> {
+    return this.process<LoginResponse>(Namespace.GET_LOGIN_STATUS);
   }
 
   async getAuthResponse() {
     return this.process(Namespace.GET_AUTH_RESPONSE);
   }
 
-  async getTokenDetail(loginResponse) {
-    if (loginResponse.status === LoginStatus.CONNECTED && loginResponse.authResponse) {
+  async getTokenDetail(loginResponse?: LoginResponse): Promise<AuthResponse> {
+    if (loginResponse?.status === LoginStatus.CONNECTED) {
       return loginResponse.authResponse;
     }
 
     const response = await this.getLoginStatus();
 
-    if (response.status === LoginStatus.CONNECTED && response.authResponse) {
+    if (response.status === LoginStatus.CONNECTED) {
       return response.authResponse;
     }
 
@@ -190,12 +235,12 @@ export default class Facebook {
     };
   }
 
-  async getToken() {
+  async getToken(): Promise<string> {
     const authResponse = await this.getTokenDetail();
     return authResponse.accessToken;
   }
 
-  async getUserId() {
+  async getUserId(): Promise<string> {
     const authResponse = await this.getTokenDetail();
     return authResponse.userID;
   }
@@ -240,22 +285,22 @@ export default class Facebook {
   }
 
   async subscribe(eventName, callback) {
-    const fb = await this.init();
-    fb.Event.subscribe(eventName, callback);
+    await this.init();
+    this.FB.Event.subscribe(eventName, callback);
   }
 
   async unsubscribe(eventName, callback) {
-    const fb = await this.init();
-    fb.Event.unsubscribe(eventName, callback);
+    await this.init();
+    this.FB.Event.unsubscribe(eventName, callback);
   }
 
   async parse(parentNode) {
-    const fb = await this.init();
+    await this.init();
 
     if (typeof parentNode === 'undefined') {
-      fb.XFBML.parse();
+      this.FB.XFBML.parse();
     } else {
-      fb.XFBML.parse(parentNode);
+      this.FB.XFBML.parse(parentNode);
     }
   }
 
@@ -268,8 +313,8 @@ export default class Facebook {
   }
 
   async setAutoGrow() {
-    const fb = await this.init();
-    fb.Canvas.setAutoGrow();
+    await this.init();
+    this.FB.Canvas.setAutoGrow();
   }
 
   async paySimple(product, quantity = 1) {

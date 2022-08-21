@@ -26,20 +26,20 @@ function Comments(props: CommentsProps, ref: any) {
 
   return (
     <Parser>
-    <div
-      className="fb-comments"
-      data-colorscheme={colorScheme}
-      data-numposts={numPosts}
-      data-href={href}
-      data-order-by={orderBy}
-      data-width={width}
-      data-skin={colorScheme}
-      data-mobile={mobile}
-      {...rest}
-      ref={ref}
-    >
-      {children}
-    </div>
+      <div
+        className="fb-comments"
+        data-colorscheme={colorScheme}
+        data-numposts={numPosts}
+        data-href={href}
+        data-order-by={orderBy}
+        data-width={width}
+        data-skin={colorScheme}
+        data-mobile={mobile}
+        {...rest}
+        ref={ref}
+      >
+        {children}
+      </div>
     </Parser>
   );
 }

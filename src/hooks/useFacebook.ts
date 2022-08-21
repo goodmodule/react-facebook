@@ -2,11 +2,11 @@ import { useContext, useEffect } from 'react';
 import FacebookContext, { type FacebookContextInterface } from '../components/FacebookContext';
 
 export type UseFacebookProps = {
-  init?: boolean;
+  lazy?: boolean;
 };
 
 export default function useFacebook(props: UseFacebookProps = {}): FacebookContextInterface {
-  const { init = true } = props;
+  const { lazy = false } = props;
 
   const context: FacebookContextInterface = useContext(FacebookContext);
   if (!context) {
@@ -14,10 +14,10 @@ export default function useFacebook(props: UseFacebookProps = {}): FacebookConte
   }
 
   useEffect(() => {
-    if (init) {
+    if (!lazy) {
       context.init();
     }
-  }, [init]);
+  }, [lazy]);
 
   return context;
 }

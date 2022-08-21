@@ -2,11 +2,11 @@ import { createContext } from 'react';
 import Facebook from '../utils/Facebook';
 
 export type FacebookContextInterface = {
-  isReady: boolean;
+  isLoading: boolean;
   error: Error | undefined;
   init: () => Promise<Facebook | undefined>;
-  api: Facebook;
-  parse: (element: HTMLDivElement) => Promise<void>;
+  api: Facebook | undefined;
+  parse: (element: HTMLDivElement | HTMLSpanElement) => Promise<void>;
 };
 
-export default createContext<FacebookContextInterface>();
+export default createContext<FacebookContextInterface | undefined>(undefined);

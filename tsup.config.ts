@@ -6,4 +6,5 @@ export default defineConfig({
   sourcemap: true,
   clean: true,
   platform: 'browser',
+  format: ['esm','cjs','iife'],
 });

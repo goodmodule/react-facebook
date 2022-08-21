@@ -1,23 +1,52 @@
-import React, { type ReactNode } from 'react';
+import React, { useState, memo, forwardRef, type ReactNode, useEffect, useCallback } from 'react';
 import useFacebook from '../hooks/useFacebook';
 
 export type ParserProps = {
   children: ReactNode;
+  inline?: boolean;
 };
 
-export default function Parser(props: ParserProps) {
-  const { children, ...rest } = props;
-  const { parse } = useFacebook();
+type ParserInternalProps = {
+  children: ReactNode;
+  inline?: boolean;
+};
 
-  function handleRef(element: HTMLDivElement) {
+const ParserInternal = memo(forwardRef((props: ParserInternalProps, ref) => {
+  const { inline, children, ...rest } = props;
+
+  console.log('RERENDER ParserInternal');
+
+  const Tag = inline ? 'span' : 'div';
+  return (
+    <Tag {...rest} ref={ref}>
+      {children}
+    </Tag>
+  );
+}));
+
+function Parser(props: ParserProps) {
+  const { children, inline, ...rest } = props;
+  const { parse } = useFacebook();
+  const [element, setElement] = useState<HTMLDivElement | HTMLSpanElement | null>(null);
+
+  const handleRef = useCallback((element: HTMLDivElement | HTMLSpanElement | null) => {
+    setElement(element);
+  }, []);
+
+  useEffect(() => {
     if (element) {
+      console.log('PARSE');
       parse(element);
     }
-  }
+  }, [element]);
+
+  console.log('RERENDER Parser', element);
 
   return (
-    <div {...rest} ref={handleRef}>
+    <ParserInternal inline={inline} {...rest} ref={handleRef}>
       {children}
-    </div>
+    </ParserInternal>
   );
 }
+
+export default memo(Parser);
