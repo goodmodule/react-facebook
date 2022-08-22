@@ -1,9 +1,8 @@
 import { type ReactNode, type ComponentType } from 'react';
-import useShare, { ShareOptions } from '../hooks/useShare';
+import useShare, { type ShareOptions } from '../hooks/useShare';
 
-export type LoginButton = {
+export type LoginButton = ShareOptions & {
   children?: ReactNode;
-  options: ShareOptions;
   asChild?: ComponentType | keyof JSX.IntrinsicElements;
   disabled?: boolean;
 };
@@ -11,9 +10,12 @@ export type LoginButton = {
 export default function ShareButton(props: LoginButton) {
   const {
     children,
-    options,
     asChild: AsChild = 'button',
     disabled,
+    href,
+    display,
+    hashtag,
+    redirectUri,
     ...rest
   } = props;
 
@@ -24,7 +26,12 @@ export default function ShareButton(props: LoginButton) {
       return;
     }
 
-    share(options);
+    share({
+      href,
+      display,
+      hashtag,
+      redirectUri,
+    });
   }
 
   return (

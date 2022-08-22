@@ -19,10 +19,6 @@ export default function useLogin() {
 
   async function handleLogin(loginOptions: LoginOptions, callback?: (response: LoginResponse) => void) {
     try {
-      if (isLoadingLogin) {
-        return;
-      }
-
       if (!api) {
         throw new Error('Facebook API is not initialized');
       }
@@ -37,6 +33,7 @@ export default function useLogin() {
       setLatestResponse(response);
 
       callback?.(response);
+      return response;
     } catch (error: any) {
       setError(error);
       throw(error);

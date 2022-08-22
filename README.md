@@ -9,6 +9,7 @@
 [coveralls-image]: https://img.shields.io/coveralls/seeden/react-facebook/master.svg?style=flat-square
 [coveralls-url]: https://coveralls.io/r/seeden/react-facebook?branch=master
 [github-url]: https://github.com/seeden/react-facebook
+[support-url]: https://github.com/sponsors/seeden
 
 # Components
 
@@ -29,14 +30,14 @@
 - Subscribe
 - User Profile
 
-# Support us
+# Support
 
-Star this project on [GitHub][github-url].
+Star me and this project on [GitHub][support-url].
 
 # Initialisation
 
-By default FacebookProvider is loading facebook script immediately with componentDidMount (you are able to use it with SSR).
-If you want to download facebook script only when facebook component is rendered you need to add parameter wait to FacebookProvider.
+By default FacebookProvider is loading facebook script immediately after render (you are able to use it with SSR).
+If you want to download facebook script only when facebook component is rendered you need to add parameter lazy to FacebookProvider.
 Use only one instance of the FacebookProvider on your page.
 
 
@@ -44,182 +45,151 @@ Use only one instance of the FacebookProvider on your page.
 
 ## Like button
 
-```js
-import React, { Component} from 'react';
+```tsx
 import { FacebookProvider, Like } from 'react-facebook';
 
-export default class Example extends Component {
-  render() {
-    return (
-      <FacebookProvider appId="123456789">
-        <Like href="http://www.facebook.com" colorScheme="dark" showFaces share />
-      </FacebookProvider>
-    );
-  }
+export default function LikeExample() {
+  return (
+    <FacebookProvider appId="123456789">
+      <Like href="http://www.facebook.com" colorScheme="dark" showFaces share />
+    </FacebookProvider>
+  );
 }
 ```
 
-## Share post
+## useShare
 
-```js
-import React, { Component} from 'react';
-import { FacebookProvider, Share } from 'react-facebook';
+```tsx
+import { FacebookProvider, useShare } from 'react-facebook';
 
-export default class Example extends Component {
-  render() {
-    return (
-      <FacebookProvider appId="123456789">
-        <Share href="http://www.facebook.com">
-          {({ handleClick, loading }) => (
-            <button type="button" disabled={loading} onClick={handleClick}>Share</button>
-          )}
-        </Share>
-      </FacebookProvider>
-    );
+export default function ShareExample() {
+  const { share, isLoading, error } = useShare();
+
+  async function handleShare() {
+    await share({
+      href: 'http://www.facebook.com',
+    });
   }
+
+  return (
+    <button type="button" disabled={isLoading} onClick={handleShare}>Share</button>
+  );
 }
 ```
 
 ## Share button
 
-You can use predefined button with bootstrap and font awesome classNames
+You can use predefined button
 
-```js
-import React, { Component} from 'react';
+```tsx
 import { FacebookProvider, ShareButton } from 'react-facebook';
 
-export default class Example extends Component {
-  render() {
-    return (
-      <FacebookProvider appId="123456789">
-        <ShareButton href="http://www.facebook.com">
-          Share
-        </ShareButton>
-      </FacebookProvider>
-    );
-  }
+export default function ShareButtonExample() {
+  return (
+    <FacebookProvider appId="123456789">
+      <ShareButton href="http://www.facebook.com" className="my-classname">
+        Share
+      </ShareButton>
+    </FacebookProvider>
+  );
 }
 ```
 
 ## Comments
 
-```js
-import React, { Component} from 'react';
+```tsx
 import { FacebookProvider, Comments } from 'react-facebook';
 
-export default class Example extends Component {
-  render() {
-    return (
-      <FacebookProvider appId="123456789">
-        <Comments href="http://www.facebook.com" />
-      </FacebookProvider>
-    );
-  }
+export default function CommentsExample() {
+  return (
+    <FacebookProvider appId="123456789">
+      <Comments href="http://www.facebook.com" />
+    </FacebookProvider>
+  );
 }
 ```
 
 ## Comments count
 
-```js
-import React, { Component} from 'react';
+```tsx
 import { FacebookProvider, CommentsCount } from 'react-facebook';
 
-export default class Example extends Component {
-  render() {
-    return (
-      <FacebookProvider appId="123456789">
-        <CommentsCount href="http://www.facebook.com" />
-      </FacebookProvider>
-    );
-  }
+export default function CommentsCountExample() {
+  return (
+    <FacebookProvider appId="123456789">
+      <CommentsCount href="http://www.facebook.com" />
+    </FacebookProvider>
+  );
 }
 ```
 
-## Login Button
+## useLogin
 
-```js
-import React, { Component} from 'react';
+```tsx
+import { FacebookProvider, useLogin } from 'react-facebook';
+
+export default function LoginExample() {
+  const { login, status, isLoading, error} = useLogin();
+  
+  async function handleLogin() {
+    try {
+      const response = await login({
+        scope: 'email',
+      });
+
+      console.log(response.status);
+    } catch (error: any) {
+      console.log(error.message);
+    }
+  }
+
+  return (
+    <button onClick={handleLogin} disabled={isLoading}>
+      Login via Facebook
+    </button>
+  );
+}
+```
+
+### LoginButton
+
+```tsx
 import { FacebookProvider, LoginButton } from 'react-facebook';
 
-export default class Example extends Component {
-  handleResponse = (data) => {
-    console.log(data);
+export default function LoginButtonExample() {
+  functon handleSuccess(response) {
+    console.log(response.status);
   }
 
-  handleError = (error) => {
-    this.setState({ error });
+  function handleError(error) {
+    console.log(error);
   }
 
-  render() {
-    return (
-      <FacebookProvider appId="123456789">
-        <LoginButton
-          scope="email"
-          onCompleted={this.handleResponse}
-          onError={this.handleError}
-        >
-          <span>Login via Facebook</span>
-        </LoginButton>
-      </FacebookProvider>
-    );
-  }
-}
-```
-
-### Custom login render
-
-If you want to use custom component you can use children as function.
-
-```js
-import React, { Component} from 'react';
-import { FacebookProvider, Login } from 'react-facebook';
-
-export default class Example extends Component {
-  handleResponse = (data) => {
-    console.log(data);
-  }
-
-  handleError = (error) => {
-    this.setState({ error });
-  }
-
-  render() {
-    return (
-      <FacebookProvider appId="123456789">
-        <Login
-          scope="email"
-          onCompleted={this.handleResponse}
-          onError={this.handleError}
-        >
-          {({ loading, handleClick, error, data }) => (
-            <span onClick={handleClick}>
-              Login via Facebook
-              {loading && (
-                <span>Loading...</span>
-              )}
-            </span>
-          )}
-        </Login>
-      </FacebookProvider>
-    );
-  }
+  return (
+    <FacebookProvider appId="123456789">
+      <LoginButton
+        scope="email"
+        onError={handleError}
+        onSuccess={handleSuccess}
+      >
+        Login via Facebook
+      </LoginButton>
+    </FacebookProvider>
+  );
 }
 ```
 
 ## Embedded post
 
-```js
-import React, { Component} from 'react';
+```tsx
 import { FacebookProvider, EmbeddedPost } from 'react-facebook';
 
-export default class Example extends Component {
-  render() {
-    return (
-      <FacebookProvider appId="123456789">
-        <EmbeddedPost href="http://www.facebook.com" width="500" />
-      </FacebookProvider>
-    );
-  }
+export default function EmbeddedPostExample() {
+  return (
+    <FacebookProvider appId="123456789">
+      <EmbeddedPost href="http://www.facebook.com" width="500" />
+    </FacebookProvider>
+  );
 }
 ```
 
@@ -357,71 +327,58 @@ export default class Example extends Component {
 
 ## API Access
 
-```js
-import React, { Component} from 'react';
-import { FacebookProvider, Initialize } from 'react-facebook';
+```tsx
+import { FacebookProvider, useFacebook } from 'react-facebook';
 
-export default class Example extends Component {
-  render() {
-    return (
-      <FacebookProvider appId="123456789">
-        <Initialize>
-          {({ isReady, api }) => {
-            api.ui(...) // our custom async/await api
-            // original FB api is available via window.FB
-          }}
-        <Initialize>
-      </FacebookProvider>    
-    );
+export default function UseFacebookExample() {
+  const { isLoading, init, error } = useFacebook();
+
+  async function handleClick() {
+    const api = await init();
+
+    const response = await api.login();
+    const FB = await api.getFB(); // Get original FB object
   }
+
+  return (
+    <button disabled={isLoading} onClick={handleClick}>
+      Login
+    </button>
+  );
 }
 ```
 
-## Subscribe
+## useSubscribe - Subscribe to events
 
-```js
-import React, { Component} from 'react';
-import { FacebookProvider, Subscribe } from 'react-facebook';
+```tsx
+import { FacebookProvider, useSubscribe } from 'react-facebook';
 
-export default class Example extends Component {
-  handleChange = (response) => {
-    console.log(response);
-  } 
+export default function UseSubscribeExample() {
+  const latestValue = useSubscribe('auth.statusChange', (value) => {
+    console.log('new response', value);
+  });
 
-  render() {
-    return (
-      <FacebookProvider appId="123456789">
-        <Subscribe event="auth.statusChange" onChange={this.handleChange} />
-      </FacebookProvider>    
-    );
-  }
+  return (
+    <div>
+      {latestValue}
+    </div>
+  );
 }
 ```
 
-## Login Status
+## useLoginStatus - read login status of current user
 
-```js
-import React, { Component} from 'react';
-import { FacebookProvider, Status } from 'react-facebook';
+```tsx
+import { FacebookProvider, useLoginStatus } from 'react-facebook';
 
-export default class Example extends Component {
-  handleChange = (response) => {
-    console.log(response);
-  } 
+export default function UseLoginStatusExample() {
+  const { status, isLoading, error } = useLoginStatus();
 
-  render() {
-    return (
-      <FacebookProvider appId="123456789">
-        <Status>
-          {({ loading, status }) => (
-            <div>
-              {...}
-            </div>
-          )}
-        </Status>
-      </FacebookProvider>    
-    );
-  }
+  return (
+    <div>
+      Current user login status: {isLoading ? 'Loading...' : status}
+    </div>
+  );
 }
 ```
 
@@ -431,29 +388,17 @@ This component will not sign user. You need to do that with another component.
 Default scope: 'id', 'first_name', 'last_name', 'middle_name', 'name', 'name_format', 'picture', 'short_name', 'email'.
 If profile is undefined login status !== LoginStatus.CONNECTED
 
-```js
-import React, { Component} from 'react';
-import { FacebookProvider, Profile } from 'react-facebook';
+```tsx
+import { FacebookProvider, useProfile } from 'react-facebook';
 
-export default class Example extends Component {
-  handleChange = (response) => {
-    console.log(response);
-  } 
+export default function UseProfileExample() {
+  const { profile, isLoading, error } = useProfile(['id', 'name']);
 
-  render() {
-    return (
-      <FacebookProvider appId="123456789">
-        <Profile>
-          {({ loading, profile }) => (
-            <div>
-              {profile.picture}
-              {profile.name} 
-            </div>
-          )}
-        </Profile>
-      </FacebookProvider>    
-    );
-  }
+  return (
+    <div>
+      {profile?.name} has id: {profile?.id}
+    </div>    
+  );
 }
 ```
 
@@ -463,15 +408,9 @@ export default class Example extends Component {
 npx cypress open --component
 ```
 
-# Support us
+# Support
 
-Star this project on [GitHub][github-url].
-
-## Try our other React components
-
- - Translate your great project [react-translate-maker](https://github.com/CherryProjects/react-translate-maker)
- - Google Analytics [react-g-analytics](https://github.com/seeden/react-g-analytics)
- - Google AdSense via Google Publisher Tag [react-google-publisher-tag](https://github.com/seeden/react-google-publisher-tag)
+Star me and this project on [GitHub][support-url].
 
 ## Credits
 
