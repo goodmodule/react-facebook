@@ -90,11 +90,11 @@ export default class Facebook {
     }
   }
 
-  get appId() {
+  getAppId() {
     return this.options.appId;
   }
 
-  get FB() {
+  getFB() {
     return window.FB;
   }
 
@@ -146,6 +146,7 @@ export default class Facebook {
     const fb = await this.init();
 
     return new Promise((resolve, reject) => {
+      // @ts-ignore
       fb[namespace](...before, (response: Response | { error: { code: number, type: string, message: string} }) => {
         if (!response) {
           if (namespace === Namespace.UI) return;
@@ -165,13 +166,17 @@ export default class Facebook {
     return this.process(Namespace.UI, [options]);
   }
 
-  async api(path, method = Method.GET, params = {}) {
-    return this.process(Namespace.API, [path, method, params]);
+  async api<T>(path, method = Method.GET, params = {}) {
+    return this.process<T>(Namespace.API, [path, method, params]);
   }
 
   async login(options: LoginOptions) {
     const { scope, authType = [], returnScopes, rerequest, reauthorize } = options;
-    const loginOptions = {
+    const loginOptions: {
+      return_scopes?: boolean;
+      auth_type?: string;
+      scope?: string;
+    } = {
       scope,
     };
 
@@ -265,7 +270,7 @@ export default class Facebook {
   }
 
   async getPermissions() {
-    const response = await this.api('/me/permissions');
+    const response = await this.api<{ data: any }>('/me/permissions');
     return response.data;
   }
 
@@ -286,21 +291,21 @@ export default class Facebook {
 
   async subscribe(eventName, callback) {
     await this.init();
-    this.FB.Event.subscribe(eventName, callback);
+    this.getFB().Event.subscribe(eventName, callback);
   }
 
   async unsubscribe(eventName, callback) {
     await this.init();
-    this.FB.Event.unsubscribe(eventName, callback);
+    this.getFB().Event.unsubscribe(eventName, callback);
   }
 
   async parse(parentNode) {
     await this.init();
 
     if (typeof parentNode === 'undefined') {
-      this.FB.XFBML.parse();
+      this.getFB().XFBML.parse();
     } else {
-      this.FB.XFBML.parse(parentNode);
+      this.getFB().XFBML.parse(parentNode);
     }
   }
 
@@ -314,7 +319,7 @@ export default class Facebook {
 
   async setAutoGrow() {
     await this.init();
-    this.FB.Canvas.setAutoGrow();
+    this.getFB().Canvas.setAutoGrow();
   }
 
   async paySimple(product, quantity = 1) {

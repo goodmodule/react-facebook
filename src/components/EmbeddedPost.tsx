@@ -1,4 +1,4 @@
-import React, { type ReactNode, memo, forwardRef } from 'react';
+import { type ReactNode, memo, forwardRef } from 'react';
 import Parser from './Parser';
 
 export type EmbeddedPostProps = {

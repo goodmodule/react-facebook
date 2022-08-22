@@ -1,13 +1,15 @@
-import React, { type ReactNode, memo, forwardRef } from 'react';
+import { type ReactNode, memo, forwardRef } from 'react';
 import Parser from './Parser';
 
+// https://developers.facebook.com/docs/messenger-platform/reference/web-plugins#send_to_messenger
 export type SendToMessengerProps = {
   messengerAppId: string;
   pageId: string;
-  color?: string;
+  color?: 'blue' | 'white';
   children?: ReactNode;
   dataRef?: string;
-  size?: string;
+  size?: 'standard' | 'large' | 'xlarge';
+  enforceLogin?: boolean;
 };
 
 function SendToMessenger(props: SendToMessengerProps, ref: any) {
@@ -18,6 +20,7 @@ function SendToMessenger(props: SendToMessengerProps, ref: any) {
     children,
     dataRef,
     size,
+    enforceLogin,
     ...rest
   } = this.props;
 
@@ -30,6 +33,7 @@ function SendToMessenger(props: SendToMessengerProps, ref: any) {
         data-color={color}
         data-size={size}
         data-ref={dataRef}
+        enforce_login={enforceLogin}
         {...rest}
         ref={ref}
       >

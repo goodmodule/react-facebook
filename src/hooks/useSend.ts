@@ -13,6 +13,7 @@ export default function useSend() {
     appId?: string;
     to: string;
     redirectURI?: string;
+    display?: string;
   }) {
     try {
       setError(undefined);
@@ -26,7 +27,7 @@ export default function useSend() {
       const {
         link = getCurrentHref(),
         display,
-        appId = api.appId,
+        appId = api.getAppId(),
         to,
         redirectURI,
       } = options;

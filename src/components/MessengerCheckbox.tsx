@@ -1,4 +1,4 @@
-import React, { type ReactNode, memo, forwardRef } from 'react';
+import { type ReactNode, memo, forwardRef } from 'react';
 import Parser from './Parser';
 
 export type MessengerCheckboxProps = {
@@ -33,6 +33,7 @@ function MessengerCheckbox(props: MessengerCheckboxProps, ref: any) {
     <Parser>
       <div
         className="fb-messenger-checkbox"
+        // @ts-ignore
         messenger_app_id={messengerAppId}
         page_id={pageId}
         size={size}

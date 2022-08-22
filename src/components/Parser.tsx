@@ -1,4 +1,4 @@
-import React, { useState, memo, forwardRef, type ReactNode, useEffect, useCallback } from 'react';
+import { useState, memo, forwardRef, type ReactNode, useEffect, useCallback } from 'react';
 import useFacebook from '../hooks/useFacebook';
 
 export type ParserProps = {
@@ -11,12 +11,10 @@ type ParserInternalProps = {
   inline?: boolean;
 };
 
-const ParserInternal = memo(forwardRef((props: ParserInternalProps, ref) => {
+const ParserInternal = memo(forwardRef((props: ParserInternalProps, ref: React.ForwardedRef<HTMLDivElement>) => {
   const { inline, children, ...rest } = props;
-
-  console.log('RERENDER ParserInternal');
-
   const Tag = inline ? 'span' : 'div';
+
   return (
     <Tag {...rest} ref={ref}>
       {children}
@@ -35,12 +33,9 @@ function Parser(props: ParserProps) {
 
   useEffect(() => {
     if (element) {
-      console.log('PARSE');
       parse(element);
     }
   }, [element]);
-
-  console.log('RERENDER Parser', element);
 
   return (
     <ParserInternal inline={inline} {...rest} ref={handleRef}>

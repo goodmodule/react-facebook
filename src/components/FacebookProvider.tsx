@@ -1,4 +1,4 @@
-import React, { useState, useEffect, type ReactNode } from 'react';
+import { useState, useEffect, type ReactNode } from 'react';
 import Facebook, { type FacebookOptions } from '../utils/Facebook';
 import FacebookContext, { type FacebookContextInterface } from './FacebookContext';
 
@@ -45,8 +45,8 @@ export default function FacebookProvider(props: FacebookProviderProps) {
   }
 
   useEffect(() => {
-    const { wait } = options;
-    if (!wait) {
+    const { lazy } = options;
+    if (!lazy) {
       init();
     }
   }, []);

@@ -15,6 +15,12 @@ export default function useFeed() {
     to: string;
     picture?: string;
     source?: string;
+    display?: string;
+    name?: string;
+    caption?: string;
+    description?: string;
+    dataRef?: string;
+    redirectURI?: string;
   }) {
     try {
       setError(undefined);

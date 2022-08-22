@@ -1,12 +1,14 @@
-import React, { type ReactNode, memo, forwardRef } from 'react';
+import { type ReactNode, memo, forwardRef } from 'react';
 import Parser from './Parser';
 
+// https://developers.facebook.com/docs/messenger-platform/reference/web-plugins#message_us
 export type MessageUsProps = {
   messengerAppId: string;
   pageId: string;
-  color?: string;
+  color?: 'blue' | 'white';
   children?: ReactNode;
-  size?: string;
+  size?: 'standard' | 'large' | 'xlarge';
+  dataRef?: string;
 };
 
 function MessageUs(props: MessageUsProps, ref: any) {
@@ -16,6 +18,7 @@ function MessageUs(props: MessageUsProps, ref: any) {
     pageId,
     children,
     size,
+    dataRef,
     ...rest
   } = props;
 
@@ -23,10 +26,12 @@ function MessageUs(props: MessageUsProps, ref: any) {
     <Parser>
       <div
         className="fb-messengermessageus"
-        messenger_app_id={messengerAppId}
+        // @ts-ignore
+        messenger_app_id={messengerAppId} 
         page_id={pageId}
         data-color={color}
         data-size={size}
+        data-ref={dataRef}
         {...rest}
         ref={ref}
       >

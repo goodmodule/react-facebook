@@ -1,15 +1,15 @@
-import React, { type ReactNode, type ReactElement } from 'react';
+import { type ReactNode, type ComponentType } from 'react';
 import useLogin, { LoginOptions } from '../hooks/useLogin';
 
-export type LoginButton = HTMLButtonElement & {
+export type LoginButton = {
   children?: ReactNode;
   options: LoginOptions;
-  asChild?: ReactElement;
+  asChild?: ComponentType | keyof JSX.IntrinsicElements;
+  disabled?: boolean;
 };
 
 export default function LoginButton(props: LoginButton) {
   const {
-    type = 'button',
     children,
     options,
     asChild: AsChild = 'button',
@@ -29,7 +29,6 @@ export default function LoginButton(props: LoginButton) {
 
   return (
     <AsChild
-      type={type}
       onClick={handleLogin}
       disabled={isLoading}
       {...rest}

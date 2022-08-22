@@ -1,10 +1,13 @@
 import { defineConfig } from 'tsup';
 
-export default defineConfig({
-  entry: ['src/index.ts'],
-  splitting: false,
+export default defineConfig((options) => ({
+  entry: ['./src/index.ts'],
+  splitting: true,
   sourcemap: true,
   clean: true,
-  platform: 'browser',
-  format: ['esm','cjs','iife'],
-});
+  external: ['react', 'react-dom'],
+  format: ['esm','cjs'],
+  dts: false,
+  onSuccess: "npm run declarations",
+  minify: !options.watch
+}));

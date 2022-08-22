@@ -28,7 +28,9 @@ export default function useSubscribe<T>(event: string, callback?: (data: any) =>
   useEffect(() => {
     handleSubscribe();
 
-    return () => handleUnsubscribe();
+    return () => {
+      handleUnsubscribe();
+    };
   }, [handleSubscribe]);
 
   return lastValue;

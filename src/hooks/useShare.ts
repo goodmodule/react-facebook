@@ -36,7 +36,7 @@ export default function useShare() {
         method: 'share',
         href,
         display,
-        app_id: api.appId,
+        app_id: api.getAppId(),
         hashtag,
         redirect_uri: redirectUri,
         ...rest,
