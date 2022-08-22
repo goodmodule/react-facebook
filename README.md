@@ -32,7 +32,7 @@
 
 # Support
 
-Become my sponsor and help me maintain this project [GitHub][support-url]. Thank you
+[Become my sponsor][support-url] and help me maintain this project. Thank you
 
 # Initialisation
 
@@ -410,7 +410,7 @@ npx cypress open --component
 
 # Support
 
-Become my sponsor and help me maintain this project [GitHub][support-url]. Thank you
+[Become my sponsor][support-url] and help me maintain this project. Thank you
 
 ## Credits
 
