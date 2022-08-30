@@ -7,6 +7,7 @@ export default defineConfig((options) => ({
   clean: true,
   external: ['react', 'react-dom'],
   format: ['esm','cjs'],
+  legacyOutput: true,
   dts: false,
   onSuccess: "npm run declarations",
   minify: !options.watch
