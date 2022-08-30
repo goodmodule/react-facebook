@@ -33,7 +33,7 @@ export default function useFeed() {
 
       const {
         link = getCurrentHref(),
-        appId = api.appId,
+        appId = api.getAppId(),
         display,
         redirectURI,
         from,
