@@ -109,6 +109,19 @@ export default function CommentsExample() {
 }
 ```
 
+If comments do not work and you are seeing this error in the browser console:
+
+`Refused to display 'https://www.facebook.com/v3.1/plugins/comments.php?blahblahblah' in a frame because it set 'X-Frame-Options' to 'DENY'.`
+
+Possible reasons:
+1. If the site visitor is from the EU region, the visitor needs to be **both**:
+    - Logged in to Facebook.
+    - Have third-party cookies enabled in FB privacy settings.
+2. User is using a browser that is blocking third party cookies by default (for example Safari and Firefox).
+
+It is not a bug in this library, [there is no way around it](https://developers.facebook.com/support/bugs/854001531875629/).
+
+
 ## Comments count
 
 ```tsx
