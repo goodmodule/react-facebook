@@ -1,5 +1,5 @@
 import React from 'react';
-import { Like, Comments, FacebookProvider } from '../../dist/index.mjs';
+import { Like, Comments, FacebookProvider } from '../../dist/esm/index';
 
 describe('Like.cy.js', () => {
   it('Like Button', () => {
