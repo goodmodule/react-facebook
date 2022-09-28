@@ -1,4 +1,5 @@
-import React, { useState, useEffect, ReactNode } from 'react';
+import React, { useState, useEffect } from 'react';
+import type { ReactNode } from 'react';
 import Facebook from '../utils/Facebook';
 import type { FacebookOptions } from '../utils/Facebook';
 import FacebookContext from './FacebookContext';

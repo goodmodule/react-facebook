@@ -16,6 +16,7 @@ const ParserInternal = memo(forwardRef((props: ParserInternalProps, ref: React.F
   const Tag = inline ? 'span' : 'div';
 
   return (
+    // @ts-ignore
     <Tag {...rest} ref={ref}>
       {children}
     </Tag>

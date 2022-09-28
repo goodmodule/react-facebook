@@ -1,4 +1,5 @@
-import React, { ReactNode, memo, forwardRef } from 'react';
+import React, { memo, forwardRef } from 'react';
+import type { ReactNode } from 'react';
 import Parser from './Parser';
 import getCurrentHref from '../utils/getCurrentHref';
 
@@ -31,8 +32,6 @@ function Like(props: LikeProps, ref: any) {
     referral,
     ...rest
   } = props;
-
-  console.log('RENDERING like');
 
   return (
     <Parser>

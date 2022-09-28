@@ -41,7 +41,7 @@ export default function useSend() {
         redirect_uri: redirectURI,
       }));
     } catch (error) {
-      setError(error);
+      setError(error as Error);
     } finally {
       setIsLoading(false);
     }

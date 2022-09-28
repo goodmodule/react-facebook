@@ -42,7 +42,7 @@ export default function useShare() {
         ...rest,
       }));
     } catch (error) {
-      setError(error);
+      setError(error as Error);
     } finally {
       setIsLoading(false);
     }

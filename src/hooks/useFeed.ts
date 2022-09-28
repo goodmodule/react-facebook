@@ -62,7 +62,7 @@ export default function useFeed() {
         ref: dataRef,
       }));
     } catch (error) {
-      setError(error);
+      setError(error as Error);
     } finally {
       setIsLoading(false);
     }
