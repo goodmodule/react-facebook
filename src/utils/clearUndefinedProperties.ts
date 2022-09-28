@@ -1,16 +1,8 @@
-export default function clearUndefinedProperties(obj: Record<string, any>): Record<string, any> {
-  if (!obj) {
-    return obj;
-  }
+type NonNullProperties<T> = { 
+  // @ts-ignore
+  [K in keyof T as (T[K] extends undefined ? never : K)]: T[K];
+};
 
-  const newObj = {};
-
-  Object.keys(obj).forEach((propertyName) => {
-    const value = obj[propertyName];
-    if (value !== undefined) {
-      newObj[propertyName] = value;
-    }
-  });
-
-  return newObj;
+export default function clearUndefinedProperties<T extends {}, V = NonNullProperties<T>>(obj: T): V {
+  return Object.fromEntries(Object.entries(obj).filter(([, value]) => value === undefined)) as V;
 }

@@ -1,4 +1,4 @@
-import { type ReactNode, memo, forwardRef } from 'react';
+import React, { ReactNode, memo, forwardRef } from 'react';
 import Parser from './Parser';
 
 // https://developers.facebook.com/docs/messenger-platform/reference/web-plugins#message_us

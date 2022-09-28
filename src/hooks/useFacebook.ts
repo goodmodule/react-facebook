@@ -1,5 +1,6 @@
 import { useContext, useEffect } from 'react';
-import FacebookContext, { type FacebookContextInterface } from '../components/FacebookContext';
+import FacebookContext from '../components/FacebookContext';
+import type { FacebookContextInterface } from '../components/FacebookContext';
 
 export type UseFacebookProps = {
   lazy?: boolean;
@@ -8,7 +9,7 @@ export type UseFacebookProps = {
 export default function useFacebook(props: UseFacebookProps = {}): FacebookContextInterface {
   const { lazy = false } = props;
 
-  const context: FacebookContextInterface = useContext(FacebookContext);
+  const context: FacebookContextInterface | undefined = useContext(FacebookContext);
   if (!context) {
     throw new Error('useFacebook must be used within a FacebookProvider');
   }

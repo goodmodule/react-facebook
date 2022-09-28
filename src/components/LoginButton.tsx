@@ -1,6 +1,7 @@
-import { type ReactNode, type ComponentType } from 'react';
-import useLogin, { type LoginOptions } from '../hooks/useLogin';
-import { type LoginResponse } from '../utils/Facebook';
+import React, { ReactNode, ComponentType } from 'react';
+import useLogin from '../hooks/useLogin';
+import type { LoginOptions } from '../hooks/useLogin';
+import type { LoginResponse } from '../utils/Facebook';
 
 export type LoginButton = LoginOptions & {
   children?: ReactNode;
@@ -42,8 +43,8 @@ export default function LoginButton(props: LoginButton) {
       });
 
       onSuccess?.(response);
-    } catch (error: any) {
-      onError?.(error);
+    } catch (error) {
+      onError?.(error as Error);
     }
   }
 

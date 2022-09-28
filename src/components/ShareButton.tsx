@@ -1,5 +1,6 @@
-import { type ReactNode, type ComponentType } from 'react';
-import useShare, { type ShareOptions } from '../hooks/useShare';
+import React, { ReactNode, ComponentType } from 'react';
+import type { ShareOptions } from '../hooks/useShare';
+import useShare from '../hooks/useShare';
 
 export type LoginButton = ShareOptions & {
   children?: ReactNode;

@@ -1,6 +1,8 @@
-import { useState, useEffect, type ReactNode } from 'react';
-import Facebook, { type FacebookOptions } from '../utils/Facebook';
-import FacebookContext, { type FacebookContextInterface } from './FacebookContext';
+import React, { useState, useEffect, ReactNode } from 'react';
+import Facebook from '../utils/Facebook';
+import type { FacebookOptions } from '../utils/Facebook';
+import FacebookContext from './FacebookContext';
+import type { FacebookContextInterface } from './FacebookContext';
 
 let api: Facebook | undefined;
 
@@ -14,7 +16,7 @@ export default function FacebookProvider(props: FacebookProviderProps) {
   const [isReady, setIsReady] = useState<boolean>(false);
   const [error, setError] = useState<Error | undefined>();
 
-  async function init(): Promise<Facebook | undefined> {
+  async function init() {
     try {
       if (api) {
         return api.init();
@@ -28,16 +30,16 @@ export default function FacebookProvider(props: FacebookProviderProps) {
       await api.init();
 
       setIsReady(true);
-
-      return api;
     } catch (error) {
-      setError(error);
+      setError(error as Error);
     } finally {
       setIsLoading(false);
     }
+
+    return api;
   }
 
-  async function parse(element: HTMLDivElement | HTMLSpanElement): Promise<void> {
+  async function parse(element: HTMLDivElement | HTMLSpanElement) {
     const api = await init();
     if (api) {
       await api.parse(element);

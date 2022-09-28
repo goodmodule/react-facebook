@@ -13,7 +13,7 @@ export default function useLoginStatus(): {
   const [error, setError] = useState<Error | undefined>(undefined);
   const [status, setStatus] = useState<LoginStatus>(LoginStatus.UNKNOWN);
 
-  const handleStatusChanges = useCallback((response) => {
+  const handleStatusChanges = useCallback((response: { status: LoginStatus }) => {
     setStatus(response.status);
   }, []);
 
@@ -29,8 +29,8 @@ export default function useLoginStatus(): {
 
       const { status } = await api.getLoginStatus();
       setStatus(status);
-    } catch (error: any) {
-      setError(error);
+    } catch (error) {
+      setError(error as Error);
     } finally {
       setIsLoading(false);
     }

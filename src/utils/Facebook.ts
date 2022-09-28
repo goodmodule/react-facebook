@@ -73,7 +73,7 @@ const defaultOptions: Omit<FacebookOptions, 'appId'> = {
 
 export default class Facebook {
   options: FacebookOptions;
-  loadingPromise: Promise<any>;
+  loadingPromise: Promise<any> | undefined;
 
   constructor(options: FacebookOptions) {
     if (!options.appId) {
@@ -162,11 +162,11 @@ export default class Facebook {
     });
   }
 
-  async ui(options) {
+  async ui(options: any) {
     return this.process(Namespace.UI, [options]);
   }
 
-  async api<T>(path, method = Method.GET, params = {}) {
+  async api<T>(path: string, method = Method.GET, params = {}) {
     return this.process<T>(Namespace.API, [path, method, params]);
   }
 
@@ -226,11 +226,11 @@ export default class Facebook {
     throw new Error('Token is undefined');
   }
 
-  async getProfile(params) {
+  async getProfile(params: any) {
     return this.api('/me', Method.GET, params);
   }
 
-  async getTokenDetailWithProfile(params, response) {
+  async getTokenDetailWithProfile(params: any, response: any) {
     const tokenDetail = await this.getTokenDetail(response);
     const profile = await this.getProfile(params);
 
@@ -250,7 +250,7 @@ export default class Facebook {
     return authResponse.userID;
   }
 
-  async sendInvite(to, options) {
+  async sendInvite(to: string, options: any) {
     return this.ui({
       to,
       method: 'apprequests',
@@ -258,8 +258,7 @@ export default class Facebook {
     });
   }
 
-
-  async postAction(ogNamespace, ogAction, ogObject, ogObjectUrl, noFeedStory) {
+  async postAction(ogNamespace: string, ogAction: string, ogObject: string, ogObjectUrl: string, noFeedStory: boolean = false) {
     let url = `/me/${ogNamespace}:${ogAction}?${ogObject}=${encodeURIComponent(ogObjectUrl)}`;
 
     if (noFeedStory === true) {
@@ -271,10 +270,13 @@ export default class Facebook {
 
   async getPermissions() {
     const response = await this.api<{ data: any }>('/me/permissions');
-    return response.data;
+    return response.data as {
+      permission: string;
+      status: 'granted';
+    }[];
   }
 
-  async hasPermissions(permissions) {
+  async hasPermissions(permissions: string[]) {
     const usersPermissions = await this.getPermissions();
 
     const findedPermissions = permissions.filter((p) => {
@@ -289,17 +291,19 @@ export default class Facebook {
     return findedPermissions.length === permissions.length;
   }
 
-  async subscribe(eventName, callback) {
+  async subscribe<T>(eventName: string, callback: (value: T) => void) {
     await this.init();
     this.getFB().Event.subscribe(eventName, callback);
+
+    return () => this.unsubscribe(eventName, callback);
   }
 
-  async unsubscribe(eventName, callback) {
+  async unsubscribe<T>(eventName: string, callback: (value: T) => void) {
     await this.init();
     this.getFB().Event.unsubscribe(eventName, callback);
   }
 
-  async parse(parentNode) {
+  async parse(parentNode: HTMLElement) {
     await this.init();
 
     if (typeof parentNode === 'undefined') {
@@ -313,8 +317,8 @@ export default class Facebook {
     return this.api('/me/apprequests');
   }
 
-  async removeRequest(requestID) {
-    return this.api(requestID, Method.DELETE);
+  async removeRequest(requestId: string) {
+    return this.api(requestId, Method.DELETE);
   }
 
   async setAutoGrow() {
@@ -322,7 +326,7 @@ export default class Facebook {
     this.getFB().Canvas.setAutoGrow();
   }
 
-  async paySimple(product, quantity = 1) {
+  async paySimple(product: string, quantity = 1) {
     return this.ui({
       method: 'pay',
       action: 'purchaseitem',
@@ -331,7 +335,7 @@ export default class Facebook {
     });
   }
 
-  async pay(product, options) {
+  async pay(product: string, options: any) {
     return this.ui({
       method: 'pay',
       action: 'purchaseitem',

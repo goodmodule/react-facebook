@@ -1,4 +1,4 @@
-import { type ReactNode, memo, forwardRef } from 'react';
+import React, { ReactNode, memo, forwardRef } from 'react';
 import Parser from './Parser';
 
 // https://developers.facebook.com/docs/messenger-platform/reference/web-plugins#send_to_messenger
@@ -22,12 +22,13 @@ function SendToMessenger(props: SendToMessengerProps, ref: any) {
     size,
     enforceLogin,
     ...rest
-  } = this.props;
+  } = props;
 
   return (
     <Parser>
       <div
         className="fb-send-to-messenger"
+        // @ts-ignore
         messenger_app_id={messengerAppId}
         page_id={pageId}
         data-color={color}

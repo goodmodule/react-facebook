@@ -1,4 +1,4 @@
-import { useState, memo, forwardRef, type ReactNode, useEffect, useCallback } from 'react';
+import React, { useState, memo, forwardRef, ReactNode, useEffect, useCallback } from 'react';
 import useFacebook from '../hooks/useFacebook';
 
 export type ParserProps = {

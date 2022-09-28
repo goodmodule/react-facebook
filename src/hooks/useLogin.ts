@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import useFacebook from './useFacebook';
-import { type LoginResponse } from '../utils/Facebook';
+import type { LoginResponse } from '../utils/Facebook';
 import LoginStatus from '../constants/LoginStatus';
 
 export type LoginOptions = {
@@ -34,8 +34,8 @@ export default function useLogin() {
 
       callback?.(response);
       return response;
-    } catch (error: any) {
-      setError(error);
+    } catch (error) {
+      setError(error as Error);
       throw(error);
     } finally {
       setIsLoadingLogin(false);

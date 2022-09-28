@@ -28,8 +28,8 @@ export default function useProfile(fields: string[]) {
 
         setProfile(profile);
       }
-    } catch (error: any) {
-      setError(error);
+    } catch (error) {
+      setError(error as Error);
     } finally {
       setIsLoading(false);
     }
