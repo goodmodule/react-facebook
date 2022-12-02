@@ -5,11 +5,12 @@ import getCurrentHref from '../utils/getCurrentHref';
 export type CommentsProps = {
   href?: string;
   numPosts?: number;
-  orderBy?: string;
+  orderBy?: 'reverse_time' | 'time';
   width?: number | string;
-  colorScheme?: string;
+  colorScheme?: 'light' | 'dark';
   children?: ReactNode;
   mobile?: boolean;
+  lazy?: boolean;
 };
 
 function Comments(props: CommentsProps, ref: any) {
@@ -21,6 +22,7 @@ function Comments(props: CommentsProps, ref: any) {
     width,
     children,
     mobile,
+    lazy,
     ...rest
   } = props;
 
@@ -35,6 +37,7 @@ function Comments(props: CommentsProps, ref: any) {
         data-width={width}
         data-skin={colorScheme}
         data-mobile={mobile}
+        data-lazy={lazy}
         {...rest}
         ref={ref}
       >

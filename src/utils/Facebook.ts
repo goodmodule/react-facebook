@@ -59,10 +59,10 @@ export type FacebookOptions = {
 
 const defaultOptions: Omit<FacebookOptions, 'appId'> = {
   domain: 'connect.facebook.net',
-  version: 'v14.0',
+  version: 'v15.0',
   cookie: false,
   status: false,
-  xfbml: false,
+  xfbml: true,
   language: 'en_US',
   frictionlessRequests: false,
   debug: false,
@@ -126,7 +126,7 @@ export default class Facebook {
       };
 
       if (window.document.getElementById('facebook-jssdk')) {
-        return resolve(window.FB);
+        return resolve(this);
       }
       
       const js = window.document.createElement('script');
@@ -143,7 +143,9 @@ export default class Facebook {
   }
 
   async process<Response>(namespace: Namespace, before: any[] = [], after: any[] = []): Promise<Response> {
-    const fb = await this.init();
+    await this.init();
+
+    const fb = this.getFB();
 
     return new Promise((resolve, reject) => {
       // @ts-ignore
@@ -151,7 +153,7 @@ export default class Facebook {
         if (!response) {
           if (namespace === Namespace.UI) return;
           reject(new Error('Response is undefined'));
-        } else if ('error' in response) {
+        } else if (!!response && 'error' in response) {
           const { code, type, message } = response.error;
 
           reject(new FBError(message, code, type));

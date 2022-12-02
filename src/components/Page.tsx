@@ -12,6 +12,7 @@ export type PageProps = {
   hideCTA?: boolean;
   smallHeader?: boolean;
   adaptContainerWidth?: boolean;
+  lazy?: boolean;
   children?: ReactNode;
   style?: Object;
 };
@@ -29,6 +30,7 @@ function Page(props: PageProps, ref: any) {
     smallHeader,
     adaptContainerWidth,
     children,
+    lazy,
     ...rest
   } = props;
 
@@ -46,6 +48,7 @@ function Page(props: PageProps, ref: any) {
         data-adapt-container-width={adaptContainerWidth}
         data-height={height}
         data-width={width}
+        data-lazy={lazy}
         {...rest}
         ref={ref}
       >

@@ -5,6 +5,7 @@ export type EmbeddedPostProps = {
   href: string;
   width?: string | number;
   showText?: boolean;
+  lazy?: boolean;
   children?: ReactNode;
 };
 
@@ -13,6 +14,7 @@ function EmbeddedPost(props: EmbeddedPostProps, ref: any) {
     href,
     width,
     showText,
+    lazy,
     children,
     ...rest
   } = props;
@@ -23,6 +25,7 @@ function EmbeddedPost(props: EmbeddedPostProps, ref: any) {
         className="fb-post"
         data-href={href}
         data-width={width}
+        data-lazy={lazy}
         data-show-text={showText}
         {...rest}
         ref={ref}

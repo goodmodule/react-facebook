@@ -31,7 +31,7 @@ export default function useShare() {
       if (!api) {
         throw new Error('Facebook API is not initialized');
       }
-  
+      
       return api.ui(clearUndefinedProperties({
         method: 'share',
         href,

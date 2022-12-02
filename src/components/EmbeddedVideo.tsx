@@ -8,6 +8,7 @@ export type EmbeddedVideoProps = {
   allowFullScreen?: boolean;
   autoPlay?: boolean;
   showCaptions?: boolean;
+  lazy?: boolean;
   children?: ReactNode;
 };
 
@@ -18,6 +19,7 @@ function EmbeddedVideo(props: EmbeddedVideoProps, ref: any) {
     showText,
     allowFullScreen,
     autoPlay,
+    lazy,
     showCaptions,
     children,
     ...rest
@@ -32,6 +34,7 @@ function EmbeddedVideo(props: EmbeddedVideoProps, ref: any) {
         data-show-text={showText}
         data-show-captions={showCaptions}
         data-autoplay={autoPlay}
+        data-lazy={lazy}
         data-allowfullscreen={allowFullScreen}
         {...rest}
         ref={ref}

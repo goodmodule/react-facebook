@@ -6,7 +6,7 @@ import getCurrentHref from '../utils/getCurrentHref';
 export type LikeProps = {
   referral?: string;
   href?: string;
-  layout?: string;
+  layout?: 'standard' | 'button_count' | 'button' | 'box_count';
   showFaces?: boolean;
   colorScheme?: string;
   action?: string;
@@ -15,6 +15,7 @@ export type LikeProps = {
   width?: number | string;
   size?: string;
   kidDirectedSite?: boolean;
+  lazy?: boolean;
 };
 
 function Like(props: LikeProps, ref: any) {
@@ -30,6 +31,7 @@ function Like(props: LikeProps, ref: any) {
     size,
     kidDirectedSite,
     referral,
+    lazy,
     ...rest
   } = props;
 
@@ -46,6 +48,7 @@ function Like(props: LikeProps, ref: any) {
         data-share={share}
         data-width={width}
         data-size={size}
+        data-lazy={lazy}
         data-kid-directed-site={kidDirectedSite}
         {...rest}
         ref={ref}

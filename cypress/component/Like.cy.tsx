@@ -9,6 +9,6 @@ describe('Like.cy.js', () => {
       </FacebookProvider>
     ));
 
-    cy.contains('and 175M').should('be.visible')
+    cy.contains('others like this').should('be.visible')
   })
 });

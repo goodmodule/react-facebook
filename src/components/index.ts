@@ -11,6 +11,8 @@ export { default as Comments } from './Comments';
 export { default as CommentsCount } from './CommentsCount';
 export { default as Group } from './Group';
 
+export { default as Save } from './Save';
+export { default as Share } from './Share';
 export { default as CustomChat } from './CustomChat';
 export { default as MessageUs } from './MessageUs';
 export { default as MessengerCheckbox } from './MessengerCheckbox';

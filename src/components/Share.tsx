@@ -2,41 +2,35 @@ import React, { ReactNode, forwardRef, memo } from 'react';
 import Parser from './Parser';
 import getCurrentHref from '../utils/getCurrentHref';
 
-export type GroupProps = {
+export type ShareProps = {
   href?: string;
-  skin?: string;
-  showSocialContext?: boolean;
-  showMetaData?: boolean;
-  width?: number | string;
   lazy?: boolean;
+  size?: 'small' | 'large';
+  layout?: 'box_count' | 'button_count' | 'button' | 'icon_link';
   children?: ReactNode;
   style?: Object;
 };
 
-function Group(props: GroupProps, ref: any) {
+function Share(props: ShareProps, ref: any) {
   const {
     style,
     href = getCurrentHref(),
-    width,
     lazy,
-    showSocialContext,
-    showMetaData,
+    layout,
+    size,
     children,
-    skin,
     ...rest
   } = props;
 
   return (
     <Parser>
       <div
-        className="fb-group"
+        className="fb-share-button"
         style={style}
         data-href={href}
-        data-width={width}
-        data-show-social-context={showSocialContext}
-        data-show-metadata={showMetaData}
-        data-skin={skin}
         data-lazy={lazy}
+        data-size={size}
+        data-layout={layout}
         {...rest}
         ref={ref}
       >
@@ -46,4 +40,4 @@ function Group(props: GroupProps, ref: any) {
   );
 }
 
-export default memo(forwardRef(Group));
+export default memo(forwardRef(Share));
