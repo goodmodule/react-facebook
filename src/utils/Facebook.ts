@@ -62,7 +62,7 @@ const defaultOptions: Omit<FacebookOptions, 'appId'> = {
   version: 'v15.0',
   cookie: false,
   status: false,
-  xfbml: true,
+  xfbml: false,
   language: 'en_US',
   frictionlessRequests: false,
   debug: false,

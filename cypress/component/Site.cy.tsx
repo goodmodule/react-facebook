@@ -1,7 +1,6 @@
 import React from 'react';
 import {   
   FacebookProvider,
-  useShare,
   ShareButton,
   Comments,
   Like,
@@ -12,7 +11,7 @@ import {
 describe('Site.cy.js', () => {
   it('Site', () => {
     cy.mount((
-      <FacebookProvider appId="113869198637480" debug>
+      <FacebookProvider appId="671184534658954" debug>
         <h3>Page:</h3>
         <Page href="https://www.facebook.com/facebook" tabs="timeline" />
 
