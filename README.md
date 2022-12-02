@@ -26,7 +26,9 @@
 - Group
 - Message Us
 - Customer Chat
+- Save
 - Status
+- Share
 - Subscribe
 - User Profile
 
