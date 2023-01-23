@@ -172,7 +172,7 @@ export default function LoginExample() {
 import { FacebookProvider, LoginButton } from 'react-facebook';
 
 export default function LoginButtonExample() {
-  functon handleSuccess(response) {
+  function handleSuccess(response) {
     console.log(response.status);
   }
 
