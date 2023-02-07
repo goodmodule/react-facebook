@@ -19,6 +19,7 @@ export type LoginOptions = {
   authType?: string[];
   rerequest?: boolean;
   reauthorize?: boolean;
+  extras?: Record<string, any>;
 };
 declare global {
   interface Window { 
@@ -173,11 +174,12 @@ export default class Facebook {
   }
 
   async login(options: LoginOptions) {
-    const { scope, authType = [], returnScopes, rerequest, reauthorize } = options;
+    const { scope, authType = [], returnScopes, rerequest, reauthorize, extras } = options;
     const loginOptions: {
       return_scopes?: boolean;
       auth_type?: string;
       scope?: string;
+      extras?: Record<string, any>;
     } = {
       scope,
     };
@@ -196,6 +198,10 @@ export default class Facebook {
 
     if (authType.length) {
       loginOptions.auth_type = authType.join(',');
+    }
+
+    if (extras) {
+      loginOptions.extras = extras;
     }
 
     return this.process<LoginResponse>(Namespace.LOGIN, [], [loginOptions]);
