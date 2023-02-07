@@ -21,6 +21,7 @@ export default function LoginButton(props: LoginButton) {
     authType,
     rerequest,
     reauthorize,
+    extras,
     onError,
     onSuccess,
     ...rest
@@ -40,6 +41,7 @@ export default function LoginButton(props: LoginButton) {
         authType,
         rerequest,
         reauthorize,
+        extras,
       });
 
       onSuccess?.(response);

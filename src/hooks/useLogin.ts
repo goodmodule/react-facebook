@@ -9,6 +9,7 @@ export type LoginOptions = {
   authType?: string[];
   rerequest?: boolean;
   reauthorize?: boolean;
+  extras?: Record<string, any>;
 };
 
 export default function useLogin() {
