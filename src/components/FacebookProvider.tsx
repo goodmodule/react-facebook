@@ -19,15 +19,10 @@ export default function FacebookProvider(props: FacebookProviderProps) {
 
   async function init() {
     try {
-      if (api) {
-        return api.init();
-      }
-
       setIsReady(false);
       setIsLoading(true);
 
-      api = new Facebook(options);
-
+      api = api ?? new Facebook(options);
       await api.init();
 
       setIsReady(true);
