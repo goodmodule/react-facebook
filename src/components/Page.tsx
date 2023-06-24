@@ -9,6 +9,7 @@ export type PageProps = {
   height?: number | string;
   width?: number | string;
   showFacepile?: boolean;
+  showPosts?: boolean;
   hideCTA?: boolean;
   smallHeader?: boolean;
   adaptContainerWidth?: boolean;
@@ -26,6 +27,7 @@ function Page(props: PageProps, ref: any) {
     width,
     height,
     showFacepile,
+    showPosts,
     hideCTA,
     smallHeader,
     adaptContainerWidth,
@@ -42,6 +44,7 @@ function Page(props: PageProps, ref: any) {
         data-tabs={tabs}
         data-hide-cover={hideCover}
         data-show-facepile={showFacepile}
+        data-show-posts={showPosts}
         data-hide-cta={hideCTA}
         data-href={href}
         data-small-header={smallHeader}
