@@ -30,7 +30,7 @@ export default function LoginButton(props: LoginButton) {
 
   async function handleLogin() {
     try {
-      if (isLoading) {
+      if (isLoading || disabled) {
         return;
       }
   
@@ -51,7 +51,7 @@ export default function LoginButton(props: LoginButton) {
   return (
     <AsChild
       onClick={handleLogin}
-      disabled={isLoading}
+      disabled={isLoading || disabled}
       {...rest}
     >
       {children}
