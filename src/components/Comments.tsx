@@ -28,7 +28,7 @@ function Comments(props: CommentsProps, ref: any) {
 
   return (
     <Parser>
-      <div
+      <span
         className="fb-comments"
         data-colorscheme={colorScheme}
         data-numposts={numPosts}
@@ -42,7 +42,7 @@ function Comments(props: CommentsProps, ref: any) {
         ref={ref}
       >
         {children}
-      </div>
+      </span>
     </Parser>
   );
 }
